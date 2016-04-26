@@ -14,13 +14,14 @@ public abstract class Entity {
 	protected int spriteXSize;//Again, only for the current sprite
 	protected int spriteYSize;
 	protected double health;
-	
 	//These are things that all entities should know how to do
+	/**Will be called whenever the entity collides with
+	 * another entity or the side of the screen.*/
 	public abstract void collide(Entity e);
-	public abstract void damage(int amount);
+	/**Called whenever the entity takes damage.  Animations can be implemented here.*/
 	public abstract void damage(int amount, Entity damageSource);
-	public abstract void die();
-	public abstract void die(Entity damageSource);
+	/***/
+	public abstract void t();
 	
 	public boolean isAlive() {
 		return health > 0;
