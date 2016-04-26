@@ -1,6 +1,7 @@
 package display;
 
 import javax.swing.*;
+import java.awt.*;
 
 public final class Player {
 	public static ImageIcon north;
@@ -12,5 +13,9 @@ public final class Player {
 		south = new ImageIcon("assets/wumpus/south.png");
 		east = new ImageIcon("assets/wumpus/east.png");
 		west = new ImageIcon("assets/wumpus/west.png");
+	}
+	
+	public static void draw(Graphics g) {
+		
 	}
 }
