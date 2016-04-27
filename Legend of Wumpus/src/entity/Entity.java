@@ -15,11 +15,11 @@ public abstract class Entity {
 	protected int y;
 	protected Image sprite; // This is what is being drawn, not
 							// a container for all sprite states.
-	protected double health;
+	protected int health;
 
 	// Make sure that ALL entities are registered.
 	public Entity() {
-		World.entities.add(this);
+		World.registerEntity(this);
 	}
 
 	// These are things that all entities should know how to do
@@ -35,10 +35,36 @@ public abstract class Entity {
 	 */
 	public abstract void damage(int amount, Entity damageSource);
 
-	/**Called every tick to draw the entity's sprite.  All methods that override this
-	 * should have a call to super.draw()*/
+	/**
+	 * Called every tick to draw the entity's sprite. All methods that override
+	 * this should have a call to super.draw()
+	 */
 	public void draw(Graphics g) {
-		g.drawImage(sprite, x, y, null);
+		g.drawImage(sprite, getX(), getY(), null);
+	}
+
+	public int getX() {
+		return x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	/**
+	 * @param y
+	 *            the y to set
+	 */
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	/**
+	 * @param x
+	 *            the x to set
+	 */
+	public void setX(int x) {
+		this.x = x;
 	}
 
 	public boolean isAlive() {

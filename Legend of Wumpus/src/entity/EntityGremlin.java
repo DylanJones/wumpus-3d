@@ -19,23 +19,27 @@ public class EntityGremlin extends EntityMinion {
 
 	public EntityGremlin(int x, int y) {
 		super();
-		this.x = x;
-		this.y = y;
+		this.setX(x);
+		this.setY(y);
+		this.health = 100;
 		this.sprite = gremlinImage;
 	}
 
 	@Override
 	public void collide(Entity e) {
-		System.out.println("gremlin collide");
+//		System.out.println("gremlin collide");
+		attack(e);
 	}
 
 	@Override
 	public void damage(int amount, Entity damageSource) {
 		System.out.println("gremlin damage");
+		health -= amount;
 	}
 
 	@Override
 	public void attack(Entity target) {
-		System.out.println("Gremlin attack");
+//		System.out.println("Gremlin attack");
+		target.damage(2, this);
 	}
 }

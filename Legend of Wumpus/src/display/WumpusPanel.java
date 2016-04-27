@@ -12,6 +12,7 @@ import javax.swing.*;
 public class WumpusPanel extends JPanel {
 	private Timer ticker;
 	private KeyboardHandler kb;
+	public static Player thePlayer;
 
 	public WumpusPanel() {
 		super();
@@ -20,15 +21,15 @@ public class WumpusPanel extends JPanel {
 		this.setFocusable(true);
 		ticker = new Timer(10, new Tick(this, kb));
 		ticker.start();
+		thePlayer = new Player();
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
-		for (Entity e : World.entities) {
+		for (Entity e : World.getAllEntities()) {
 			e.draw(g);
 		}
-		Player.draw(g);
 	}
 }
