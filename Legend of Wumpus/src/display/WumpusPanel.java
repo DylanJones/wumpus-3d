@@ -1,28 +1,34 @@
 package display;
 
+import entity.*;
 import java.awt.*;
-
 import javax.swing.*;
 
 @SuppressWarnings("serial")
-/** This is the class which does the.... something */
+/**
+ * This is the class which loads everything into the JPanel and should probably
+ * handle graphics, although we might need a separate class for that.
+ */
 public class WumpusPanel extends JPanel {
-	private Timer myTimer;
-	private KeyboardHandler myKeyboardHandler;
+	private Timer ticker;
+	private KeyboardHandler kb;
 
 	public WumpusPanel() {
 		super();
-		myKeyboardHandler = new KeyboardHandler();
-		this.addKeyListener(myKeyboardHandler);
+		kb = new KeyboardHandler();
+		this.addKeyListener(kb);
 		this.setFocusable(true);
-		myTimer = new Timer(10, new Tick(this, myKeyboardHandler));
-		myTimer.start();
+		ticker = new Timer(10, new Tick(this, kb));
+		ticker.start();
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
 		g.setColor(Color.WHITE);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
+		for (Entity e : World.entities) {
+			e.draw(g);
+		}
 		Player.draw(g);
 	}
 }

@@ -1,6 +1,9 @@
 package entity;
 
+import java.awt.Graphics;
 import java.awt.Image;
+
+import display.World;
 
 /**
  * This is the abstract Entity class. It is the superclass of all dynamic world
@@ -12,9 +15,12 @@ public abstract class Entity {
 	protected int y;
 	protected Image sprite; // This is what is being drawn, not
 							// a container for all sprite states.
-	protected int spriteXSize;// Again, only for the current sprite
-	protected int spriteYSize;
 	protected double health;
+
+	// Make sure that ALL entities are registered.
+	public Entity() {
+		World.entities.add(this);
+	}
 
 	// These are things that all entities should know how to do
 	/**
@@ -29,8 +35,11 @@ public abstract class Entity {
 	 */
 	public abstract void damage(int amount, Entity damageSource);
 
-	/***/
-	public abstract void t();
+	/**Called every tick to draw the entity's sprite.  All methods that override this
+	 * should have a call to super.draw()*/
+	public void draw(Graphics g) {
+		g.drawImage(sprite, x, y, null);
+	}
 
 	public boolean isAlive() {
 		return health > 0;
