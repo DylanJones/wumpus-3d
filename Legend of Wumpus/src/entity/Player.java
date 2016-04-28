@@ -3,6 +3,7 @@ package entity;
 import javax.imageio.ImageIO;
 
 import display.World;
+import display.WumpusPanel;
 
 import java.awt.*;
 import java.io.File;
@@ -19,24 +20,31 @@ public final class Player extends Entity {
 	private static Image eastImage;
 	private static Image westImage;
 	private int facing = World.NORTH;
-	private long lastAttackTime = 0;
 
 	static {
 		try {
-			northImage = ImageIO.read(new File("assets/wumpus/north.png"));
-			southImage = ImageIO.read(new File("assets/wumpus/north.png"));
-			eastImage = ImageIO.read(new File("assets/wumpus/north.png"));
-			westImage = ImageIO.read(new File("assets/wumpus/north.png"));
+			northImage = ImageIO.read(new File("assets/wumpus/north.png"));// .getScaledInstance(arg0,
+																			// arg1,
+																			// Image.SCALE_REPLICATE);
+			southImage = ImageIO.read(new File("assets/wumpus/south.png"));
+			eastImage = ImageIO.read(new File("assets/wumpus/east.png"));
+			westImage = ImageIO.read(new File("assets/wumpus/west.png"));
 		} catch (IOException e) {
+			System.err.print("Error reading Player image files");
+			System.exit(1);
 		}
 	}
 
 	public Player() {
-		this.health = 100;
+		this.health = 10;
 		this.x = 100;
 		this.y = 100;
 	}
 
+	/**
+	 * @param g
+	 *            the graphics object
+	 */
 	public void draw(Graphics g) {
 		switch (facing) {
 		case World.NORTH:
@@ -56,15 +64,43 @@ public final class Player extends Entity {
 
 	@Override
 	public void collide(Entity e) {
-//		System.out.println("Player Collision");
+		// System.out.println("Player Collision");
 	}
 
 	@Override
 	public void damage(int amount, Entity damageSource) {
-		if (System.currentTimeMillis() - this.lastAttackTime > 1000) {
-			this.lastAttackTime = System.currentTimeMillis();
-			health -= amount;
-			System.out.println("Player damaged! Health: " + health);
+		health -= amount;
+		System.out.println("Player damaged! Health: " + health);
+	}
+
+	public void turnLeft() {
+		facing = facing >= 3 ? 0 : facing + 1;
+	}
+
+	public int getDirection() {
+		return facing;
+	}
+
+	public void tick() {
+		if (health <= 0) {
+			World.setGameState(2);
+		}
+	}
+
+	public void move(int pixels) {
+		switch (facing) {
+		case World.NORTH:
+			y -= pixels;
+			break;
+		case World.SOUTH:
+			y += pixels;
+			break;
+		case World.EAST:
+			x += pixels;
+			break;
+		case World.WEST:
+			x -= pixels;
+			break;
 		}
 	}
 }
