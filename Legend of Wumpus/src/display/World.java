@@ -10,10 +10,30 @@ public final class World {
 	public static final int EAST = 1;
 	public static final int SOUTH = 2;
 	public static final int WEST = 3;
+
+	// Game state: 0 = overworld, 1 = boss, 2 = title screen
+	private static int gameState = 0;
+
 	public static void registerEntity(Entity e) {
 		entities.add(e);
 	}
-	public static Set<Entity> getAllEntities(){
+
+	public static Set<Entity> getAllEntities() {
 		return entities;
+	}
+
+	/**
+	 * @return the gameState
+	 */
+	public static int getGameState() {
+		return gameState;
+	}
+
+	/**
+	 * @param gameState
+	 *            the gameState to set
+	 */
+	public static void setGameState(int gameState) {
+		World.gameState = gameState;
 	}
 }
