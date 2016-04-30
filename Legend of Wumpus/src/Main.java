@@ -20,21 +20,24 @@ public class Main {
 		JPanel panel = new WumpusPanel();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(panel);
-		frame.setSize(600, 600);
+		frame.setSize(640, 480);
 		frame.setVisible(true);
 		/* TEMPORARY, DELETE SOON */
 		new EntityGremlin(100, 100);
 		new EntityGremlin(100, 500);
 		new EntityGremlin(500, 100);
 		new EntityGremlin(500, 500);
-		for (;;) {
+		/*for (;false;) {
 			try {
-				playSound("assets/SplashScreenTheme.wav");
+				playSound("assets/music/SplashScreenTheme.wav");
 				Thread.sleep((long) ((1000 * 60) * 3.51));
 			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
 				e.printStackTrace();
+			}catch(Exception e){ 
+				System.err.println("Unexpecteed errrrorrrr");
+				e.printStackTrace();
 			}
-		}
+		}*/
 
 	}
 

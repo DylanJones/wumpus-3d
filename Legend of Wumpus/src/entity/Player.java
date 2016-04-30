@@ -94,16 +94,20 @@ public final class Player extends Entity {
 	public void move(int pixels) {
 		switch (facing) {
 		case World.NORTH:
-			y -= pixels;
+			if (y >= pixels)
+				y -= pixels;
 			break;
 		case World.SOUTH:
-			y += pixels;
+			if (y <= 480 - pixels)
+				y += pixels;
 			break;
 		case World.EAST:
-			x += pixels;
+			if (x <= 640 - pixels)
+				x += pixels;
 			break;
 		case World.WEST:
-			x -= pixels;
+			if (x >= pixels)
+				x -= pixels;
 			break;
 		}
 	}
