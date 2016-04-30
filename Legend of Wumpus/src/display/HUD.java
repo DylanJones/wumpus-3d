@@ -14,6 +14,7 @@ public final class HUD {
 	/** Draws the tri-force logo. */
 	private static void drawTriForce(Graphics g) {
 		// TODO: stub
+		//it needs to draw the triangle thing
 	}
 
 	/** Draws the HUD on top of the Graphics object. */
