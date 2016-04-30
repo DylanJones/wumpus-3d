@@ -3,6 +3,8 @@ package entity;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.ConcurrentModificationException;
+
 import javax.imageio.ImageIO;
 
 import display.World;
@@ -14,7 +16,8 @@ public class EntityGremlin extends EntityMinion {
 
 	static {
 		try {
-			gremlinImage = ImageIO.read(new File("assets/gremlin/gremlin-icon.png")).getScaledInstance(32, 32, Image.SCALE_FAST);
+			gremlinImage = ImageIO.read(new File("assets/gremlin/gremlin-icon.png")).getScaledInstance(32, 32,
+					Image.SCALE_FAST);
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(1);
@@ -43,7 +46,7 @@ public class EntityGremlin extends EntityMinion {
 
 	@Override
 	public void attack(Entity target) {
-		if(System.currentTimeMillis() - lastAttackTime > 1000 && target instanceof Player) {
+		if (System.currentTimeMillis() - lastAttackTime > 1000 && target instanceof Player) {
 			lastAttackTime = System.currentTimeMillis();
 			target.damage(2, this);
 		}
@@ -53,10 +56,10 @@ public class EntityGremlin extends EntityMinion {
 	public void tick() {
 		int playerX = World.getThePlayer().getX();
 		int playerY = World.getThePlayer().getY();
-		if(Math.abs(this.x - playerX) + Math.abs(this.y - playerY) < 300) {
-			if(Math.abs(this.x - playerX)  > Math.abs(this.y - playerY)) {
+		if (Math.abs(this.x - playerX) + Math.abs(this.y - playerY) < 300) {
+			if (Math.abs(this.x - playerX) > Math.abs(this.y - playerY)) {
 				this.x += (x - playerX) > 1 ? -1 : 1;
-			}else{
+			} else {
 				this.y += (y - playerY) > 1 ? -1 : 1;
 			}
 		}

@@ -47,7 +47,7 @@ public final class Player extends Entity {
 
 	/**
 	 * @param g
-	 *            the graphics object
+	 *            the graphics object to graw on
 	 */
 	public void draw(Graphics g) {
 		switch (facing) {
