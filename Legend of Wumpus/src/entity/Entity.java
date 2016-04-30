@@ -11,10 +11,9 @@ import display.World;
  */
 public abstract class Entity {
 	// Variables are protected so they can be accessed by subclasses
-	protected int x;
-	protected int y;
+	protected int x, y;
 	protected Image sprite; // This is what is being drawn, not
-							// a container for all sprite states.
+						// a container for all sprite states.
 	protected int health;
 
 	// Make sure that ALL entities are registered.

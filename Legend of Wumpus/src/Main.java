@@ -9,9 +9,9 @@ public class Main {
 		JPanel panel = new WumpusPanel();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(panel);
-		frame.setSize(600, 600);
+		frame.setSize(640, 480);
 		frame.setVisible(true);
-		/*TEMPORARY, DELETE SOON*/
+		/* TEMPORARY, DELETE SOON */
 		new EntityGremlin(300, 300);
 	}
 }

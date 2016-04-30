@@ -14,8 +14,9 @@ public class KeyboardHandler implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// System.out.println("KeyPress: " + e.getKeyChar());
+		//Only execute once per keypress
 		if(e.getKeyChar() == 'e' && !isKeyPressed('e')) {
-			turnPlayer();
+			World.getThePlayer().turnLeft();
 		}
 		if (keysPressed.containsKey(e.getKeyChar())) {
 			keysPressed.replace(e.getKeyChar(), true);
@@ -45,10 +46,5 @@ public class KeyboardHandler implements KeyListener {
 		} catch (NullPointerException e) {// The key doesn't exist; return false
 		}
 		return pressed;
-	}
-
-	private void turnPlayer() {
-		System.out.println(WumpusPanel.thePlayer.getDirection());
-		WumpusPanel.thePlayer.turnLeft();
 	}
 }
