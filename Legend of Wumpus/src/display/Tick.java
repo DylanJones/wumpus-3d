@@ -3,6 +3,7 @@ package display;
 import entity.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ConcurrentModificationException;
 
 /** This class does the majority of the world engine work. */
 public class Tick implements ActionListener {
@@ -55,8 +56,13 @@ public class Tick implements ActionListener {
 	}
 
 	private void entityTick() {
-		for (Entity e : World.getAllEntities()) {
-			e.tick();
+		try {
+			for (Entity e : World.getAllEntities()) {
+				e.tick();
+			}
+		} catch (ConcurrentModificationException exception) {
+			System.err.println("errors were encountered");
+			exception.printStackTrace();
 		}
 	}
 
