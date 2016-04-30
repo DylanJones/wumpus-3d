@@ -40,6 +40,9 @@ public class KeyboardHandler implements KeyListener {
 		try {
 			pressed = keysPressed.get(key);
 		} catch (NullPointerException | ConcurrentModificationException e) {// The key doesn't exist; return false
+			if(e instanceof ConcurrentModificationException) { 
+				System.out.println("mod exceptoin");
+			}
 		}
 		return pressed;
 	}
