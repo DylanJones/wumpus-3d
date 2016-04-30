@@ -98,11 +98,11 @@ public final class Player extends Entity {
 				y -= pixels;
 			break;
 		case World.SOUTH:
-			if (y <= 480 - pixels)
+			if (y <= 480 - pixels - 50)
 				y += pixels;
 			break;
 		case World.EAST:
-			if (x <= 640 - pixels)
+			if (x <= 640 - pixels - 26)
 				x += pixels;
 			break;
 		case World.WEST:

@@ -22,12 +22,13 @@ public class Main {
 		frame.add(panel);
 		frame.setSize(640, 480);
 		frame.setVisible(true);
+		// frame.setResizable(false);
 		/* TEMPORARY, DELETE SOON */
 		new EntityGremlin(100, 100);
 		new EntityGremlin(100, 500);
 		new EntityGremlin(500, 100);
 		new EntityGremlin(500, 500);
-		/*for (;false;) {
+		for (;;) {
 			try {
 				playSound("assets/music/SplashScreenTheme.wav");
 				Thread.sleep((long) ((1000 * 60) * 3.51));
@@ -37,7 +38,7 @@ public class Main {
 				System.err.println("Unexpecteed errrrorrrr");
 				e.printStackTrace();
 			}
-		}*/
+		}
 
 	}
 
