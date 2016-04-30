@@ -43,21 +43,5 @@ public class Main {
 		clip = AudioSystem.getClip();
 		clip.open(audioIn);
 		clip.start();
-		/*AudioPlayer MGP = AudioPlayer.player;
-		AudioStream BGM;
-
-		ContinuousAudioDataStream loop = null;
-
-		try {
-			InputStream test = new FileInputStream(file);
-			BGM = new AudioStream(test);
-			AudioPlayer.player.start(BGM);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		// Why are you starting it on a null object
-		// MGP.start(loop);*/
 	}
 }
