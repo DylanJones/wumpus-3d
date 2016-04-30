@@ -73,7 +73,7 @@ public final class Player extends Entity {
 
 	@Override
 	public void damage(int amount, Entity damageSource) {
-		health -= amount;
+		if (health > 0) health -= amount; //Stops player from having negative health
 		System.out.println("Player damaged! Health: " + health);
 	}
 
