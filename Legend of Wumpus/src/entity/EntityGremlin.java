@@ -14,7 +14,7 @@ public class EntityGremlin extends EntityMinion {
 
 	static {
 		try {
-			gremlinImage = ImageIO.read(new File("assets/gremlin/gremlin-icon.png"));
+			gremlinImage = ImageIO.read(new File("assets/gremlin/gremlin-icon.png")).getScaledInstance(32, 32, Image.SCALE_FAST);
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.exit(1);
@@ -43,8 +43,7 @@ public class EntityGremlin extends EntityMinion {
 
 	@Override
 	public void attack(Entity target) {
-		// System.out.println("Gremlin attack");
-		if(System.currentTimeMillis() - lastAttackTime > 1000) {
+		if(System.currentTimeMillis() - lastAttackTime > 1000 && target instanceof Player) {
 			lastAttackTime = System.currentTimeMillis();
 			target.damage(2, this);
 		}
