@@ -27,17 +27,17 @@ public class Main {
 		new EntityGremlin(100, 500);
 		new EntityGremlin(500, 100);
 		new EntityGremlin(500, 500);
-		for (;;) {
+		/*for (;false;) {
 			try {
 				playSound("assets/music/SplashScreenTheme.wav");
 				Thread.sleep((long) ((1000 * 60) * 3.51));
 			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
 				e.printStackTrace();
-			}/*catch(Exception e){ 
+			}catch(Exception e){ 
 				System.err.println("Unexpecteed errrrorrrr");
 				e.printStackTrace();
-			}*/
-		}
+			}
+		}*/
 
 	}
 
