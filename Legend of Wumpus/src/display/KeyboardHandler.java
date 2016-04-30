@@ -2,6 +2,7 @@ package display;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 
 /**
@@ -9,7 +10,7 @@ import java.util.HashMap;
  */
 public class KeyboardHandler implements KeyListener {
 	// Map of keys and their states.
-	private HashMap<Character, Boolean> keysPressed = new HashMap<Character, Boolean>();
+	private volatile HashMap<Character, Boolean> keysPressed = new HashMap<Character, Boolean>();
 
 	@Override
 	public void keyPressed(KeyEvent e) {
@@ -18,17 +19,12 @@ public class KeyboardHandler implements KeyListener {
 		if(e.getKeyChar() == 'e' && !isKeyPressed('e')) {
 			World.getThePlayer().turnLeft();
 		}
-		if (keysPressed.containsKey(e.getKeyChar())) {
-			keysPressed.replace(e.getKeyChar(), true);
-		} else {
-			keysPressed.put(e.getKeyChar(), true);
-		}
+		keysPressed.put(e.getKeyChar(), true);
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
-		// System.out.println("KeyRelease: " + e.getKeyChar());
-		keysPressed.replace(e.getKeyChar(), false);
+		keysPressed.put(e.getKeyChar(), false);
 	}
 
 	@Override
@@ -43,7 +39,7 @@ public class KeyboardHandler implements KeyListener {
 		boolean pressed = false;
 		try {
 			pressed = keysPressed.get(key);
-		} catch (NullPointerException e) {// The key doesn't exist; return false
+		} catch (NullPointerException | ConcurrentModificationException e) {// The key doesn't exist; return false
 		}
 		return pressed;
 	}
