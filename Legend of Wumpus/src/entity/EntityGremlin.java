@@ -21,10 +21,10 @@ public class EntityGremlin extends EntityMinion {
 	
 	static {
 		try {
-			gremlinNorth = ImageIO.read(new File("assets/gremlin/gremlin-north.png")).getScaledInstance(32, 32,Image.SCALE_FAST);
-			gremlinSouth = ImageIO.read(new File("assets/gremlin/gremlin-south.png")).getScaledInstance(32, 32,Image.SCALE_FAST);
-			gremlinEast = ImageIO.read(new File("assets/gremlin/gremlin-east.png")).getScaledInstance(32, 32,Image.SCALE_FAST);
-			gremlinWest = ImageIO.read(new File("assets/gremlin/gremlin-west.png")).getScaledInstance(32, 32,Image.SCALE_FAST);
+			gremlinNorth = ImageIO.read(new File("assets/gremlin/gremlin-north.png")).getScaledInstance(64, 64,Image.SCALE_FAST);
+			gremlinSouth = ImageIO.read(new File("assets/gremlin/gremlin-south.png")).getScaledInstance(64, 64,Image.SCALE_FAST);
+			gremlinEast = ImageIO.read(new File("assets/gremlin/gremlin-east.png")).getScaledInstance(64, 64,Image.SCALE_FAST);
+			gremlinWest = ImageIO.read(new File("assets/gremlin/gremlin-west.png")).getScaledInstance(64, 64,Image.SCALE_FAST);
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.err.println("Error reading Gremlin images");
@@ -36,8 +36,9 @@ public class EntityGremlin extends EntityMinion {
 		super();
 		this.x = x;
 		this.y = y;
+		this.spriteHeight = gremlinNorth.getHeight(null);
+		this.spriteHeight = gremlinNorth.getWidth(null);
 		this.health = 100;
-		this.sprite = gremlinNorth;
 	}
 
 	@Override
@@ -90,16 +91,16 @@ public class EntityGremlin extends EntityMinion {
 	public void draw(Graphics g) {
 		switch(facing) {
 		case World.NORTH:
-			g.drawImage(gremlinNorth, x, y, null);
+			g.drawImage(gremlinNorth, x + this.getWidth() / 2, y - this.getHeight() / 2, null);
 			break;
 		case World.SOUTH:
-			g.drawImage(gremlinSouth, x, y, null);
+			g.drawImage(gremlinSouth, x + this.getWidth() / 2, y - this.getHeight() / 2, null);
 			break;
 		case World.EAST:
-			g.drawImage(gremlinEast, x, y, null);
+			g.drawImage(gremlinEast, x + this.getWidth() / 2, y - this.getHeight() / 2, null);
 			break;
 		case World.WEST:
-			g.drawImage(gremlinWest, x, y, null);
+			g.drawImage(gremlinWest, x + this.getWidth() / 2, y - this.getHeight() / 2, null);
 			break;
 		}
 	}

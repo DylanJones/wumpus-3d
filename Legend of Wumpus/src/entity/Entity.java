@@ -6,14 +6,13 @@ import java.awt.Image;
 import display.World;
 
 /**
- * This is the abstract Entity class. It is the superclass of all dynamic world
- * objects.
+ * This is the abstract Entity class. It is the superclass of pretty much
+ * everything that moves.
  */
 public abstract class Entity {
 	// Variables are protected so they can be accessed by subclasses
 	protected int x, y;
-	protected Image sprite; // This is what is being drawn, not
-						// a container for all sprite states.
+	protected int spriteWidth, spriteHeight; // the size of the sprite
 	protected int health;
 
 	// Make sure that ALL entities are registered.
@@ -25,8 +24,7 @@ public abstract class Entity {
 	public abstract void tick();
 
 	/**
-	 * Will be called whenever the entity collides with another entity or the
-	 * side of the screen.
+	 * Will be called whenever the entity collides with another entity.
 	 */
 	public abstract void collide(Entity e);
 
@@ -37,12 +35,9 @@ public abstract class Entity {
 	public abstract void damage(int amount, Entity damageSource);
 
 	/**
-	 * Called every tick to draw the entity's sprite. All methods that override
-	 * this should have a call to super.draw()
+	 * Called every tick to draw the entity on the screen.
 	 */
-	public void draw(Graphics g) {
-		g.drawImage(sprite, getX(), getY(), null);
-	}
+	public abstract void draw(Graphics g);
 
 	public int getX() {
 		return x;
@@ -52,7 +47,11 @@ public abstract class Entity {
 		return y;
 	}
 
-	public boolean isAlive() {
-		return health > 0;
+	public int getWidth() {
+		return spriteWidth;
+	}
+
+	public int getHeight() {
+		return spriteHeight;
 	}
 }

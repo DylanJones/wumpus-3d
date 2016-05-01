@@ -41,6 +41,8 @@ public final class Player extends Entity {
 
 	public Player() {
 		this.health = 10;
+		this.spriteHeight = northImage.getHeight(null);
+		this.spriteWidth = northImage.getWidth(null);
 		this.x = 300;
 		this.y = 100;
 	}
@@ -52,16 +54,16 @@ public final class Player extends Entity {
 	public void draw(Graphics g) {
 		switch (facing) {
 		case World.NORTH:
-			g.drawImage(northImage, getX(), getY(), null);
+			g.drawImage(northImage, getX() + this.getWidth() / 2, getY() - this.getHeight() / 2, null);
 			break;
 		case World.SOUTH:
-			g.drawImage(southImage, getX(), getY(), null);
+			g.drawImage(southImage, getX() + this.getWidth() / 2, getY() - this.getHeight() / 2, null);
 			break;
 		case World.EAST:
-			g.drawImage(eastImage, getX(), getY(), null);
+			g.drawImage(eastImage, getX() + this.getWidth() / 2, getY() - this.getHeight() / 2, null);
 			break;
 		case World.WEST:
-			g.drawImage(westImage, getX(), getY(), null);
+			g.drawImage(westImage, getX() + this.getWidth() / 2, getY() - this.getHeight() / 2, null);
 			break;
 		}
 	}
@@ -85,7 +87,13 @@ public final class Player extends Entity {
 		return facing;
 	}
 
+	
+	private long lastRegentime = System.currentTimeMillis();
 	public void tick() {
+		if(System.currentTimeMillis() - lastRegentime > 2000){
+			health += 2;
+			lastRegentime = System.currentTimeMillis();
+		}
 		if (health <= 0) {
 			World.setGameState(2);
 		}

@@ -27,19 +27,8 @@ public class Main {
 		new EntityGremlin(100, 480);
 		new EntityGremlin(480, 100);
 		new EntityGremlin(480, 480);
-		MusicPlayer.changePlayingMusic("/assets/music/SplashScreenTheme.wav");
+		/*MusicPlayer.changePlayingMusic("/assets/music/SplashScreenTheme.wav");
 		Thread.sleep(1000*10);
-		MusicPlayer.changePlayingMusic("/assets/music/DungeonTheme.wav");
-		//  for (;;) { 
-		//  	try { 
-		//  		MusicPlayer.changePlayingMusic("assets/music/SplashScreenTheme.wav");
-		//  		Thread.sleep((long) ((1000 * 60) * 3.51)); 
-		//  	} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) { 
-		//  		e.printStackTrace(); 
-		//  	} catch(Exception e) { 
-		//  		System.err.println("Unexpecteed errrrorrrr");
-		//  		e.printStackTrace(); 
-		// 	}
-		// }
+		MusicPlayer.changePlayingMusic("/assets/music/DungeonTheme.wav");*/
 	}
 }
