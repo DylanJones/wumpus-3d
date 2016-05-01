@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
@@ -11,21 +12,22 @@ import display.World;
 import display.WumpusPanel;
 
 public class EntityGremlin extends EntityMinion {
-	static Image gremlinImage;
-	static Image gremlinNorth;
-	static Image gremlinSouth;
-	static Image gremlinEast;
-	static Image gremlinWest;
+	private static Image gremlinNorth;
+	private static Image gremlinSouth;
+	private static Image gremlinEast;
+	private static Image gremlinWest;
+	private int facing = World.NORTH;
 	private long lastAttackTime = 0;
+	
 	static {
 		try {
-			gremlinImage = ImageIO.read(new File("assets/gremlin/gremlin-north.png")).getScaledInstance(32, 32,Image.SCALE_FAST);
 			gremlinNorth = ImageIO.read(new File("assets/gremlin/gremlin-north.png")).getScaledInstance(32, 32,Image.SCALE_FAST);
 			gremlinSouth = ImageIO.read(new File("assets/gremlin/gremlin-south.png")).getScaledInstance(32, 32,Image.SCALE_FAST);
 			gremlinEast = ImageIO.read(new File("assets/gremlin/gremlin-east.png")).getScaledInstance(32, 32,Image.SCALE_FAST);
 			gremlinWest = ImageIO.read(new File("assets/gremlin/gremlin-west.png")).getScaledInstance(32, 32,Image.SCALE_FAST);
 		} catch (IOException e) {
 			e.printStackTrace();
+			System.err.println("Error reading Gremlin images");
 			System.exit(1);
 		}
 	}
@@ -35,7 +37,7 @@ public class EntityGremlin extends EntityMinion {
 		this.x = x;
 		this.y = y;
 		this.health = 100;
-		this.sprite = gremlinImage;
+		this.sprite = gremlinNorth;
 	}
 
 	@Override
@@ -65,22 +67,40 @@ public class EntityGremlin extends EntityMinion {
 			if (Math.abs(this.x - playerX) > Math.abs(this.y - playerY)) {
 				int increment = (x - playerX) > 1 ? -1 : 1;
 				if(increment > 0) {
-					this.sprite = gremlinEast;
+					facing = World.EAST;
 				}
 				else {
-					this.sprite = gremlinWest;
+					facing = World.WEST;
 				}
 				this.x += increment;
 			} else {
 				int increment = (y - playerY) > 1 ? -1 : 1;
 				if(increment > 0) {
-					this.sprite = gremlinSouth;
+					facing = World.SOUTH;
 				}
 				else {
-					this.sprite = gremlinNorth;
+					facing = World.NORTH;
 				}
 				this.y += increment;
 			}
+		}
+	}
+	
+	@Override
+	public void draw(Graphics g) {
+		switch(facing) {
+		case World.NORTH:
+			g.drawImage(gremlinNorth, x, y, null);
+			break;
+		case World.SOUTH:
+			g.drawImage(gremlinSouth, x, y, null);
+			break;
+		case World.EAST:
+			g.drawImage(gremlinEast, x, y, null);
+			break;
+		case World.WEST:
+			g.drawImage(gremlinWest, x, y, null);
+			break;
 		}
 	}
 }
