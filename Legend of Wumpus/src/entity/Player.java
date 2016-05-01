@@ -67,8 +67,6 @@ public final class Player extends Entity {
 			g.drawImage(westImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
 			break;
 		}
-		g.setColor(Color.BLACK);
-		g.drawRect(x, y, 4, 4);
 	}
 
 	@Override
@@ -78,8 +76,11 @@ public final class Player extends Entity {
 
 	@Override
 	public void damage(int amount, Entity damageSource) {
-		if (health > 0)
-			health -= amount; // Stops player from having negative health
+		if (health > 0) {// Stops player from having negative health
+			health -= amount;
+			if(health <= 0) //did it go below 0?
+				World.setGameState(2);
+		}
 		System.out.println("Player damaged! Health: " + health);
 	}
 
@@ -92,27 +93,24 @@ public final class Player extends Entity {
 	}
 
 	public void tick() {
-		if (health <= 0) {
-			World.setGameState(2);
-		}
 	}
 
 	public void move(int pixels) {
 		switch (facing) {
 		case World.NORTH:
-			if (y >= pixels)
+			if (y >= pixels + this.getHeight() / 2)
 				y -= pixels;
 			break;
 		case World.SOUTH:
-			if (y <= 480 - pixels - 50)
+			if (y <= 480 - (pixels + this.getHeight() / 2)) //was pixels - 40
 				y += pixels;
 			break;
 		case World.EAST:
-			if (x <= 640 - pixels - 26)
+			if (x <= 640 - (pixels + this.getWidth() / 2)) //was pixels - 26
 				x += pixels;
 			break;
 		case World.WEST:
-			if (x >= pixels)
+			if (x >= pixels + this.getWidth() / 2)
 				x -= pixels;
 			break;
 		}
