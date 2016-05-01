@@ -5,6 +5,7 @@ import javax.imageio.ImageIO;
 import display.World;
 import display.WumpusPanel;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.Robot;
@@ -54,18 +55,20 @@ public final class Player extends Entity {
 	public void draw(Graphics g) {
 		switch (facing) {
 		case World.NORTH:
-			g.drawImage(northImage, getX() + this.getWidth() / 2, getY() - this.getHeight() / 2, null);
+			g.drawImage(northImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
 			break;
 		case World.SOUTH:
-			g.drawImage(southImage, getX() + this.getWidth() / 2, getY() - this.getHeight() / 2, null);
+			g.drawImage(southImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
 			break;
 		case World.EAST:
-			g.drawImage(eastImage, getX() + this.getWidth() / 2, getY() - this.getHeight() / 2, null);
+			g.drawImage(eastImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
 			break;
 		case World.WEST:
-			g.drawImage(westImage, getX() + this.getWidth() / 2, getY() - this.getHeight() / 2, null);
+			g.drawImage(westImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
 			break;
 		}
+		g.setColor(Color.BLACK);
+		g.drawRect(x, y, 4, 4);
 	}
 
 	@Override
@@ -75,7 +78,8 @@ public final class Player extends Entity {
 
 	@Override
 	public void damage(int amount, Entity damageSource) {
-		if (health > 0) health -= amount; //Stops player from having negative health
+		if (health > 0)
+			health -= amount; // Stops player from having negative health
 		System.out.println("Player damaged! Health: " + health);
 	}
 
@@ -87,13 +91,7 @@ public final class Player extends Entity {
 		return facing;
 	}
 
-	
-	private long lastRegentime = System.currentTimeMillis();
 	public void tick() {
-		if(System.currentTimeMillis() - lastRegentime > 2000){
-			health += 2;
-			lastRegentime = System.currentTimeMillis();
-		}
 		if (health <= 0) {
 			World.setGameState(2);
 		}

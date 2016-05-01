@@ -60,7 +60,7 @@ public class Tick implements ActionListener {
 			}
 		} catch (ConcurrentModificationException exception) {
 			System.err.println("errors were encountered");
-			exception.printStackTrace();
+//			exception.printStackTrace();
 		}
 	}
 
