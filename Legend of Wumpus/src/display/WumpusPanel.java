@@ -27,7 +27,7 @@ public class WumpusPanel extends JPanel {
 			bg = ImageIO.read(new File("assets/bg.png")).getScaledInstance(640, 480, Image.SCALE_FAST);
 		} catch (IOException e) {
 			e.printStackTrace();
-			System.err.println("Error reading Gremlin images");
+			System.err.println("Error reading background images");
 			System.exit(1);
 		}
 	}
