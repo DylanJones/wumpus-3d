@@ -28,8 +28,8 @@ public class Main {
 		new EntityGremlin(100, 480);
 		new EntityGremlin(480, 100);
 		new EntityGremlin(480, 480);
-		MusicPlayer.changePlayingMusic("/assets/music/SplashScreenTheme.wav");
+		/*MusicPlayer.changePlayingMusic("/assets/music/SplashScreenTheme.wav");
 		Thread.sleep(1000*10);
-		MusicPlayer.changePlayingMusic("/assets/music/DungeonTheme.wav");
+		MusicPlayer.changePlayingMusic("/assets/music/DungeonTheme.wav");*/
 	}
 }

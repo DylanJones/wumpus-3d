@@ -23,6 +23,8 @@ public final class Player extends Entity {
 	private static Image eastImage;
 	private static Image westImage;
 	private int facing = World.NORTH;
+	private long attackStartTime = 0;
+	private boolean attacking = false;
 	private long lastDamageTime = 0;
 
 	static {
@@ -73,7 +75,7 @@ public final class Player extends Entity {
 	@Override
 	public void collide(Entity e) {
 		// System.out.println("Player Collision");
-		e.damage(1, this);
+		// e.damage(1, this);
 	}
 
 	@Override
@@ -119,6 +121,11 @@ public final class Player extends Entity {
 				x -= pixels;
 			break;
 		}
+	}
+
+	public void attack() {
+		this.attackStartTime = System.currentTimeMillis();
+		
 	}
 
 	public int getHealth() {

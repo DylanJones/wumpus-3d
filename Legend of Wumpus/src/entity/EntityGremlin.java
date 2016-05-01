@@ -84,80 +84,70 @@ public class EntityGremlin extends EntityMinion {
 
 	@Override
 	public void tick() {
-		if(squareX2 != 0)
-		{
-			if(this.clockwise)
-			{
-				switch(facing)
-				{
-					case World.EAST:
-						if(this.x == squareX2)
-						{
-							this.facing = World.SOUTH;
-						} else {
-							this.x += 1;
-						}
-						break;
-					case World.SOUTH:
-						if(this.y == squareY2)
-						{
-							this.facing = World.WEST;
-						} else {
-							this.y += 1;
-						}
-						break;
-					case World.WEST:
-						if(this.x == squareX1)
-						{
-							this.facing = World.NORTH;
-						} else {
-							this.x -= 1;
-						}
-						break;
-					case World.NORTH:
-						if(this.y == squareY1)
-						{
-							this.facing = World.EAST;
-						} else {
-							this.y -= 1;
-						}
-						break;
+		//Do we have a set square to walk in?
+		if (squareX2 != 0) {
+			//Which direction do we walk?
+			if (this.clockwise) {
+				switch (facing) {
+				case World.EAST:
+					if (this.x == squareX2) {
+						this.facing = World.SOUTH;
+					} else {
+						this.x += 1;
+					}
+					break;
+				case World.SOUTH:
+					if (this.y == squareY2) {
+						this.facing = World.WEST;
+					} else {
+						this.y += 1;
+					}
+					break;
+				case World.WEST:
+					if (this.x == squareX1) {
+						this.facing = World.NORTH;
+					} else {
+						this.x -= 1;
+					}
+					break;
+				case World.NORTH:
+					if (this.y == squareY1) {
+						this.facing = World.EAST;
+					} else {
+						this.y -= 1;
+					}
+					break;
 				}
 			} else {
-				switch(facing)
-				{
-					case World.EAST:
-						if(this.x == squareX2)
-						{
-							this.facing = World.NORTH;
-						} else {
-							this.x += 1;
-						}
-						break;
-					case World.SOUTH:
-						if(this.y == squareY2)
-						{
-							this.facing = World.EAST;
-						} else {
-							this.y += 1;
-						}
-						break;
-					case World.WEST:
-						if(this.x == squareX1)
-						{
-							this.facing = World.SOUTH;
-						} else {
-							this.x -= 1;
-						}
-						break;
-					case World.NORTH:
-						if(this.y == squareY1)
-						{
-							this.facing = World.WEST;
-						} else {
-							this.y -= 1;
-						}
-						break;
+				switch (facing) {
+				case World.EAST:
+					if (this.x == squareX2) {
+						this.facing = World.NORTH;
+					} else {
+						this.x += 1;
+					}
+					break;
+				case World.SOUTH:
+					if (this.y == squareY2) {
+						this.facing = World.EAST;
+					} else {
+						this.y += 1;
+					}
+					break;
+				case World.WEST:
+					if (this.x == squareX1) {
+						this.facing = World.SOUTH;
+					} else {
+						this.x -= 1;
+					}
+					break;
+				case World.NORTH:
+					if (this.y == squareY1) {
+						this.facing = World.WEST;
+					} else {
+						this.y -= 1;
+					}
+					break;
 				}
 			}
 		} else {

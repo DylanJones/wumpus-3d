@@ -10,6 +10,7 @@ import java.util.Iterator;
 public class Tick implements ActionListener {
 	private WumpusPanel container;
 	private KeyboardHandler kb;
+	private boolean wasQPressed = false;
 
 	public Tick(WumpusPanel parent, KeyboardHandler kb) {
 		container = parent;
@@ -32,6 +33,12 @@ public class Tick implements ActionListener {
 	private void movePlayer() {
 		if (kb.isKeyPressed('w'))
 			World.getThePlayer().move(5);
+		if(!wasQPressed && kb.isKeyPressed('q')){
+			wasQPressed = true;
+			World.getThePlayer().attack();
+		}else {
+			wasQPressed = false;
+		}
 	}
 
 	/**
