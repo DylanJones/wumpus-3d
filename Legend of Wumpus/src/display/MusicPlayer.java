@@ -24,7 +24,7 @@ public class MusicPlayer {
 		audioIn = AudioSystem.getAudioInputStream(MusicPlayer.class.getResource(file));
 		clip = AudioSystem.getClip();
 		clip.open(audioIn);
-		clip.start();
+		clip.loop(Clip.LOOP_CONTINUOUSLY);
 	}
 
 	public static void changePlayingMusic(String newMusic) {
