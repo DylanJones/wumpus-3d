@@ -18,14 +18,23 @@ public class EntityGremlin extends EntityMinion {
 	private static Image gremlinEast;
 	private static Image gremlinWest;
 	private int facing = World.NORTH;
+	// For its walking square
+	private int squareX1;
+	private int squareY1;
+	private int squareX2;
+	private int squareY2;
 	private long lastAttackTime = 0;
-	
+
 	static {
 		try {
-			gremlinNorth = ImageIO.read(new File("assets/gremlin/gremlin-north.png")).getScaledInstance(32, 32,Image.SCALE_FAST);
-			gremlinSouth = ImageIO.read(new File("assets/gremlin/gremlin-south.png")).getScaledInstance(32, 32,Image.SCALE_FAST);
-			gremlinEast  = ImageIO.read(new File("assets/gremlin/gremlin-east.png")) .getScaledInstance(32, 32,Image.SCALE_FAST);
-			gremlinWest  = ImageIO.read(new File("assets/gremlin/gremlin-west.png")) .getScaledInstance(32, 32,Image.SCALE_FAST);
+			gremlinNorth = ImageIO.read(new File("assets/gremlin/gremlin-north.png")).getScaledInstance(32, 32,
+					Image.SCALE_FAST);
+			gremlinSouth = ImageIO.read(new File("assets/gremlin/gremlin-south.png")).getScaledInstance(32, 32,
+					Image.SCALE_FAST);
+			gremlinEast = ImageIO.read(new File("assets/gremlin/gremlin-east.png")).getScaledInstance(32, 32,
+					Image.SCALE_FAST);
+			gremlinWest = ImageIO.read(new File("assets/gremlin/gremlin-west.png")).getScaledInstance(32, 32,
+					Image.SCALE_FAST);
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.err.println("Error reading Gremlin images");
@@ -33,13 +42,18 @@ public class EntityGremlin extends EntityMinion {
 		}
 	}
 
-	public EntityGremlin(int x, int y) {
+	public EntityGremlin(int x, int y, int squareX1, int squareY1, int squareX2, int squareY2) {
 		super();
 		this.x = x;
 		this.y = y;
 		this.spriteHeight = gremlinNorth.getHeight(null);
 		this.spriteWidth = gremlinNorth.getWidth(null);
 		this.health = 100;
+	}
+	
+	//The default just stays there
+	public EntityGremlin(int x, int y) {
+		this(x, y, x, y, x, y);
 	}
 
 	@Override
@@ -68,29 +82,27 @@ public class EntityGremlin extends EntityMinion {
 		if (Math.abs(this.x - playerX) + Math.abs(this.y - playerY) < 300) {
 			if (Math.abs(this.x - playerX) > Math.abs(this.y - playerY)) {
 				int increment = (x - playerX) > 1 ? -1 : 1;
-				if(increment > 0) {
+				if (increment > 0) {
 					facing = World.EAST;
-				}
-				else {
+				} else {
 					facing = World.WEST;
 				}
 				this.x += increment;
 			} else {
 				int increment = (y - playerY) > 1 ? -1 : 1;
-				if(increment > 0) {
+				if (increment > 0) {
 					facing = World.SOUTH;
-				}
-				else {
+				} else {
 					facing = World.NORTH;
 				}
 				this.y += increment;
 			}
 		}
 	}
-	
+
 	@Override
 	public void draw(Graphics g) {
-		switch(facing) {
+		switch (facing) {
 		case World.NORTH:
 			g.drawImage(gremlinNorth, x - this.getWidth() / 2, y - this.getHeight() / 2, null);
 			break;
@@ -104,7 +116,5 @@ public class EntityGremlin extends EntityMinion {
 			g.drawImage(gremlinWest, x - this.getWidth() / 2, y - this.getHeight() / 2, null);
 			break;
 		}
-		g.setColor(Color.BLACK);
-		g.drawRect(x,y,4, 4);
 	}
 }
