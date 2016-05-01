@@ -42,18 +42,22 @@ public class EntityGremlin extends EntityMinion {
 		}
 	}
 
-	public EntityGremlin(int x, int y, int squareX1, int squareY1, int squareX2, int squareY2) {
+	public EntityGremlin(int squareX1, int squareY1, int squareX2, int squareY2) {
 		super();
-		this.x = x;
-		this.y = y;
+		this.x = squareX1;
+		this.y = squareY1;
+		this.squareX1 = squareX1;
+		this.squareY1 = squareY1;
+		this.squareX2 = squareX2;
+		this.squareY2 = squareY2;
 		this.spriteHeight = gremlinNorth.getHeight(null);
 		this.spriteWidth = gremlinNorth.getWidth(null);
-		this.health = 100;
+		this.health = 1;
 	}
-	
-	//The default just stays there
+
+	// The default just stays there
 	public EntityGremlin(int x, int y) {
-		this(x, y, x, y, x, y);
+		this(x, y, x, y);
 	}
 
 	@Override
@@ -65,14 +69,14 @@ public class EntityGremlin extends EntityMinion {
 	public void damage(int amount, Entity damageSource) {
 		System.out.println("gremlin damage");
 		health -= amount;
+		if(health <= 0)
+			World.deregisterEntity(this);
 	}
 
 	@Override
 	public void attack(Entity target) {
-		if (System.currentTimeMillis() - lastAttackTime > 1000 && target instanceof Player) {
-			lastAttackTime = System.currentTimeMillis();
-			target.damage(2, this);
-		}
+		if (target instanceof Player)
+			target.damage(1, this);
 	}
 
 	@Override

@@ -23,6 +23,7 @@ public final class Player extends Entity {
 	private static Image eastImage;
 	private static Image westImage;
 	private int facing = World.NORTH;
+	private long lastDamageTime = 0;
 
 	static {
 		try {
@@ -72,16 +73,20 @@ public final class Player extends Entity {
 	@Override
 	public void collide(Entity e) {
 		// System.out.println("Player Collision");
+		e.damage(1, this);
 	}
 
 	@Override
 	public void damage(int amount, Entity damageSource) {
-		if (health > 0) {// Stops player from having negative health
-			health -= amount;
-			if(health <= 0) //did it go below 0?
-				World.setGameState(2);
+		if (System.currentTimeMillis() - lastDamageTime > 1000) {
+			lastDamageTime = System.currentTimeMillis();
+			if (health > 0) {// Stops player from having negative health
+				health -= amount;
+				if (health <= 0) // did it go below 0?
+					World.setGameState(2);
+			}
+			System.out.println("Player damaged! Health: " + health);
 		}
-		System.out.println("Player damaged! Health: " + health);
 	}
 
 	public void turnLeft() {
@@ -102,11 +107,11 @@ public final class Player extends Entity {
 				y -= pixels;
 			break;
 		case World.SOUTH:
-			if (y <= 480 - (pixels + this.getHeight() / 2)) //was pixels - 40
+			if (y <= 480 - (pixels + this.getHeight() / 2)) // was pixels - 40
 				y += pixels;
 			break;
 		case World.EAST:
-			if (x <= 640 - (pixels + this.getWidth() / 2)) //was pixels - 26
+			if (x <= 640 - (pixels + this.getWidth() / 2)) // was pixels - 26
 				x += pixels;
 			break;
 		case World.WEST:
