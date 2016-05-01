@@ -41,7 +41,7 @@ public final class Player extends Entity {
 
 	public Player() {
 		this.health = 10;
-		this.x = 100;
+		this.x = 300;
 		this.y = 100;
 	}
 

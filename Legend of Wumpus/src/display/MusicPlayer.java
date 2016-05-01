@@ -11,6 +11,16 @@ public class MusicPlayer {
 
 	private static void playSound(String file)
 			throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+		AudioInputStream tempAudioIn = AudioSystem.getAudioInputStream(MusicPlayer.class.getResource(file));
+		Clip tempClip = AudioSystem.getClip();
+		tempClip.open(tempAudioIn);
+		tempClip.setFramePosition(0);
+        tempClip.loop(0);
+		tempClip.start();
+	}
+
+	private static void loopSound(String file)
+			throws UnsupportedAudioFileException, IOException, LineUnavailableException {
 		audioIn = AudioSystem.getAudioInputStream(MusicPlayer.class.getResource(file));
 		clip = AudioSystem.getClip();
 		clip.open(audioIn);
@@ -19,7 +29,8 @@ public class MusicPlayer {
 
 	public static void changePlayingMusic(String newMusic) {
 		try {
-			playSound(newMusic);
+			if(clip != null) clip.stop();
+			loopSound(newMusic);
 			currentMusic = newMusic;
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
 			e.printStackTrace();
@@ -29,8 +40,11 @@ public class MusicPlayer {
 
 	/** @return is music playing or not */
 	public static boolean isMusicPlaying() {
-		// TODO: make this work
-		return true;
+		if(clip != null)
+		{
+			return true;
+		}
+		return false;
 	}
 
 	/**
