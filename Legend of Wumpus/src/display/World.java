@@ -43,8 +43,8 @@ public final class World {
 	}
 
 	/** @return a Set view of all current Entities */
-	public static Set<Entity> getAllEntities() {
-		return entities;
+	public static Iterator<Entity> getAllEntities() {
+		return entities.iterator();
 	}
 
 	/**
