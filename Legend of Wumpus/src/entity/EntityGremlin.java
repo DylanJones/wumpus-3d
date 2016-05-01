@@ -6,6 +6,7 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.util.ConcurrentModificationException;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -19,11 +20,12 @@ public class EntityGremlin extends EntityMinion {
 	private static Image gremlinWest;
 	private int facing = World.NORTH;
 	// For its walking square
-	private int squareX1;
-	private int squareY1;
-	private int squareX2;
-	private int squareY2;
+	private int squareX1 = 0;
+	private int squareY1 = 0;
+	private int squareX2 = 0;
+	private int squareY2 = 0;
 	private long lastAttackTime = 0;
+	private boolean clockwise;
 
 	static {
 		try {
@@ -53,11 +55,12 @@ public class EntityGremlin extends EntityMinion {
 		this.spriteHeight = gremlinNorth.getHeight(null);
 		this.spriteWidth = gremlinNorth.getWidth(null);
 		this.health = 1;
+		this.clockwise = new Random().nextBoolean();
 	}
 
 	// The default just stays there
 	public EntityGremlin(int x, int y) {
-		this(x, y, x, y);
+		this(x, y, 0, 0);
 	}
 
 	@Override
@@ -81,25 +84,103 @@ public class EntityGremlin extends EntityMinion {
 
 	@Override
 	public void tick() {
-		int playerX = World.getThePlayer().getX();
-		int playerY = World.getThePlayer().getY();
-		if (Math.abs(this.x - playerX) + Math.abs(this.y - playerY) < 300) {
-			if (Math.abs(this.x - playerX) > Math.abs(this.y - playerY)) {
-				int increment = (x - playerX) > 1 ? -1 : 1;
-				if (increment > 0) {
-					facing = World.EAST;
-				} else {
-					facing = World.WEST;
+		if(squareX2 != 0)
+		{
+			if(this.clockwise)
+			{
+				switch(facing)
+				{
+					case World.EAST:
+						if(this.x == squareX2)
+						{
+							this.facing = World.SOUTH;
+						} else {
+							this.x += 1;
+						}
+						break;
+					case World.SOUTH:
+						if(this.y == squareY2)
+						{
+							this.facing = World.WEST;
+						} else {
+							this.y += 1;
+						}
+						break;
+					case World.WEST:
+						if(this.x == squareX1)
+						{
+							this.facing = World.NORTH;
+						} else {
+							this.x -= 1;
+						}
+						break;
+					case World.NORTH:
+						if(this.y == squareY1)
+						{
+							this.facing = World.EAST;
+						} else {
+							this.y -= 1;
+						}
+						break;
 				}
-				this.x += increment;
 			} else {
-				int increment = (y - playerY) > 1 ? -1 : 1;
-				if (increment > 0) {
-					facing = World.SOUTH;
-				} else {
-					facing = World.NORTH;
+				switch(facing)
+				{
+					case World.EAST:
+						if(this.x == squareX2)
+						{
+							this.facing = World.NORTH;
+						} else {
+							this.x += 1;
+						}
+						break;
+					case World.SOUTH:
+						if(this.y == squareY2)
+						{
+							this.facing = World.EAST;
+						} else {
+							this.y += 1;
+						}
+						break;
+					case World.WEST:
+						if(this.x == squareX1)
+						{
+							this.facing = World.SOUTH;
+						} else {
+							this.x -= 1;
+						}
+						break;
+					case World.NORTH:
+						if(this.y == squareY1)
+						{
+							this.facing = World.WEST;
+						} else {
+							this.y -= 1;
+						}
+						break;
 				}
-				this.y += increment;
+			}
+		} else {
+			int playerX = World.getThePlayer().getX();
+			int playerY = World.getThePlayer().getY();
+			if (Math.abs(this.x - playerX) + Math.abs(this.y - playerY) < 300) {
+				if (Math.abs(this.x - playerX) > Math.abs(this.y - playerY)) {
+					int increment = (x - playerX) > 1 ? -1 : 1;
+					if (increment > 0) {
+						facing = World.EAST;
+					} else {
+						facing = World.WEST;
+					}
+					this.x += increment;
+				} else {
+					int increment = (y - playerY) > 1 ? -1 : 1;
+					if (increment > 0) {
+						facing = World.SOUTH;
+					} else {
+						facing = World.NORTH;
+					}
+					this.y += increment;
+				}
 			}
 		}
 	}

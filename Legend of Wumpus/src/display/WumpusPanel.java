@@ -21,7 +21,6 @@ public class WumpusPanel extends JPanel {
 	public static Timer ticker;
 	private static KeyboardHandler kb;
 	private static Image bg;
-
 	static {
 		try {
 			bg = ImageIO.read(new File("assets/bg.png")).getScaledInstance(640, 480, Image.SCALE_FAST);

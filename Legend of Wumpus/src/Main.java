@@ -7,6 +7,7 @@ import java.io.InputStream;
 
 import javax.sound.sampled.*;
 import javax.swing.*;
+import java.awt.Dimension;
 
 import entity.*;
 
@@ -19,11 +20,11 @@ public class Main {
 		JPanel panel = new WumpusPanel();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(panel);
-		frame.setSize(640, 480);
+		frame.setSize(640,480);
 		frame.setVisible(true);
 		// frame.setResizable(false);
 		/* TEMPORARY, DELETE SOON */
-		new EntityGremlin(100, 100);
+		new EntityGremlin(100, 100,200,200);
 		new EntityGremlin(100, 480);
 		new EntityGremlin(480, 100);
 		new EntityGremlin(480, 480);
