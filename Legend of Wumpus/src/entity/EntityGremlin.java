@@ -69,7 +69,7 @@ public class EntityGremlin extends EntityMinion {
 	public void damage(int amount, Entity damageSource) {
 		System.out.println("gremlin damage");
 		health -= amount;
-		if(health <= 0)
+		if (health <= 0)
 			World.deregisterEntity(this);
 	}
 

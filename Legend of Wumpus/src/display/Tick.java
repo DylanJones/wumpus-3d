@@ -39,12 +39,8 @@ public class Tick implements ActionListener {
 	 * they are touching, call <entity>.collide().
 	 */
 	private void collideEntities() {
-		Iterator<Entity> ents = World.getAllEntities();
-		while (ents.hasNext()) {
-			Entity e = ents.next();
-			Iterator<Entity> targets = World.getAllEntities();
-			while (targets.hasNext()) {
-				Entity x = targets.next();
+		for (Entity e : World.getAllEntities()) {
+			for (Entity x : World.getAllEntities()) {
 				if (x == e)
 					continue;// So it doesn't collide with itself
 				// If they are within each others boxes
@@ -60,9 +56,8 @@ public class Tick implements ActionListener {
 	}
 
 	private void entityTick() {
-		Iterator<Entity> ents = World.getAllEntities();
-		while (ents.hasNext()) {
-			ents.next().tick();
+		for (Entity e : World.getAllEntities()) {
+			e.tick();
 		}
 	}
 

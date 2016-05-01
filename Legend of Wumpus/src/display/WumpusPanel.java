@@ -51,9 +51,8 @@ public class WumpusPanel extends JPanel {
 			g.fillRect(0, 0, this.getWidth(), this.getHeight());
 		}
 		HUD.drawHud(g);
-		Iterator<Entity> ents = World.getAllEntities();
-		while (ents.hasNext()) {
-			ents.next().draw(g);
+		for(Entity e : World.getAllEntities()){
+			e.draw(g);
 		}
 	}
 }

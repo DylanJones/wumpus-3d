@@ -43,8 +43,8 @@ public final class World {
 	}
 
 	/** @return a Set view of all current Entities */
-	public static Iterator<Entity> getAllEntities() {
-		return entities.iterator();
+	public static Set<Entity> getAllEntities() {
+		return new HashSet<Entity>(entities);
 	}
 
 	/**
@@ -68,7 +68,7 @@ public final class World {
 	public static Player getThePlayer() {
 		return thePlayer;
 	}
-	
+
 	public static void loadWorld(String worldFile) {
 		MusicPlayer.changePlayingMusic("SomeTypeOfMusicFile");
 	}
