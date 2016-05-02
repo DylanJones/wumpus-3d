@@ -1,30 +1,27 @@
 package entity;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-import java.util.ConcurrentModificationException;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
 
 import display.World;
-import display.WumpusPanel;
 
 public class EntityGremlin extends EntityMinion {
 	private static Image gremlinNorth;
 	private static Image gremlinSouth;
 	private static Image gremlinEast;
 	private static Image gremlinWest;
+	private long lastShootTime = 0;
 	private int facing = World.NORTH;
 	// For its walking square
 	private int squareX1 = 0;
 	private int squareY1 = 0;
 	private int squareX2 = 0;
 	private int squareY2 = 0;
-	private long lastAttackTime = 0;
 	private boolean clockwise;
 
 	static {
@@ -44,6 +41,7 @@ public class EntityGremlin extends EntityMinion {
 		}
 	}
 
+	// Gremlins walk in squares
 	public EntityGremlin(int squareX1, int squareY1, int squareX2, int squareY2) {
 		super();
 		this.x = squareX1;
@@ -56,11 +54,6 @@ public class EntityGremlin extends EntityMinion {
 		this.spriteWidth = gremlinNorth.getWidth(null);
 		this.health = 1;
 		this.clockwise = new Random().nextBoolean();
-	}
-
-	// The default just stays there
-	public EntityGremlin(int x, int y) {
-		this(x, y, 0, 0);
 	}
 
 	@Override
@@ -84,93 +77,78 @@ public class EntityGremlin extends EntityMinion {
 
 	@Override
 	public void tick() {
-		//Do we have a set square to walk in?
-		if (squareX2 != 0) {
-			//Which direction do we walk?
-			if (this.clockwise) {
-				switch (facing) {
-				case World.EAST:
-					if (this.x == squareX2) {
-						this.facing = World.SOUTH;
-					} else {
-						this.x += 1;
-					}
-					break;
-				case World.SOUTH:
-					if (this.y == squareY2) {
-						this.facing = World.WEST;
-					} else {
-						this.y += 1;
-					}
-					break;
-				case World.WEST:
-					if (this.x == squareX1) {
-						this.facing = World.NORTH;
-					} else {
-						this.x -= 1;
-					}
-					break;
-				case World.NORTH:
-					if (this.y == squareY1) {
-						this.facing = World.EAST;
-					} else {
-						this.y -= 1;
-					}
-					break;
+		// Shoot player
+		if (System.currentTimeMillis() - lastShootTime > 2000) {
+			lastShootTime = System.currentTimeMillis();
+			if ((Math.abs(World.getThePlayer().getX() - this.x) <= 10)
+					&& (this.facing == World.EAST || this.facing == World.WEST)
+					|| (Math.abs(World.getThePlayer().getY() - this.y) <= 10)
+							&& (this.facing == World.NORTH || this.facing == World.WEST)) {
+				new EntityProjectile(this.x, this.y, 1, facing, this);
+			}
+		}
+		// Walk along the square
+		if (this.clockwise) {
+			switch (facing) {
+			case World.EAST:
+				if (this.x == squareX2) {
+					this.facing = World.SOUTH;
+				} else {
+					this.x += 1;
 				}
-			} else {
-				switch (facing) {
-				case World.EAST:
-					if (this.x == squareX2) {
-						this.facing = World.NORTH;
-					} else {
-						this.x += 1;
-					}
-					break;
-				case World.SOUTH:
-					if (this.y == squareY2) {
-						this.facing = World.EAST;
-					} else {
-						this.y += 1;
-					}
-					break;
-				case World.WEST:
-					if (this.x == squareX1) {
-						this.facing = World.SOUTH;
-					} else {
-						this.x -= 1;
-					}
-					break;
-				case World.NORTH:
-					if (this.y == squareY1) {
-						this.facing = World.WEST;
-					} else {
-						this.y -= 1;
-					}
-					break;
+				break;
+			case World.SOUTH:
+				if (this.y == squareY2) {
+					this.facing = World.WEST;
+				} else {
+					this.y += 1;
 				}
+				break;
+			case World.WEST:
+				if (this.x == squareX1) {
+					this.facing = World.NORTH;
+				} else {
+					this.x -= 1;
+				}
+				break;
+			case World.NORTH:
+				if (this.y == squareY1) {
+					this.facing = World.EAST;
+				} else {
+					this.y -= 1;
+				}
+				break;
 			}
 		} else {
-			int playerX = World.getThePlayer().getX();
-			int playerY = World.getThePlayer().getY();
-			if (Math.abs(this.x - playerX) + Math.abs(this.y - playerY) < 300) {
-				if (Math.abs(this.x - playerX) > Math.abs(this.y - playerY)) {
-					int increment = (x - playerX) > 1 ? -1 : 1;
-					if (increment > 0) {
-						facing = World.EAST;
-					} else {
-						facing = World.WEST;
-					}
-					this.x += increment;
+			switch (facing) {
+			case World.EAST:
+				if (this.x == squareX2) {
+					this.facing = World.NORTH;
 				} else {
-					int increment = (y - playerY) > 1 ? -1 : 1;
-					if (increment > 0) {
-						facing = World.SOUTH;
-					} else {
-						facing = World.NORTH;
-					}
-					this.y += increment;
+					this.x += 1;
 				}
+				break;
+			case World.SOUTH:
+				if (this.y == squareY2) {
+					this.facing = World.EAST;
+				} else {
+					this.y += 1;
+				}
+				break;
+			case World.WEST:
+				if (this.x == squareX1) {
+					this.facing = World.SOUTH;
+				} else {
+					this.x -= 1;
+				}
+				break;
+			case World.NORTH:
+				if (this.y == squareY1) {
+					this.facing = World.WEST;
+				} else {
+					this.y -= 1;
+				}
+				break;
 			}
 		}
 	}

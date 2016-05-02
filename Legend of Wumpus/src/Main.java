@@ -24,10 +24,7 @@ public class Main {
 		frame.setVisible(true);
 		// frame.setResizable(false);
 		/* TEMPORARY, DELETE SOON */
-		new EntityGremlin(100, 100,200,200);
-		new EntityGremlin(100, 480);
-		new EntityGremlin(480, 100);
-		new EntityGremlin(480, 480);
+		new EntityGremlin(100, 100, 200, 200);
 		/*MusicPlayer.changePlayingMusic("/assets/music/SplashScreenTheme.wav");
 		Thread.sleep(1000*10);
 		MusicPlayer.changePlayingMusic("/assets/music/DungeonTheme.wav");*/
