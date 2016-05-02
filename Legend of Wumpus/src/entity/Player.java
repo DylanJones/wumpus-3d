@@ -103,22 +103,52 @@ public final class Player extends Entity {
 	}
 
 	public void move(int pixels) {
+		// switch (facing) {
+		// case World.NORTH:
+		// 	if (y >= pixels + this.getHeight() / 2)
+		// 		y -= pixels;
+		// 	break;
+		// case World.SOUTH:
+		// 	if (y <= 480 - (pixels + this.getHeight() / 2)) // was pixels - 40
+		// 		y += pixels;
+		// 	break;
+		// case World.EAST:
+		// 	if (x <= 640 - (pixels + this.getWidth() / 2)) // was pixels - 26
+		// 		x += pixels;
+		// 	break;
+		// case World.WEST:
+		// 	if (x >= pixels + this.getWidth() / 2)
+		// 		x -= pixels;
+		// 	break;
+		// }
 		switch (facing) {
 		case World.NORTH:
-			if (y >= pixels + this.getHeight() / 2)
+			if (y >= pixels) {
 				y -= pixels;
+			} else {
+				y = 480;
+			}
 			break;
 		case World.SOUTH:
-			if (y <= 480 - (pixels + this.getHeight() / 2)) // was pixels - 40
+			if (y <= 480 - pixels) {
 				y += pixels;
+			} else {
+				y = 0;
+			}
 			break;
 		case World.EAST:
-			if (x <= 640 - (pixels + this.getWidth() / 2)) // was pixels - 26
+			if (x <= 640 - pixels) {
 				x += pixels;
+			} else {
+				x = 0;
+			}
 			break;
 		case World.WEST:
-			if (x >= pixels + this.getWidth() / 2)
+			if (x >= pixels) {
 				x -= pixels;
+			} else {
+				x = 640;
+			}
 			break;
 		}
 	}
