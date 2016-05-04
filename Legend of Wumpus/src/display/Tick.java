@@ -1,18 +1,18 @@
 package display;
 
 import entity.*;
+
+import javax.swing.JPanel;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
 
 /** This class does the majority of the world engine work. */
 public class Tick implements ActionListener {
-	private WumpusPanel container;
+	private JPanel container;
 	private KeyboardHandler kb;
 	private boolean wasQPressed = false;
 
-	public Tick(WumpusPanel parent, KeyboardHandler kb) {
+	public Tick(JPanel parent, KeyboardHandler kb) {
 		container = parent;
 		this.kb = kb;
 	}
@@ -26,7 +26,7 @@ public class Tick implements ActionListener {
 		if (World.getGameState() == 2) { // Stop the world engine
 			// This is super bad practice, need to fix
 			// ticker should be private
-			container.ticker.stop();
+			World.stopTicker();
 		}
 	}
 

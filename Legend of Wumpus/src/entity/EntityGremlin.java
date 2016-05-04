@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -15,7 +14,6 @@ public class EntityGremlin extends EntityMinion {
 	private static Image gremlinSouth;
 	private static Image gremlinEast;
 	private static Image gremlinWest;
-	private long lastShootTime = 0;
 	private int facing = World.NORTH;
 	// For its walking square
 	private int squareX1 = 0;
@@ -53,7 +51,7 @@ public class EntityGremlin extends EntityMinion {
 		this.spriteHeight = gremlinNorth.getHeight(null);
 		this.spriteWidth = gremlinNorth.getWidth(null);
 		this.health = 1;
-		this.clockwise = new Random().nextBoolean();
+		this.clockwise = Math.random() > 0.5;
 	}
 
 	@Override
@@ -78,15 +76,10 @@ public class EntityGremlin extends EntityMinion {
 	@Override
 	public void tick() {
 		// Shoot player
-		if (System.currentTimeMillis() - lastShootTime > 2000) {
-			lastShootTime = System.currentTimeMillis();
-			if ((Math.abs(World.getThePlayer().getX() - this.x) <= 10)
-					&& (this.facing == World.EAST || this.facing == World.WEST)
-					|| (Math.abs(World.getThePlayer().getY() - this.y) <= 10)
-							&& (this.facing == World.NORTH || this.facing == World.WEST)) {
-				new EntityProjectile(this.x, this.y, 1, facing, this);
-			}
+		if (Math.random() < 0.03) {
+			new EntityProjectile(this.x, this.y, 1, facing, this);
 		}
+
 		// Walk along the square
 		if (this.clockwise) {
 			switch (facing) {

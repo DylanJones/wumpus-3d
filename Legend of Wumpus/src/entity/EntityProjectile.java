@@ -38,8 +38,8 @@ public class EntityProjectile extends EntityItem {
 
 	@Override
 	public void tick() {
-		//Die if we fall off the screen
-		if(this.x > 640 || this.x < 0 || this.y > 480 || this.y < 0)
+		// Die if we fall off the screen
+		if (this.x > 640 || this.x < 0 || this.y > 480 || this.y < 0)
 			World.deregisterEntity(this);
 		switch (facing) {
 		case World.NORTH:
@@ -59,7 +59,7 @@ public class EntityProjectile extends EntityItem {
 
 	@Override
 	public void collide(Entity e) {
-		if (e != shooter){
+		if (e != shooter) {
 			e.damage(damageAmount, this);
 			World.deregisterEntity(this);
 		}

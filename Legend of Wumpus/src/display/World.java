@@ -1,6 +1,11 @@
 package display;
 
-import java.util.*;
+import javax.swing.Timer;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.swing.JPanel;
+
 import entity.Entity;
 import entity.Player;
 
@@ -11,6 +16,7 @@ public final class World {
 	private static int gameState = 0;
 	private static HashSet<Entity> entities = new HashSet<Entity>();
 	private static Player thePlayer;
+	private static Timer ticker;
 
 	public static final int NORTH = 0;
 	public static final int EAST = 1;
@@ -71,6 +77,15 @@ public final class World {
 
 	public static void loadWorld(String worldFile) {
 		MusicPlayer.changePlayingMusic("SomeTypeOfMusicFile");
+	}
+
+	public static void startTicker(JPanel parent, KeyboardHandler kb) {
+		ticker = new Timer(33, new Tick(parent, kb));
+		ticker.start();
+	}
+
+	public static void stopTicker() {
+		ticker.stop();
 	}
 
 	/** World may not be instantiated. */

@@ -7,7 +7,6 @@ import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
 
 import javax.imageio.ImageIO;
 
@@ -18,9 +17,9 @@ import javax.imageio.ImageIO;
  */
 public class WumpusPanel extends JPanel {
 	// This SHOULD be private. We must make it so.
-	public static Timer ticker;
 	private static KeyboardHandler kb;
 	private static Image bg;
+
 	static {
 		try {
 			bg = ImageIO.read(new File("assets/bg.png")).getScaledInstance(640, 480, Image.SCALE_FAST);
@@ -36,8 +35,7 @@ public class WumpusPanel extends JPanel {
 		kb = new KeyboardHandler();
 		addKeyListener(kb);
 		setFocusable(true);
-		ticker = new Timer(33, new Tick(this, kb));
-		ticker.start();
+		World.startTicker(this, kb);
 	}
 
 	@Override
@@ -50,7 +48,7 @@ public class WumpusPanel extends JPanel {
 			g.fillRect(0, 0, this.getWidth(), this.getHeight());
 		}
 		HUD.drawHud(g);
-		for(Entity e : World.getAllEntities()){
+		for (Entity e : World.getAllEntities()) {
 			e.draw(g);
 		}
 	}
