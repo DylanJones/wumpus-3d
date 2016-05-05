@@ -36,7 +36,7 @@ public class WumpusPanel extends JPanel {
 		kb = new KeyboardHandler();
 		addKeyListener(kb);
 		setFocusable(true);
-		WorldBackend.startTicker(this, kb);
+		World.startTicker(this, kb);
 	}
 
 	@Override
@@ -49,7 +49,7 @@ public class WumpusPanel extends JPanel {
 			g.fillRect(0, 0, this.getWidth(), this.getHeight());
 		}
 		HUD.drawHud(g);
-		for (Entity e : WorldBackend.getAllEntities()) {
+		for (Entity e : World.getAllEntities()) {
 			e.draw(g);
 		}
 	}

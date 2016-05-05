@@ -2,7 +2,7 @@ package entity;
 
 import javax.imageio.ImageIO;
 
-import display.WorldBackend;
+import display.World;
 import display.WumpusPanel;
 
 import java.awt.Color;
@@ -22,7 +22,7 @@ public final class Player extends Entity {
 	private static Image southImage;
 	private static Image eastImage;
 	private static Image westImage;
-	private int facing = WorldBackend.NORTH;
+	private int facing = World.NORTH;
 	private long attackStartTime = 0;
 	private boolean attacking = false;
 	private long lastDamageTime = 0;
@@ -58,16 +58,16 @@ public final class Player extends Entity {
 	@Override
 	public void draw(Graphics g) {
 		switch (facing) {
-		case WorldBackend.NORTH:
+		case World.NORTH:
 			g.drawImage(northImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
 			break;
-		case WorldBackend.SOUTH:
+		case World.SOUTH:
 			g.drawImage(southImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
 			break;
-		case WorldBackend.EAST:
+		case World.EAST:
 			g.drawImage(eastImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
 			break;
-		case WorldBackend.WEST:
+		case World.WEST:
 			g.drawImage(westImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
 			break;
 		}
@@ -86,7 +86,7 @@ public final class Player extends Entity {
 			if (health > 0) {// Stops player from having negative health
 				health -= amount;
 				if (health <= 0) // did it go below 0?
-					WorldBackend.setGameState(2);
+					World.setGameState(2);
 			}
 			System.out.println("Player damaged! Health: " + health);
 		}
@@ -105,28 +105,28 @@ public final class Player extends Entity {
 
 	public void move(int pixels) {
 		switch (facing) {
-		case WorldBackend.NORTH:
+		case World.NORTH:
 			if (y >= pixels) {
 				y -= pixels;
 			} else {
 				y = 480;
 			}
 			break;
-		case WorldBackend.SOUTH:
+		case World.SOUTH:
 			if (y <= 480 - pixels) {
 				y += pixels;
 			} else {
 				y = 0;
 			}
 			break;
-		case WorldBackend.EAST:
+		case World.EAST:
 			if (x <= 640 - pixels) {
 				x += pixels;
 			} else {
 				x = 0;
 			}
 			break;
-		case WorldBackend.WEST:
+		case World.WEST:
 			if (x >= pixels) {
 				x -= pixels;
 			} else {

@@ -3,7 +3,7 @@ package entity;
 import java.awt.Graphics;
 import java.awt.Image;
 
-import display.WorldBackend;
+import display.World;
 
 /**
  * This is the abstract Entity class. It is the superclass of pretty much
@@ -17,7 +17,7 @@ public abstract class Entity {
 
 	// Make sure that ALL entities are registered.
 	public Entity() {
-		WorldBackend.registerEntity(this);
+		World.registerEntity(this);
 	}
 
 	/** Called every tick. AI code should go here. */

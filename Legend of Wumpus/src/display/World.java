@@ -16,7 +16,7 @@ import entity.Player;
 
 /** This is a class of constants. It will contain global variables. */
 @SuppressWarnings("unused")
-public final class WorldBackend {
+public final class World {
 	// Game state: 0 = overworld, 1 = bossfight, 2 = dead, 3 = dungeon
 	// 4 = title screen / loading
 	private static int gameState = 0;
@@ -24,7 +24,7 @@ public final class WorldBackend {
 	private static HashSet<Wall> walls = new HashSet<Wall>();
 	private static Player thePlayer;
 	private static Timer ticker;
-	private static World worldTemplate;
+	private static WorldTemplate worldTemplate;
 
 	public static final int NORTH = 0;
 	public static final int EAST = 1;
@@ -73,7 +73,7 @@ public final class WorldBackend {
 	 *            the new GameState
 	 */
 	public static void setGameState(int gameState) {
-		WorldBackend.gameState = gameState;
+		World.gameState = gameState;
 	}
 
 	/**
@@ -122,15 +122,16 @@ public final class WorldBackend {
 	}
 
 	/** World may not be instantiated. */
-	private WorldBackend() {
+	private World() {
 	}
 
-	private class World {
+	/** A class to contain the World template data */
+	private class WorldTemplate {
 		public final ArrayList<String> entities = new ArrayList<String>();
 		public final ArrayList<String> walls = new ArrayList<String>();
 
-		public World(String filename) {
-
+		public WorldTemplate(String filename) {
+			parseFile(filename);
 		}
 
 		private void parseFile(String filename) {
@@ -143,9 +144,10 @@ public final class WorldBackend {
 			ArrayList<String> fileContents = new ArrayList<String>();
 			while (scanner.hasNext()) {
 				String line = scanner.nextLine();
-				if (!line.startsWith("#"))
+				if (!(line.startsWith("#") || line.equals("")))
 					fileContents.add(line);
 			}
+
 		}
 	}
 }

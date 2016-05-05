@@ -7,14 +7,14 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import display.WorldBackend;
+import display.World;
 
 public class EntityGremlin extends EntityMinion {
 	private static Image gremlinNorth;
 	private static Image gremlinSouth;
 	private static Image gremlinEast;
 	private static Image gremlinWest;
-	private int facing = WorldBackend.NORTH;
+	private int facing = World.NORTH;
 	// For its walking square
 	private int squareX1 = 0;
 	private int squareY1 = 0;
@@ -64,7 +64,7 @@ public class EntityGremlin extends EntityMinion {
 		System.out.println("gremlin damage");
 		health -= amount;
 		if (health <= 0)
-			WorldBackend.deregisterEntity(this);
+			World.deregisterEntity(this);
 	}
 
 	@Override
@@ -83,30 +83,30 @@ public class EntityGremlin extends EntityMinion {
 		// Walk along the square
 		if (this.clockwise) {
 			switch (facing) {
-			case WorldBackend.EAST:
+			case World.EAST:
 				if (this.x == squareX2) {
-					this.facing = WorldBackend.SOUTH;
+					this.facing = World.SOUTH;
 				} else {
 					this.x += 1;
 				}
 				break;
-			case WorldBackend.SOUTH:
+			case World.SOUTH:
 				if (this.y == squareY2) {
-					this.facing = WorldBackend.WEST;
+					this.facing = World.WEST;
 				} else {
 					this.y += 1;
 				}
 				break;
-			case WorldBackend.WEST:
+			case World.WEST:
 				if (this.x == squareX1) {
-					this.facing = WorldBackend.NORTH;
+					this.facing = World.NORTH;
 				} else {
 					this.x -= 1;
 				}
 				break;
-			case WorldBackend.NORTH:
+			case World.NORTH:
 				if (this.y == squareY1) {
-					this.facing = WorldBackend.EAST;
+					this.facing = World.EAST;
 				} else {
 					this.y -= 1;
 				}
@@ -114,30 +114,30 @@ public class EntityGremlin extends EntityMinion {
 			}
 		} else {
 			switch (facing) {
-			case WorldBackend.EAST:
+			case World.EAST:
 				if (this.x == squareX2) {
-					this.facing = WorldBackend.NORTH;
+					this.facing = World.NORTH;
 				} else {
 					this.x += 1;
 				}
 				break;
-			case WorldBackend.SOUTH:
+			case World.SOUTH:
 				if (this.y == squareY2) {
-					this.facing = WorldBackend.EAST;
+					this.facing = World.EAST;
 				} else {
 					this.y += 1;
 				}
 				break;
-			case WorldBackend.WEST:
+			case World.WEST:
 				if (this.x == squareX1) {
-					this.facing = WorldBackend.SOUTH;
+					this.facing = World.SOUTH;
 				} else {
 					this.x -= 1;
 				}
 				break;
-			case WorldBackend.NORTH:
+			case World.NORTH:
 				if (this.y == squareY1) {
-					this.facing = WorldBackend.WEST;
+					this.facing = World.WEST;
 				} else {
 					this.y -= 1;
 				}
@@ -149,16 +149,16 @@ public class EntityGremlin extends EntityMinion {
 	@Override
 	public void draw(Graphics g) {
 		switch (facing) {
-		case WorldBackend.NORTH:
+		case World.NORTH:
 			g.drawImage(gremlinNorth, x - this.getWidth() / 2, y - this.getHeight() / 2, null);
 			break;
-		case WorldBackend.SOUTH:
+		case World.SOUTH:
 			g.drawImage(gremlinSouth, x - this.getWidth() / 2, y - this.getHeight() / 2, null);
 			break;
-		case WorldBackend.EAST:
+		case World.EAST:
 			g.drawImage(gremlinEast, x - this.getWidth() / 2, y - this.getHeight() / 2, null);
 			break;
-		case WorldBackend.WEST:
+		case World.WEST:
 			g.drawImage(gremlinWest, x - this.getWidth() / 2, y - this.getHeight() / 2, null);
 			break;
 		}

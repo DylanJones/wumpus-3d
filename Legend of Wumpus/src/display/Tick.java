@@ -22,18 +22,18 @@ public class Tick implements ActionListener {
 		movePlayer();
 		entityTick();
 		collideEntities();
-		if (WorldBackend.getGameState() == 2) { // Stop the world engine
-			WorldBackend.stopTicker();
+		if (World.getGameState() == 2) { // Stop the world engine
+			World.stopTicker();
 		}
 		container.update(container.getGraphics());
 	}
 
 	private void movePlayer() {
 		if (kb.isKeyPressed('w'))
-			WorldBackend.getThePlayer().move(5);
+			World.getThePlayer().move(5);
 		if(!wasQPressed && kb.isKeyPressed('q')){
 			wasQPressed = true;
-			WorldBackend.getThePlayer().attack();
+			World.getThePlayer().attack();
 		}else {
 			wasQPressed = false;
 		}
@@ -44,8 +44,8 @@ public class Tick implements ActionListener {
 	 * they are touching, call <entity>.collide().
 	 */
 	private void collideEntities() {
-		for (Entity e : WorldBackend.getAllEntities()) {
-			for (Entity x : WorldBackend.getAllEntities()) {
+		for (Entity e : World.getAllEntities()) {
+			for (Entity x : World.getAllEntities()) {
 				if (x == e)
 					continue;// So it doesn't collide with itself
 				// If they are within each others boxes
@@ -61,7 +61,7 @@ public class Tick implements ActionListener {
 	}
 
 	private void entityTick() {
-		for (Entity e : WorldBackend.getAllEntities()) {
+		for (Entity e : World.getAllEntities()) {
 			e.tick();
 		}
 	}

@@ -22,7 +22,7 @@ public final class HUD {
 	 * Draws the health bar and anything else related to health. (e.g. amount)
 	 */
 	private static void drawHealth(Graphics g) {
-		for (int i = 0; i < WorldBackend.getThePlayer().getHealth(); i++) {
+		for (int i = 0; i < World.getThePlayer().getHealth(); i++) {
 			g.drawImage(heart, 595 - (25 * i), 10, null);
 		}
 	}

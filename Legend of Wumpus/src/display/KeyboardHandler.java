@@ -17,7 +17,7 @@ public class KeyboardHandler implements KeyListener {
 		// System.out.println("KeyPress: " + e.getKeyChar());
 		//Only execute once per keypress
 		if(e.getKeyChar() == 'e' && !isKeyPressed('e')) {
-			WorldBackend.getThePlayer().turnLeft();
+			World.getThePlayer().turnLeft();
 		}
 		keysPressed.put(e.getKeyChar(), true);
 	}
