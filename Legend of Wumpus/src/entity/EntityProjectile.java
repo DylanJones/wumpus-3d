@@ -7,7 +7,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import display.World;
+import display.WorldBackend;
 
 public class EntityProjectile extends EntityItem {
 	private static Image projectileImage;
@@ -40,18 +40,18 @@ public class EntityProjectile extends EntityItem {
 	public void tick() {
 		// Die if we fall off the screen
 		if (this.x > 640 || this.x < 0 || this.y > 480 || this.y < 0)
-			World.deregisterEntity(this);
+			WorldBackend.deregisterEntity(this);
 		switch (facing) {
-		case World.NORTH:
+		case WorldBackend.NORTH:
 			this.y -= SPEED;
 			break;
-		case World.SOUTH:
+		case WorldBackend.SOUTH:
 			this.y += SPEED;
 			break;
-		case World.EAST:
+		case WorldBackend.EAST:
 			this.x += SPEED;
 			break;
-		case World.WEST:
+		case WorldBackend.WEST:
 			this.x -= SPEED;
 			break;
 		}
@@ -61,7 +61,7 @@ public class EntityProjectile extends EntityItem {
 	public void collide(Entity e) {
 		if (e != shooter) {
 			e.damage(damageAmount, this);
-			World.deregisterEntity(this);
+			WorldBackend.deregisterEntity(this);
 		}
 	}
 

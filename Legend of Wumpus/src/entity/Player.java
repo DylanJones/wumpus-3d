@@ -2,7 +2,7 @@ package entity;
 
 import javax.imageio.ImageIO;
 
-import display.World;
+import display.WorldBackend;
 import display.WumpusPanel;
 
 import java.awt.Color;
@@ -22,7 +22,7 @@ public final class Player extends Entity {
 	private static Image southImage;
 	private static Image eastImage;
 	private static Image westImage;
-	private int facing = World.NORTH;
+	private int facing = WorldBackend.NORTH;
 	private long attackStartTime = 0;
 	private boolean attacking = false;
 	private long lastDamageTime = 0;
@@ -55,18 +55,19 @@ public final class Player extends Entity {
 	 * @param g
 	 *            the graphics object to graw on
 	 */
+	@Override
 	public void draw(Graphics g) {
 		switch (facing) {
-		case World.NORTH:
+		case WorldBackend.NORTH:
 			g.drawImage(northImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
 			break;
-		case World.SOUTH:
+		case WorldBackend.SOUTH:
 			g.drawImage(southImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
 			break;
-		case World.EAST:
+		case WorldBackend.EAST:
 			g.drawImage(eastImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
 			break;
-		case World.WEST:
+		case WorldBackend.WEST:
 			g.drawImage(westImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
 			break;
 		}
@@ -85,7 +86,7 @@ public final class Player extends Entity {
 			if (health > 0) {// Stops player from having negative health
 				health -= amount;
 				if (health <= 0) // did it go below 0?
-					World.setGameState(2);
+					WorldBackend.setGameState(2);
 			}
 			System.out.println("Player damaged! Health: " + health);
 		}
@@ -103,47 +104,29 @@ public final class Player extends Entity {
 	}
 
 	public void move(int pixels) {
-		// switch (facing) {
-		// case World.NORTH:
-		// 	if (y >= pixels + this.getHeight() / 2)
-		// 		y -= pixels;
-		// 	break;
-		// case World.SOUTH:
-		// 	if (y <= 480 - (pixels + this.getHeight() / 2)) // was pixels - 40
-		// 		y += pixels;
-		// 	break;
-		// case World.EAST:
-		// 	if (x <= 640 - (pixels + this.getWidth() / 2)) // was pixels - 26
-		// 		x += pixels;
-		// 	break;
-		// case World.WEST:
-		// 	if (x >= pixels + this.getWidth() / 2)
-		// 		x -= pixels;
-		// 	break;
-		// }
 		switch (facing) {
-		case World.NORTH:
+		case WorldBackend.NORTH:
 			if (y >= pixels) {
 				y -= pixels;
 			} else {
 				y = 480;
 			}
 			break;
-		case World.SOUTH:
+		case WorldBackend.SOUTH:
 			if (y <= 480 - pixels) {
 				y += pixels;
 			} else {
 				y = 0;
 			}
 			break;
-		case World.EAST:
+		case WorldBackend.EAST:
 			if (x <= 640 - pixels) {
 				x += pixels;
 			} else {
 				x = 0;
 			}
 			break;
-		case World.WEST:
+		case WorldBackend.WEST:
 			if (x >= pixels) {
 				x -= pixels;
 			} else {
@@ -155,7 +138,7 @@ public final class Player extends Entity {
 
 	public void attack() {
 		this.attackStartTime = System.currentTimeMillis();
-		
+
 	}
 
 	public int getHealth() {

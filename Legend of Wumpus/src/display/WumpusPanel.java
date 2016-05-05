@@ -2,6 +2,7 @@ package display;
 
 import entity.*;
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
 import java.awt.Graphics;
 import java.awt.Image;
@@ -35,7 +36,7 @@ public class WumpusPanel extends JPanel {
 		kb = new KeyboardHandler();
 		addKeyListener(kb);
 		setFocusable(true);
-		World.startTicker(this, kb);
+		WorldBackend.startTicker(this, kb);
 	}
 
 	@Override
@@ -48,7 +49,7 @@ public class WumpusPanel extends JPanel {
 			g.fillRect(0, 0, this.getWidth(), this.getHeight());
 		}
 		HUD.drawHud(g);
-		for (Entity e : World.getAllEntities()) {
+		for (Entity e : WorldBackend.getAllEntities()) {
 			e.draw(g);
 		}
 	}
