@@ -2,11 +2,8 @@ package display;
 
 import javax.swing.Timer;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
+import java.awt.Image;
 import java.util.HashSet;
-import java.util.Scanner;
 import java.util.Set;
 
 import javax.swing.JPanel;
@@ -15,11 +12,12 @@ import entity.Entity;
 import entity.Player;
 
 /** This is a class of constants. It will contain global variables. */
-@SuppressWarnings("unused")
+// @SuppressWarnings("unused")
 public final class World {
 	// Game state: 0 = overworld, 1 = bossfight, 2 = dead, 3 = dungeon
 	// 4 = title screen / loading
 	private static int gameState = 0;
+	private static Image backgroundImage;
 	private static HashSet<Entity> entities = new HashSet<Entity>();
 	private static HashSet<Wall> walls = new HashSet<Wall>();
 	private static Player thePlayer;
@@ -107,47 +105,21 @@ public final class World {
 		ticker.stop();
 	}
 
-	private static final class Wall {
-		public final int x;
-		public final int y;
-		public final int length;
-		public final int facing;
-
-		public Wall(int x, int y, int length, int facing) {
-			this.x = x;
-			this.y = y;
-			this.length = length;
-			this.facing = facing;
-		}
+	public static void addWall(int x, int y, int length, int direction) {
+		walls.add(new Wall(x, y, length, direction));
+	}
+	
+	public static Image getBackgroundImage() {
+		return backgroundImage;
+	}
+	
+	public static void setBackgroundImage(Image i) {
+		backgroundImage = i;
 	}
 
 	/** World may not be instantiated. */
 	private World() {
 	}
 
-	/** A class to contain the World template data */
-	private class WorldTemplate {
-		public final ArrayList<String> entities = new ArrayList<String>();
-		public final ArrayList<String> walls = new ArrayList<String>();
 
-		public WorldTemplate(String filename) {
-			parseFile(filename);
-		}
-
-		private void parseFile(String filename) {
-			Scanner scanner = null;
-			try {
-				scanner = new Scanner(new File(filename));
-			} catch (FileNotFoundException e) {
-				e.printStackTrace();
-			}
-			ArrayList<String> fileContents = new ArrayList<String>();
-			while (scanner.hasNext()) {
-				String line = scanner.nextLine();
-				if (!(line.startsWith("#") || line.equals("")))
-					fileContents.add(line);
-			}
-
-		}
-	}
 }
