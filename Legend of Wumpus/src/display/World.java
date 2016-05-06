@@ -91,9 +91,10 @@ public final class World {
 
 	public static void loadWorld(String worldFile) {
 		/* Open and read file... */
+		/* PLEASE FIX THIS!!! YOU CAN DELETE WHATEVER YOU NEED TO */
 		// new File(worldFile).read();
-
-		MusicPlayer.changePlayingMusic("SomeTypeOfMusicFile");
+		worldTemplate = new WorldTemplate(worldFile);
+		worldTemplate.load();
 	}
 
 	public static void startTicker(JPanel parent, KeyboardHandler kb) {
@@ -108,11 +109,15 @@ public final class World {
 	public static void addWall(int x, int y, int length, int direction) {
 		walls.add(new Wall(x, y, length, direction));
 	}
-	
+
+	public static Set<Wall> getWalls() {
+		return walls;
+	}
+
 	public static Image getBackgroundImage() {
 		return backgroundImage;
 	}
-	
+
 	public static void setBackgroundImage(Image i) {
 		backgroundImage = i;
 	}
@@ -120,6 +125,5 @@ public final class World {
 	/** World may not be instantiated. */
 	private World() {
 	}
-
 
 }

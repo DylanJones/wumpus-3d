@@ -22,7 +22,9 @@ public final class WorldTemplate {
 	}
 
 	private void parseFile(String filename) {
-		// Read the file, ignoring comments`
+		// The file is in the assets/worlds directory
+		filename = "assets/worlds/" + filename;
+		// Read the file, ignoring comments
 		Scanner scanner = null;
 		try {
 			scanner = new Scanner(new File(filename));
@@ -36,7 +38,7 @@ public final class WorldTemplate {
 				fileContents.add(line);
 		}
 		// Split into sections
-		String lastLine = "";
+		String lastLine = fileContents.get(0);
 		int fileIndex = 0;
 		// Skip to metadata
 		while (!lastLine.contains("metadata:")) {
@@ -62,13 +64,14 @@ public final class WorldTemplate {
 		while (!lastLine.contains("entities:")) {
 			fileIndex++;
 			lastLine = fileContents.get(fileIndex);
-			walls.add(lastLine);
+			if (!lastLine.equalsIgnoreCase("entities:"))
+				walls.add(lastLine);
 		}
 		// Read entities UNTIL EOF
 		while (fileIndex < fileContents.size()) {
-			fileIndex++;
 			lastLine = fileContents.get(fileIndex);
 			entities.add(lastLine);
+			fileIndex++;
 		}
 	}
 
@@ -78,7 +81,27 @@ public final class WorldTemplate {
 			int x = Integer.parseInt(coords[0]);
 			int y = Integer.parseInt(coords[1]);
 			int length = Integer.parseInt(coords[2]);
-			int direction = Integer.parseInt(coords[3]);
+			int direction;
+			try {
+				direction = Integer.parseInt(coords[3]);
+			} catch (NumberFormatException e) {
+				switch (coords[3]) {
+				case "north":
+					direction = World.NORTH;
+					break;
+				case "south":
+					direction = World.SOUTH;
+					break;
+				case "east":
+					direction = World.EAST;
+					break;
+				case "west":
+					direction = World.WEST;
+					break;
+				default:
+					direction = 0;
+				}
+			}
 			World.addWall(x, y, length, direction);
 		}
 
@@ -97,7 +120,7 @@ public final class WorldTemplate {
 			break;
 		}
 	}
-	
+
 	public String getNextWorld(int direction) {
 		switch (direction) {
 		case World.NORTH:

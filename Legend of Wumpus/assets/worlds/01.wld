@@ -1,0 +1,15 @@
+#Starting world file
+metadata:
+version 0.1
+image bg.png
+north null.wld
+south null.wld
+east null.wld
+west null.wld
+
+walls:
+320 0 450 vertical
+
+entities:
+gremlin 100 100 200 200
+gremlin 320 240 320 240

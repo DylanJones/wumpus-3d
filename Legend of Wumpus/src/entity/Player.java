@@ -2,13 +2,11 @@ package entity;
 
 import javax.imageio.ImageIO;
 
+import display.Wall;
 import display.World;
-import display.WumpusPanel;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Robot;
 import java.io.File;
 import java.io.IOException;
 
@@ -16,15 +14,13 @@ import java.io.IOException;
  * This class should handle all of the things related to the Player. It should
  * NOT handle drawing the GUI (beyond drawing the player sprite).
  */
-@SuppressWarnings("unused")
 public final class Player extends Entity {
 	private static Image northImage;
 	private static Image southImage;
 	private static Image eastImage;
 	private static Image westImage;
+
 	private int facing = World.NORTH;
-	private long attackStartTime = 0;
-	private boolean attacking = false;
 	private long lastDamageTime = 0;
 
 	static {
@@ -103,42 +99,79 @@ public final class Player extends Entity {
 	public void tick() {
 	}
 
+	/**
+	 * east / west: player.x +- movment < Math.abs(player.x +- movment - wall.x)
+	 * + wall.x && player.x +- movment > wall.x north / south: player.y +-
+	 * movment < Math.abs(player.y +- movment - wall.y) + wall.y && player.y +-
+	 * movment > wall.y
+	 */
 	public void move(int pixels) {
+		boolean canMove = true;
 		switch (facing) {
 		case World.NORTH:
-			if (y >= pixels) {
-				y -= pixels;
-			} else {
-				y = 480;
+			for (Wall wall : World.getWalls()) {
+				if ((y - pixels < Math.abs(y - pixels - wall.y) + wall.y && y - pixels > wall.y)) {
+					canMove = false;
+				}
+			}
+			if (canMove) {
+				if (y >= pixels) {
+					y -= pixels;
+				} else {
+					y = 480;
+					World.loadWorld(World.NORTH);
+				}
 			}
 			break;
 		case World.SOUTH:
-			if (y <= 480 - pixels) {
-				y += pixels;
-			} else {
-				y = 0;
+			for (Wall wall : World.getWalls()) {
+				if ((y + pixels < Math.abs(y + pixels - wall.y) + wall.y && y + pixels > wall.y)) {
+					canMove = false;
+				}
+			}
+			if (canMove) {
+				if (y <= 480 - pixels) {
+					y += pixels;
+				} else {
+					y = 0;
+					World.loadWorld(World.SOUTH);
+				}
 			}
 			break;
 		case World.EAST:
-			if (x <= 640 - pixels) {
-				x += pixels;
-			} else {
-				x = 0;
+			for (Wall wall : World.getWalls()) {
+				if ((y > wall.y && y < wall.length + wall.y) && x + pixels > wall.x) {
+					canMove = false;
+				}
+			}
+			if (canMove) {
+				if (x <= 640 - pixels) {
+					x += pixels;
+				} else {
+					x = 0;
+					World.loadWorld(World.EAST);
+				}
 			}
 			break;
 		case World.WEST:
-			if (x >= pixels) {
-				x -= pixels;
-			} else {
-				x = 640;
+			for (Wall wall : World.getWalls()) {
+				if ((y > wall.y && y < wall.length + wall.y) && x - pixels < wall.x) {
+					canMove = false;
+				}
+			}
+			if (canMove) {
+				if (x >= pixels) {
+					x -= pixels;
+				} else {
+					x = 640;
+					World.loadWorld(World.WEST);
+				}
 			}
 			break;
 		}
 	}
 
 	public void attack() {
-		this.attackStartTime = System.currentTimeMillis();
-
 	}
 
 	public int getHealth() {

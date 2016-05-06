@@ -1,5 +1,6 @@
 package display;
 
+/** Container for information about the level's walls */
 public final class Wall {
 	public final int x;
 	public final int y;
