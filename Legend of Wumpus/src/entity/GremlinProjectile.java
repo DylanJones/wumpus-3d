@@ -9,10 +9,9 @@ import javax.imageio.ImageIO;
 
 import display.World;
 
-public class EntityProjectile extends EntityItem {
-	private static Image projectileImage;
+public class GremlinProjectile extends EntityItem {
+	protected static Image projectileImage;
 	private static final int SPEED = 7;
-	private Entity shooter;
 	private int damageAmount;
 	private int facing;
 
@@ -25,13 +24,12 @@ public class EntityProjectile extends EntityItem {
 		}
 	}
 
-	public EntityProjectile(int x, int y, int damageAmount, int direction, Entity shooter) {
+	public GremlinProjectile(int x, int y, int damageAmount, int direction) {
 		super();
 		this.x = x;
 		this.y = y;
 		this.damageAmount = damageAmount;
 		this.facing = direction;
-		this.shooter = shooter;
 		this.spriteHeight = projectileImage.getHeight(null);
 		this.spriteWidth = projectileImage.getWidth(null);
 	}
@@ -59,7 +57,7 @@ public class EntityProjectile extends EntityItem {
 
 	@Override
 	public void collide(Entity e) {
-		if (e != shooter) {
+		if (e instanceof Player) {
 			e.damage(damageAmount, this);
 			World.deregisterEntity(this);
 		}

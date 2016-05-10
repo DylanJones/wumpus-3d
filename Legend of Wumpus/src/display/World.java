@@ -24,7 +24,6 @@ public final class World {
 	private static HashSet<Wall> walls = new HashSet<Wall>();
 	private static Player thePlayer;
 	private static Timer ticker;
-	private static WorldTemplate worldTemplate;
 
 	public static final int NORTH = 0;
 	public static final int EAST = 1;
@@ -98,7 +97,7 @@ public final class World {
 		/* Open and read file... */
 		/* PLEASE FIX THIS!!! YOU CAN DELETE WHATEVER YOU NEED TO */
 		// new File(worldFile).read();
-		worldTemplate = new WorldTemplate(worldFile);
+		WorldTemplate worldTemplate = new WorldTemplate(worldFile);
 		worldTemplate.load();
 	}
 
@@ -117,6 +116,41 @@ public final class World {
 
 	public static Set<Wall> getWalls() {
 		return walls;
+	}
+	
+	public static boolean willCollide(int x, int y, int facing, int movment) {
+		boolean willCollide = false;
+		switch (facing) {
+		case World.NORTH:
+			for (Wall wall : World.getWalls()) {
+				if ((x > wall.x && x < wall.length + wall.x) && y - movment <= wall.y && y >= wall.y && wall.facing == World.HORIZONTAL) {
+					willCollide = true;
+				}
+			}
+			break;
+		case World.SOUTH:
+			for (Wall wall : World.getWalls()) {
+				if ((x > wall.x && x < wall.length + wall.x) && y + movment >= wall.y && y <= wall.y && wall.facing == World.HORIZONTAL) {
+					willCollide = true;
+				}
+			}
+			break;
+		case World.EAST:
+			for (Wall wall : World.getWalls()) {
+				if ((y > wall.y && y < wall.length + wall.y) && x + movment >= wall.x && x <= wall.x && wall.facing == World.VERTICAL) {
+					willCollide = true;
+				}
+			}
+			break;
+		case World.WEST:
+			for (Wall wall : World.getWalls()) {
+				if ((y > wall.y && y < wall.length + wall.y) && x - movment <= wall.x && x >= wall.x && wall.facing == World.VERTICAL) {
+					willCollide = true;
+				}
+			}
+			break;
+		}
+		return willCollide;
 	}
 
 	public static Image getBackgroundImage() {

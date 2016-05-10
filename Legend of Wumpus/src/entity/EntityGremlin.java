@@ -77,7 +77,7 @@ public class EntityGremlin extends EntityMinion {
 	public void tick() {
 		// Shoot player
 		if (Math.random() < 0.03) {
-			new EntityProjectile(this.x, this.y, 1, facing, this);
+			new GremlinProjectile(this.x, this.y, 1, facing);
 		}
 
 		// Walk along the square

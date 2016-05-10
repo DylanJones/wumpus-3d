@@ -106,68 +106,42 @@ public final class Player extends Entity {
 	 * movment > wall.y
 	 */
 	public void move(int pixels) {
-		boolean canMove = true;
-		switch (facing) {
-		case World.NORTH:
-			for (Wall wall : World.getWalls()) {
-				if ((x > wall.x && x < wall.length + wall.x) && y - pixels <= wall.y && y >= wall.y && wall.facing == World.HORIZONTAL) {
-					canMove = false;
-				}
-			}
-			if (canMove) {
+		boolean canMove = !World.willCollide(x, y, facing, pixels);
+		if (canMove) {
+			switch (facing) {
+			case World.NORTH:
 				if (y >= pixels) {
 					y -= pixels;
 				} else {
 					y = 480;
 					World.loadWorld(World.NORTH);
 				}
-			}
-			break;
-		case World.SOUTH:
-			for (Wall wall : World.getWalls()) {
-				if ((x > wall.x && x < wall.length + wall.x) && y + pixels >= wall.y && y <= wall.y && wall.facing == World.HORIZONTAL) {
-					canMove = false;
-				}
-			}
-			if (canMove) {
+				break;
+			case World.SOUTH:
 				if (y <= 480 - pixels) {
 					y += pixels;
 				} else {
 					y = 0;
 					World.loadWorld(World.SOUTH);
 				}
-			}
-			break;
-		case World.EAST:
-			for (Wall wall : World.getWalls()) {
-				if ((y > wall.y && y < wall.length + wall.y) && x + pixels >= wall.x && x <= wall.x && wall.facing == World.VERTICAL) {
-					canMove = false;
-				}
-			}
-			if (canMove) {
+				break;
+			case World.EAST:
 				if (x <= 640 - pixels) {
 					x += pixels;
 				} else {
 					x = 0;
 					World.loadWorld(World.EAST);
 				}
-			}
-			break;
-		case World.WEST:
-			for (Wall wall : World.getWalls()) {
-				if ((y > wall.y && y < wall.length + wall.y) && x - pixels <= wall.x && x >= wall.x && wall.facing == World.VERTICAL) {
-					canMove = false;
-				}
-			}
-			if (canMove) {
+				break;
+			case World.WEST:
 				if (x >= pixels) {
 					x -= pixels;
 				} else {
 					x = 640;
 					World.loadWorld(World.WEST);
 				}
+				break;
 			}
-			break;
 		}
 	}
 
