@@ -12,6 +12,7 @@ public final class WorldTemplate {
 	public final ArrayList<String> entities = new ArrayList<String>();
 	public final ArrayList<String> walls = new ArrayList<String>();
 	public String version;
+	public String image;
 	private String worldNorth;
 	private String worldSouth;
 	private String worldEast;
@@ -51,6 +52,8 @@ public final class WorldTemplate {
 			lastLine = fileContents.get(fileIndex);
 			if (lastLine.startsWith("version "))
 				this.version = lastLine.replace("version ", "");
+			if (lastLine.startsWith("image "))
+				this.image = "assets/backgrounds/" + lastLine.replace("image ", "");
 			if (lastLine.startsWith("north "))
 				this.worldNorth = lastLine.replace("north ", "");
 			if (lastLine.startsWith("south "))
@@ -76,6 +79,7 @@ public final class WorldTemplate {
 	}
 
 	public void load() {
+		World.setBackgroundImage(image);
 		for (String wall : this.walls) {
 			String[] coords = wall.split(" ");
 			int x = Integer.parseInt(coords[0]);
@@ -85,21 +89,10 @@ public final class WorldTemplate {
 			try {
 				direction = Integer.parseInt(coords[3]);
 			} catch (NumberFormatException e) {
-				switch (coords[3]) {
-				case "north":
-					direction = World.NORTH;
-					break;
-				case "south":
-					direction = World.SOUTH;
-					break;
-				case "east":
-					direction = World.EAST;
-					break;
-				case "west":
-					direction = World.WEST;
-					break;
-				default:
-					direction = 0;
+				if(coords[3].contains("horizontal")) {
+					direction = World.HORIZONTAL;
+				}else {
+					direction = World.VERTICAL;
 				}
 			}
 			World.addWall(x, y, length, direction);

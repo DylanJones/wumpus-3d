@@ -110,7 +110,7 @@ public final class Player extends Entity {
 		switch (facing) {
 		case World.NORTH:
 			for (Wall wall : World.getWalls()) {
-				if ((y - pixels < Math.abs(y - pixels - wall.y) + wall.y && y - pixels > wall.y)) {
+				if ((x > wall.x && x < wall.length + wall.x) && y - pixels <= wall.y && y >= wall.y && wall.facing == World.HORIZONTAL) {
 					canMove = false;
 				}
 			}
@@ -125,7 +125,7 @@ public final class Player extends Entity {
 			break;
 		case World.SOUTH:
 			for (Wall wall : World.getWalls()) {
-				if ((y + pixels < Math.abs(y + pixels - wall.y) + wall.y && y + pixels > wall.y)) {
+				if ((x > wall.x && x < wall.length + wall.x) && y + pixels >= wall.y && y <= wall.y && wall.facing == World.HORIZONTAL) {
 					canMove = false;
 				}
 			}
@@ -140,7 +140,7 @@ public final class Player extends Entity {
 			break;
 		case World.EAST:
 			for (Wall wall : World.getWalls()) {
-				if ((y > wall.y && y < wall.length + wall.y) && x + pixels > wall.x) {
+				if ((y > wall.y && y < wall.length + wall.y) && x + pixels >= wall.x && x <= wall.x && wall.facing == World.VERTICAL) {
 					canMove = false;
 				}
 			}
@@ -155,7 +155,7 @@ public final class Player extends Entity {
 			break;
 		case World.WEST:
 			for (Wall wall : World.getWalls()) {
-				if ((y > wall.y && y < wall.length + wall.y) && x - pixels < wall.x) {
+				if ((y > wall.y && y < wall.length + wall.y) && x - pixels <= wall.x && x >= wall.x && wall.facing == World.VERTICAL) {
 					canMove = false;
 				}
 			}

@@ -3,16 +3,18 @@ package display;
 import javax.swing.Timer;
 
 import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import entity.Entity;
 import entity.Player;
 
 /** This is a class of constants. It will contain global variables. */
-// @SuppressWarnings("unused")
 public final class World {
 	// Game state: 0 = overworld, 1 = bossfight, 2 = dead, 3 = dungeon
 	// 4 = title screen / loading
@@ -28,6 +30,9 @@ public final class World {
 	public static final int EAST = 1;
 	public static final int SOUTH = 2;
 	public static final int WEST = 3;
+	
+	public static final int VERTICAL = 1;
+	public static final int HORIZONTAL = 2;
 
 	static {
 		thePlayer = new Player();
@@ -38,7 +43,7 @@ public final class World {
 	 * the Entity constructor.
 	 * 
 	 * @param e
-	 *            the Entity to delete
+	 *            the Entity to add
 	 */
 	public static void registerEntity(Entity e) {
 		entities.add(e);
@@ -118,8 +123,13 @@ public final class World {
 		return backgroundImage;
 	}
 
-	public static void setBackgroundImage(Image i) {
-		backgroundImage = i;
+	public static void setBackgroundImage(String filename) {
+		try {
+			backgroundImage = ImageIO.read(new File(filename));
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.err.println("Error loading image file " + filename);
+		}
 	}
 
 	/** World may not be instantiated. */
