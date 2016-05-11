@@ -15,16 +15,23 @@ import java.io.IOException;
  * NOT handle drawing the GUI (beyond drawing the player sprite).
  */
 public final class Player extends Entity {
+	private static final int ATTACK_COOLDOWN = 500; //attack cooldown in millis
 	private static Image northImage;
 	private static Image southImage;
 	private static Image eastImage;
 	private static Image westImage;
+	private static Image northAttackImage;
+	private static Image southAttackImage;
+	private static Image eastAttackImage;
+	private static Image westAttackImage;
 
 	private int facing = World.NORTH;
 	private long lastDamageTime = 0;
+	private long attackStartTime = 0;
 
 	static {
 		try {
+			//Walking images
 			northImage = ImageIO.read(new File("assets/wumpus/north.png")).getScaledInstance(28, 30,
 					Image.SCALE_REPLICATE);
 			southImage = ImageIO.read(new File("assets/wumpus/south.png")).getScaledInstance(28, 30,
@@ -32,6 +39,15 @@ public final class Player extends Entity {
 			eastImage = ImageIO.read(new File("assets/wumpus/east.png")).getScaledInstance(28, 30,
 					Image.SCALE_REPLICATE);
 			westImage = ImageIO.read(new File("assets/wumpus/west.png")).getScaledInstance(28, 30,
+					Image.SCALE_REPLICATE);
+			//Attacking images
+			northAttackImage = ImageIO.read(new File("assets/wumpus/attack_north.png")).getScaledInstance(28, 30,
+					Image.SCALE_REPLICATE);
+			southAttackImage = ImageIO.read(new File("assets/wumpus/attack_south.png")).getScaledInstance(28, 30,
+					Image.SCALE_REPLICATE);
+			eastAttackImage = ImageIO.read(new File("assets/wumpus/attack_east.png")).getScaledInstance(28, 30,
+					Image.SCALE_REPLICATE);
+			westAttackImage = ImageIO.read(new File("assets/wumpus/attack_west.png")).getScaledInstance(28, 30,
 					Image.SCALE_REPLICATE);
 		} catch (IOException e) {
 			System.err.print("Error reading Player image files");
@@ -55,24 +71,36 @@ public final class Player extends Entity {
 	public void draw(Graphics g) {
 		switch (facing) {
 		case World.NORTH:
-			g.drawImage(northImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
+			if(System.currentTimeMillis() - this.attackStartTime < 500)
+				g.drawImage(northAttackImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
+			else
+				g.drawImage(northImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
 			break;
 		case World.SOUTH:
-			g.drawImage(southImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
+			if(System.currentTimeMillis() - this.attackStartTime < 500)
+				g.drawImage(southAttackImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
+			else
+				g.drawImage(southImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
 			break;
 		case World.EAST:
-			g.drawImage(eastImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
+			if(System.currentTimeMillis() - this.attackStartTime < 500)
+				g.drawImage(eastAttackImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
+			else
+				g.drawImage(eastImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
 			break;
 		case World.WEST:
-			g.drawImage(westImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
+			if(System.currentTimeMillis() - this.attackStartTime < 500)
+				g.drawImage(westAttackImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
+			else
+				g.drawImage(westImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
 			break;
 		}
 	}
 
 	@Override
 	public void collide(Entity e) {
-		// System.out.println("Player Collision");
-		// e.damage(1, this);
+		if(System.currentTimeMillis() - this.attackStartTime < ATTACK_COOLDOWN)
+			e.damage(2, this);
 	}
 
 	@Override
@@ -107,6 +135,9 @@ public final class Player extends Entity {
 	 */
 	public void move(int pixels) {
 		boolean canMove = !World.willCollide(x, y, facing, pixels);
+		//Can't move while attacking
+		if(System.currentTimeMillis() - this.attackStartTime < ATTACK_COOLDOWN)
+			canMove = false;
 		if (canMove) {
 			switch (facing) {
 			case World.NORTH:
@@ -146,6 +177,8 @@ public final class Player extends Entity {
 	}
 
 	public void attack() {
+		if(System.currentTimeMillis() - this.attackStartTime > ATTACK_COOLDOWN)
+			attackStartTime = System.currentTimeMillis();
 	}
 
 	public int getHealth() {

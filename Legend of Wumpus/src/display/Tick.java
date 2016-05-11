@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 public class Tick implements ActionListener {
 	private JPanel container;
 	private KeyboardHandler kb;
-	private boolean wasQPressed = false;
 
 	public Tick(JPanel parent, KeyboardHandler kb) {
 		container = parent;
@@ -31,12 +30,8 @@ public class Tick implements ActionListener {
 	private void movePlayer() {
 		if (kb.isKeyPressed('w'))
 			World.getThePlayer().move(5);
-		if(!wasQPressed && kb.isKeyPressed('q')){
-			wasQPressed = true;
+		if (kb.isKeyPressed('q'))
 			World.getThePlayer().attack();
-		}else {
-			wasQPressed = false;
-		}
 	}
 
 	/**
