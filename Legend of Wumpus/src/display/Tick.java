@@ -46,10 +46,7 @@ public class Tick implements ActionListener {
 				// If they are within each others boxes
 				if ((Math.abs(e.getX() - x.getX()) * 2 < e.getWidth() + x.getWidth())
 						&& (Math.abs(e.getY() - x.getY()) * 2 < e.getHeight() + x.getHeight())) {
-					// if (Math.abs(e.getX() - x.getX()) + Math.abs(e.getY() -
-					// x.getY()) < 30) {
 					e.collide(x);
-					// System.out.println("collision");
 				}
 			}
 		}

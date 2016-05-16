@@ -11,7 +11,7 @@ import javax.swing.*;
  */
 public class WumpusPanel extends JPanel {
 	// This SHOULD be private. We must make it so.
-	private static KeyboardHandler kb;
+	private KeyboardHandler kb;
 
 	public WumpusPanel() {
 		super();
