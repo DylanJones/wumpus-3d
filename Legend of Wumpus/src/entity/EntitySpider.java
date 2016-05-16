@@ -14,6 +14,7 @@ public class EntitySpider extends EntityMinion {
 	static {
 		try {
 			standingImage = ImageIO.read(new File("assets/spider/standing.png"));
+			jumpingImage = ImageIO.read(new File("assets/spider/jumping.png"));
 		} catch (IOException e) {
 			System.err.println("Error reading Spider images!");
 			System.exit(1);
