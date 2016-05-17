@@ -14,7 +14,10 @@ import javax.swing.JPanel;
 import entity.Entity;
 import entity.Player;
 
-/** This is a class of constants. It will contain global variables. */
+/**
+ * This is a class for miscilaneous things related to the World. It will contain
+ * global variables.
+ */
 public final class World {
 	// Game state: 0 = overworld, 1 = bossfight, 2 = dead, 3 = dungeon
 	// 4 = title screen / loading
@@ -29,7 +32,7 @@ public final class World {
 	public static final int EAST = 1;
 	public static final int SOUTH = 2;
 	public static final int WEST = 3;
-	
+
 	public static final int VERTICAL = 1;
 	public static final int HORIZONTAL = 2;
 
@@ -88,80 +91,102 @@ public final class World {
 	/**
 	 * Called when the player walks off the screen, loads the new section of
 	 * world in the specified direction
-	 * @param direction Which direction to load the world from
+	 * 
+	 * @param direction
+	 *            Which direction to load the world from
 	 */
 	public static void loadWorld(int direction) {
 	}
 
 	/**
-	* Load the specified world file into memory, and kill all the previouisus things that were in the world
-	* @param worldFile The world file to load
-	*/
+	 * Load the specified world file into memory, and kill all the previouisus
+	 * things that were in the world
+	 * 
+	 * @param worldFile
+	 *            The world file to load
+	 */
 	public static void loadWorld(String worldFile) {
 		WorldTemplate worldTemplate = new WorldTemplate(worldFile);
 		worldTemplate.load();
 	}
 
 	/**
-	* Start the world clock with the parent and keyboardhandler
-	* @param parent  The parent of the new tick
-	* @param kb  The keyboardhandler associated with parent
-	*/
+	 * Start the world clock with the parent and keyboardhandler
+	 * 
+	 * @param parent
+	 *            The parent of the new tick
+	 * @param kb
+	 *            The keyboardhandler associated with parent
+	 */
 	public static void startTicker(JPanel parent, KeyboardHandler kb) {
 		ticker = new Timer(33, new Tick(parent, kb));
 		ticker.start();
 	}
 
 	/**
-	* Stop the world clock.
-	*/
+	 * Stop the world clock.
+	 */
 	public static void stopTicker() {
 		ticker.stop();
 	}
 
 	/**
-	* Add a wall to the world.
-	* @param x The x coordinate of the wall
-	* @param y The y coordinate of the wall
-	* @param length The length of the wall
-	* @param direction Is the wall horizontal or vertical
-	*/
+	 * Add a wall to the world.
+	 * 
+	 * @param x
+	 *            The x coordinate of the wall
+	 * @param y
+	 *            The y coordinate of the wall
+	 * @param length
+	 *            The length of the wall
+	 * @param direction
+	 *            Is the wall horizontal or vertical
+	 */
 	public static void addWall(int x, int y, int length, int direction) {
 		walls.add(new Wall(x, y, length, direction));
 	}
 
 	/**
-	* Return a set view of all the walls.
-	* @return the walls
-	*/
+	 * Return a set view of all the walls.
+	 * 
+	 * @return the walls
+	 */
 	public static Set<Wall> getWalls() {
 		return new HashSet<Wall>(walls);
 	}
-	
+
 	/**
-	* Checks for a collison in the specifid movment
-	* @param x the x coordinate of entity
-	* @param y the y coordinate of entity
-	* @param facing The direction in which to move
-	* @param movment The amount that will be moved in pixels
-	* @return Whetehr or not the movment will run into a wall
-	*/
+	 * Checks for a collison in the specifid movment
+	 * 
+	 * @param x
+	 *            the x coordinate of entity
+	 * @param y
+	 *            the y coordinate of entity
+	 * @param facing
+	 *            The direction in which to move
+	 * @param movment
+	 *            The amount that will be moved in pixels
+	 * @return Whetehr or not the movment will run into a wall
+	 */
 	public static boolean willCollide(int x, int y, int facing, int movment) {
 	}
 
 	/**
-	* Get the background image.
-	* @return the background image for the current screen
-	*/
+	 * Get the background image.
+	 * 
+	 * @return the background image for the current screen
+	 */
 	public static Image getBackgroundImage() {
 		return backgroundImage;
 	}
 
 	/**
-	* Load and set the backgriund image for the wolrd
-	* @param filename The filename of the new background image
-	* 
-	*/
+	 * Load and set the backgriund image for the wolrd
+	 * 
+	 * @param filename
+	 *            The filename of the new background image
+	 * 
+	 */
 	public static void setBackgroundImage(String filename) {
 	}
 
