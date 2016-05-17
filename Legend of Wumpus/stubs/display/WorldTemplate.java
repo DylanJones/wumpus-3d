@@ -23,6 +23,7 @@ public final class WorldTemplate {
 	}
 
 	private void parseFile(String filename) {
+<<<<<<< 36ca0f63daebc762b130712661b5e1d31f124c8b
 		// Read the filename into this object's private fields
 	}
 
@@ -32,6 +33,17 @@ public final class WorldTemplate {
 
 	private void createEntity(String entity) {
 		// Parse the given string and spawn in a new entity
+=======
+		//Read the file into this object's attributes, but don't spawn entities or change world
+	}
+
+	public void load() {
+		//Spawn in the entites and walls specified by the private variables
+	}
+
+	private void createEntity(String entity) {
+		// Take the entity string and initalize an entity with those parameters
+>>>>>>> Merge issues
 	}
 
 	public String getNextWorld(int direction) {
