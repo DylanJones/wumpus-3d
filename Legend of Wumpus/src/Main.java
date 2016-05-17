@@ -13,12 +13,5 @@ public class Main {
 		frame.setSize(640, 480);
 		frame.setVisible(true);
 		// frame.setResizable(false);
-		/* TEMPORARY, DELETE SOON */
-		new EntityGremlin(100, 100, 500, 380);
-		/*
-		 * MusicPlayer.changePlayingMusic("/assets/music/SplashScreenTheme.wav")
-		 * ; Thread.sleep(1000*10);
-		 * MusicPlayer.changePlayingMusic("/assets/music/DungeonTheme.wav");
-		 */
 	}
 }

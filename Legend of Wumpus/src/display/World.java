@@ -24,6 +24,7 @@ public final class World {
 	private static HashSet<Wall> walls = new HashSet<Wall>();
 	private static Player thePlayer;
 	private static Timer ticker;
+	private static String currentWorld;
 
 	public static final int NORTH = 0;
 	public static final int EAST = 1;
@@ -90,13 +91,16 @@ public final class World {
 	 * world in the specified direction
 	 */
 	public static void loadWorld(int direction) {
-		System.out.println("Someone fix this");
+		WorldTemplate worldTemplate = new WorldTemplate(currentWorld);
+		String nextWorld = worldTemplate.getNextWorld(direction);
+		loadWorld(nextWorld);
 	}
 
 	public static void loadWorld(String worldFile) {
-		/* Open and read file... */
-		/* PLEASE FIX THIS!!! YOU CAN DELETE WHATEVER YOU NEED TO */
-		// new File(worldFile).read();
+		entities = new HashSet<Entity>();
+		walls = new HashSet<Wall>();
+		entities.add(thePlayer);
+		currentWorld = worldFile;
 		WorldTemplate worldTemplate = new WorldTemplate(worldFile);
 		worldTemplate.load();
 	}
@@ -159,7 +163,7 @@ public final class World {
 
 	public static void setBackgroundImage(String filename) {
 		try {
-			backgroundImage = ImageIO.read(new File(filename));
+			backgroundImage = ImageIO.read(new File(filename)).getScaledInstance(640,480,Image.SCALE_REPLICATE);
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.err.println("Error loading image file " + filename);

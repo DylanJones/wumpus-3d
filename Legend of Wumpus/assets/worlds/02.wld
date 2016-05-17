@@ -1,19 +1,17 @@
 #Starting world file
 metadata:
 version 0.1
-image 01.png
-north 02.wld
-south null.wld
+image 02.png
+north null.wld
+south 01.wld
 east null.wld
 west null.wld
 
 walls:
-320 0 300 vertical
-100 100 200 horizontal
 
 entities:
 gremlin 100 100 200 200
 gremlin 220 240 320 240
 
 music:
-DungeonTheme.wav
+SplashScreenTheme.wav

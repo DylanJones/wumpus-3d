@@ -13,10 +13,10 @@ public final class WorldTemplate {
 	public final ArrayList<String> walls = new ArrayList<String>();
 	public String version;
 	public String image;
-	private String worldNorth;
-	private String worldSouth;
-	private String worldEast;
-	private String worldWest;
+	private String worldNorth = "null.wld";
+	private String worldSouth = "null.wld";
+	private String worldEast = "null.wld";
+	private String worldWest = "null.wld";
 
 	public WorldTemplate(String filename) {
 		parseFile(filename);
