@@ -9,10 +9,11 @@ import entity.EntityGremlin;
 
 /** A class to contain the World template data */
 public final class WorldTemplate {
-	public final ArrayList<String> entities = new ArrayList<String>();
-	public final ArrayList<String> walls = new ArrayList<String>();
-	public String version;
-	public String image;
+	private final ArrayList<String> entities = new ArrayList<String>();
+	private final ArrayList<String> walls = new ArrayList<String>();
+	private String version;
+	private String image;
+	private String musicName = null;
 	private String worldNorth = "null.wld";
 	private String worldSouth = "null.wld";
 	private String worldEast = "null.wld";
@@ -63,13 +64,21 @@ public final class WorldTemplate {
 			if (lastLine.startsWith("west "))
 				this.worldWest = lastLine.replace("west ", "");
 		}
-		// Read walls UNTIL entities
+		// Read walls UNTIL music
+		while (!lastLine.contains("music:")) {
+			fileIndex++;
+			lastLine = fileContents.get(fileIndex);
+			if (!lastLine.equalsIgnoreCase("music:"))
+				walls.add(lastLine);
+		}
+		// Read music UNTIL entities
 		while (!lastLine.contains("entities:")) {
 			fileIndex++;
 			lastLine = fileContents.get(fileIndex);
 			if (!lastLine.equalsIgnoreCase("entities:"))
-				walls.add(lastLine);
+				musicName = lastLine;
 		}
+
 		// Read entities UNTIL EOF
 		while (fileIndex < fileContents.size()) {
 			lastLine = fileContents.get(fileIndex);
@@ -80,6 +89,7 @@ public final class WorldTemplate {
 
 	public void load() {
 		World.setBackgroundImage(image);
+		MusicPlayer.changePlayingMusic("assets/music/"+musicName);
 		for (String wall : this.walls) {
 			String[] coords = wall.split(" ");
 			int x = Integer.parseInt(coords[0]);
