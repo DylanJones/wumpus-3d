@@ -9,9 +9,9 @@ west null.wld
 
 walls:
 
+music:
+SplashScreenTheme.wav
+
 entities:
 gremlin 100 100 200 200
 gremlin 220 240 320 240
-
-music:
-SplashScreenTheme.wav
