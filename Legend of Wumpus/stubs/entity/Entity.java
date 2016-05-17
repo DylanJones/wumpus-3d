@@ -38,7 +38,9 @@ public abstract class Entity {
 	 * Called every tick to draw the entity on the screen.
 	 */
 	public abstract void draw(Graphics g);
-
+	/**
+	* Retrieving entity data
+	*/
 	public int getX() {
 		return x;
 	}

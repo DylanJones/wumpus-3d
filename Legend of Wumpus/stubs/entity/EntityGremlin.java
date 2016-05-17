@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import display.World;
 
 public class EntityGremlin extends EntityMinion {
+	//Resource Files
 	private static Image gremlinNorth;
 	private static Image gremlinSouth;
 	private static Image gremlinEast;
