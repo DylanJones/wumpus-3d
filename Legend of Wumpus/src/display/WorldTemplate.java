@@ -89,7 +89,7 @@ public final class WorldTemplate {
 
 	public void load() {
 		World.setBackgroundImage(image);
-		MusicPlayer.changePlayingMusic("assets/music/"+musicName);
+		MusicPlayer.changePlayingMusic("/assets/music/"+musicName);
 		for (String wall : this.walls) {
 			String[] coords = wall.split(" ");
 			int x = Integer.parseInt(coords[0]);
