@@ -161,7 +161,7 @@ public final class Player extends Entity {
 			switch (facing) {
 			case World.NORTH:
 				// IF we are not walking off the screen:
-				if (y >= pixels) {
+				if (y - 60 >= pixels) {
 					y -= pixels;
 				} else {
 					y = 384;
@@ -172,7 +172,7 @@ public final class Player extends Entity {
 				if (y <= 384 - pixels) {
 					y += pixels;
 				} else {
-					y = 0;
+					y = 48;
 					World.loadWorld(World.SOUTH);
 				}
 				break;
