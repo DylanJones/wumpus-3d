@@ -8,8 +8,8 @@ east 8I.wld
 west 8G.wld
 
 walls:
-320 0 300 vertical
-100 100 200 horizontal
+65 279 385 horizontal
+70 194 85 vertical
 
 music:
 SplashScreenTheme.wav

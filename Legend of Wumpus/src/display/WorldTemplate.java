@@ -105,7 +105,7 @@ public final class WorldTemplate {
 					direction = World.VERTICAL;
 				}
 			}
-			World.addWall(x, y, length, direction);
+			World.addWall(x, y+48, length, direction);
 		}
 
 		for (String entity : this.entities) {
