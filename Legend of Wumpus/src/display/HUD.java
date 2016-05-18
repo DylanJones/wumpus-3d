@@ -23,7 +23,7 @@ public final class HUD {
 	 */
 	private static void drawHealth(Graphics g) {
 		for (int i = 0; i < World.getThePlayer().getHealth(); i++) {
-			g.drawImage(heart, 595 - (25 * i), 10, null);
+			g.drawImage(heart, 480 - (25 * i), 15, null);
 		}
 	}
 

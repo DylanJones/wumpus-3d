@@ -163,7 +163,7 @@ public final class World {
 
 	public static void setBackgroundImage(String filename) {
 		try {
-			backgroundImage = ImageIO.read(new File(filename)).getScaledInstance(640,480,Image.SCALE_REPLICATE);
+			backgroundImage = ImageIO.read(new File(filename)).getScaledInstance(512,336,Image.SCALE_REPLICATE);
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.err.println("Error loading image file " + filename);

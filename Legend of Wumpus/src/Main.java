@@ -10,7 +10,7 @@ public class Main {
 		JPanel panel = new WumpusPanel();
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.add(panel);
-		frame.setSize(640, 480);
+		frame.setSize(512, 384);
 		frame.setVisible(true);
 		frame.setResizable(false);
 	}

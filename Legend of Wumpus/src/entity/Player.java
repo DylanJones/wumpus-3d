@@ -11,7 +11,8 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * This class should handle all of the things related to the Player. It should
+ * This class should handle all of the things re
+ * lated to the Player. It should
  * NOT handle drawing the GUI (beyond drawing the player sprite).
  */
 public final class Player extends Entity {
@@ -163,12 +164,12 @@ public final class Player extends Entity {
 				if (y >= pixels) {
 					y -= pixels;
 				} else {
-					y = 480;
+					y = 384;
 					World.loadWorld(World.NORTH);
 				}
 				break;
 			case World.SOUTH:
-				if (y <= 480 - pixels) {
+				if (y <= 384 - pixels) {
 					y += pixels;
 				} else {
 					y = 0;
@@ -176,7 +177,7 @@ public final class Player extends Entity {
 				}
 				break;
 			case World.EAST:
-				if (x <= 640 - pixels) {
+				if (x <= 512 - pixels) {
 					x += pixels;
 				} else {
 					x = 0;
@@ -187,7 +188,7 @@ public final class Player extends Entity {
 				if (x >= pixels) {
 					x -= pixels;
 				} else {
-					x = 640;
+					x = 512;
 					World.loadWorld(World.WEST);
 				}
 				break;

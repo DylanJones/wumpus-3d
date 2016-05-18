@@ -13,7 +13,7 @@ public final class WorldTemplate {
 	private final ArrayList<String> walls = new ArrayList<String>();
 	private String version;
 	private String image;
-	private String musicName = null;
+	private String musicName = "SplashScreenTheme.wav";
 	private String worldNorth = "null.wld";
 	private String worldSouth = "null.wld";
 	private String worldEast = "null.wld";

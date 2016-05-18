@@ -19,16 +19,18 @@ public class WumpusPanel extends JPanel {
 		addKeyListener(kb);
 		setFocusable(true);
 		World.startTicker(this, kb);
-		World.loadWorld("02.wld");
+		World.loadWorld("8H.wld");
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
 		// Clear the screen
 		if (World.getBackgroundImage() != null) {
-			g.drawImage(World.getBackgroundImage(), 0, 0, null);
+			g.drawImage(World.getBackgroundImage(), 0, 48, null);
+			g.setColor(Color.BLACK);
+			g.fillRect(0, 0, this.getWidth(), 48);
 		} else {
-			g.setColor(Color.WHITE);
+			g.setColor(Color.BLACK);
 			g.fillRect(0, 0, this.getWidth(), this.getHeight());
 		}
 		HUD.drawHud(g);

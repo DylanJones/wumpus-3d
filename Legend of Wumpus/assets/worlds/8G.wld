@@ -1,10 +1,10 @@
 #Starting world file
 metadata:
 version 0.1
-image 02.png
+image 8G.png
 north null.wld
-south 01.wld
-east null.wld
+south null.wld
+east 8H.wld
 west null.wld
 
 walls:
@@ -13,5 +13,3 @@ music:
 SplashScreenTheme.wav
 
 entities:
-gremlin 100 100 200 200
-gremlin 220 240 320 240

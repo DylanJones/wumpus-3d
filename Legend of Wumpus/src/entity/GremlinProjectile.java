@@ -37,7 +37,7 @@ public class GremlinProjectile extends EntityItem {
 	@Override
 	public void tick() {
 		// Die if we fall off the screen
-		if (this.x > 640 || this.x < 0 || this.y > 480 || this.y < 0)
+		if (this.x > 512 || this.x < 0 || this.y > 384 || this.y < 0)
 			World.deregisterEntity(this);
 		switch (facing) {
 		case World.NORTH:

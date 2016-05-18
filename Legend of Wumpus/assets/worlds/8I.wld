@@ -1,0 +1,15 @@
+#Starting world file
+metadata:
+version 0.1
+image 8I.png
+north null.wld
+south null.wld
+east null.wld
+west 8H.wld
+
+walls:
+
+music:
+SplashScreenTheme.wav
+
+entities:
