@@ -2,128 +2,13 @@
 metadata:
 version 0.1
 image 7H.png
-north null.wld
+north 8H.wld
 south 8H.wld
-east null.wld
-west null.wld
+east 8G.wld
+west 8I.wld
 
 walls:
-64 287 162 horizontal
-226 289 44 vertical
-285 274 60 vertical
-284 273 7 horizontal
-291 263 9 vertical
-292 263 4 horizontal
-298 256 6 vertical
-298 256 38 horizontal
-336 257 8 vertical
-336 265 12 horizontal
-348 268 14 vertical
-349 282 9 vertical
-349 291 99 horizontal
-448 265 27 vertical
-448 265 7 horizontal
-454 266 6 horizontal
-459 253 13 vertical
-460 253 17 horizontal
-477 233 19 vertical
-477 233 10 horizontal
-487 223 8 vertical
-487 223 23 horizontal
-382 227 31 vertical
-383 258 34 horizontal
-417 224 32 vertical
-381 224 35 horizontal
-381 162 32 vertical
-382 194 36 horizontal
-418 158 34 vertical
-381 158 34 horizontal
-383 99 31 vertical
-383 130 35 horizontal
-418 96 33 vertical
-382 96 34 horizontal
-62 266 18 vertical
-48 266 12 horizontal
-48 255 11 vertical
-32 254 14 horizontal
-32 237 17 vertical
-20 237 11 horizontal
-20 225 11 vertical
-4 224 16 horizontal
-3 127 17 horizontal
-20 113 13 vertical
-20 112 15 horizontal
-35 94 14 vertical
-34 95 20 horizontal
-54 80 14 vertical
-53 80 14 horizontal
-67 65 13 vertical
-67 65 156 horizontal
-258 65 26 horizontal
-284 67 16 vertical
-285 83 11 horizontal
-296 84 7 vertical
-296 91 16 horizontal
-312 90 10 vertical
-313 98 14 horizontal
-327 94 4 vertical
-327 94 13 horizontal
-340 83 9 vertical
-339 83 16 horizontal
-355 65 17 vertical
-353 65 92 horizontal
-445 67 15 vertical
-447 82 6 horizontal
-453 84 5 vertical
-457 89 14 horizontal
-471 94 15 vertical
-472 88 10 vertical
-452 90 10 horizontal
-454 85 5 vertical
-470 109 7 horizontal
-477 109 12 vertical
-478 121 24 horizontal
-501 122 7 vertical
-500 129 12 horizontal
-35 104 7 vertical
-67 75 5 vertical
-159 225 34 vertical
-158 258 36 horizontal
-194 223 33 vertical
-156 223 34 horizontal
-191 222 4 horizontal
-194 250 7 vertical
-186 222 7 horizontal
-159 222 12 vertical
-227 287 10 vertical
-348 264 13 vertical
-340 87 7 vertical
-97 224 29 horizontal
-126 225 30 vertical
-94 256 33 horizontal
-94 223 34 vertical
-94 225 9 horizontal
-160 160 35 vertical
-159 193 35 horizontal
-194 160 34 vertical
-161 160 31 horizontal
-190 159 3 horizontal
-129 158 32 vertical
-94 158 34 horizontal
-94 159 36 vertical
-94 195 37 horizontal
-131 185 10 vertical
-158 94 39 vertical
-158 130 35 horizontal
-193 92 37 vertical
-157 92 35 horizontal
-157 95 8 vertical
-125 99 31 vertical
-92 130 33 horizontal
-92 93 37 vertical
-93 93 32 horizontal
-125 93 4 vertical
-126 96 12 vertical
+234 63 272 vertical
 
 music:
 SplashScreenTheme.wav
