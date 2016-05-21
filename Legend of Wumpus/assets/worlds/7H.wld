@@ -9,6 +9,7 @@ west 8I.wld
 
 walls:
 234 63 272 vertical
+300 90 272 horizontal
 
 music:
 SplashScreenTheme.wav

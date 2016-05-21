@@ -127,28 +127,28 @@ public final class World {
 		switch (facing) {
 		case World.NORTH:
 			for (Wall wall : World.getWalls()) {
-				if ((x > wall.x && x < wall.length + wall.x) && y - movment <= wall.y && y >= wall.y && wall.facing == World.HORIZONTAL) {
+				if ((x > wall.x && x < wall.length + wall.x) && y - movment - (thePlayer.getSpriteHeight()/2) <= wall.y && y >= wall.y && wall.facing == World.HORIZONTAL) {
 					willCollide = true;
 				}
 			}
 			break;
 		case World.SOUTH:
 			for (Wall wall : World.getWalls()) {
-				if ((x > wall.x && x < wall.length + wall.x) && y + movment >= wall.y && y <= wall.y && wall.facing == World.HORIZONTAL) {
+				if ((x > wall.x && x < wall.length + wall.x) && y + movment + (thePlayer.getSpriteHeight()/2) >= wall.y && y <= wall.y && wall.facing == World.HORIZONTAL) {
 					willCollide = true;
 				}
 			}
 			break;
 		case World.EAST:
 			for (Wall wall : World.getWalls()) {
-				if ((y > wall.y && y < wall.length + wall.y) && x + movment >= wall.x && x <= wall.x && wall.facing == World.VERTICAL) {
+				if ((y > wall.y && y < wall.length + wall.y) && x + movment + (thePlayer.getSpriteWidth()/2) >= wall.x && x <= wall.x && wall.facing == World.VERTICAL) {
 					willCollide = true;
 				}
 			}
 			break;
 		case World.WEST:
 			for (Wall wall : World.getWalls()) {
-				if ((y > wall.y && y < wall.length + wall.y) && x - movment <= wall.x && x >= wall.x && wall.facing == World.VERTICAL) {
+				if ((y > wall.y && y < wall.length + wall.y) && x - movment - (thePlayer.getSpriteWidth()/2) <= wall.x && x >= wall.x && wall.facing == World.VERTICAL) {
 					willCollide = true;
 				}
 			}

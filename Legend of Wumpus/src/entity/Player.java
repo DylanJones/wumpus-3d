@@ -223,4 +223,12 @@ public final class Player extends Entity {
 	public int getHealth() {
 		return health;
 	}
+
+	public int getSpriteHeight() {
+		return spriteHeight;
+	}
+
+	public int getSpriteWidth() {
+		return spriteWidth;
+	}
 }

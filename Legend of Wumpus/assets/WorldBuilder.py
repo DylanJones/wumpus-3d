@@ -51,7 +51,7 @@ def save(evt = None):
                 #Horizontal
                 length = int(abs(coords[0] - coords[2]))
                 type = "horizontal"
-            file.write(str(x+11) + " " + str(y) + " " + str(length) + " " + type + "\n")
+            file.write(str(x) + " " + str(y) + " " + str(length) + " " + type + "\n")
         #More stuff
 def undo(evt = None):
     canvas.delete(walls[len(walls)-1])
