@@ -32,7 +32,7 @@ canvas.bind("<Motion>", mouseMove)
 walls = [] #tkid of walls on canvas
 enemies = [] #tuple of enemies on canvas
 
-def save(evt = None):
+def save(evt):
     with filedialog.asksaveasfile() as file:
         file.write("metadata:\n")
         tmp = bgimg.filename.split('/')
@@ -53,11 +53,11 @@ def save(evt = None):
                 type = "horizontal"
             file.write(str(x) + " " + str(y) + " " + str(length) + " " + type + "\n")
         #More stuff
-def undo(evt = None):
+def undo(evt):
     canvas.delete(walls[len(walls)-1])
     walls.pop()
 
-def set_background(evt = None):
+def set_background(evt):
     global bgimg, bg_canvas, tkimg
     bgimg = Image.open(filedialog.askopenfile().name)
     tkimg = ImageTk.PhotoImage(bgimg)
