@@ -10,11 +10,28 @@ import javax.imageio.ImageIO;
 import display.World;
 
 public class EntitySpider extends EntityMinion {
+	// Enum because WHY NOT.
 	private enum Direction {
-		NORTHWEST, SOUTHWEST, SOUTHEAST, NORTHEAST;
+		NORTHWEST {
+			public final int nextXAdd = JUMP_DISTANCE * -1;
+			public final int nextYAdd = JUMP_DISTANCE;
+		}, SOUTHWEST {
+			public final int nextXAdd = JUMP_DISTANCE;
+			public final int nextYAdd = JUMP_DISTANCE;
+		}, SOUTHEAST {
+			public final int nextXAdd = JUMP_DISTANCE;
+			public final int nextYAdd = JUMP_DISTANCE * -1;
+		}, NORTHEAST {
+			public final int nextXAdd = JUMP_DISTANCE * -1;
+			public final int nextYAdd = JUMP_DISTANCE * -1;
+		};
+		public final int nextXAdd = 0;
+		public final int nextYAdd = 0;
 	}
+
 	private static Image standingImage;
 	private static Image jumpingImage;
+	private static final int JUMP_DISTANCE = 50;
 
 	private boolean jumping = false;
 	private long lastJumpTime = 0;
@@ -45,7 +62,7 @@ public class EntitySpider extends EntityMinion {
 	@Override
 	public void tick() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -67,16 +84,50 @@ public class EntitySpider extends EntityMinion {
 		}
 	}
 
+	private void startJump() {
+		Direction d = whichWayToJump();
+		if (canJump(d)) {
+			jumping = true;
+			lastJumpTime = System.currentTimeMillis();
+		}
+	}
+
+	private boolean canJump(Direction dir) {
+		switch (dir) {
+		case NORTHEAST:
+			if (World.willCollide(x, y, World.NORTH, JUMP_DISTANCE))
+				if (World.willCollide(x, y - JUMP_DISTANCE, World.EAST, JUMP_DISTANCE))
+					return true;
+			break;
+		case NORTHWEST:
+			if (World.willCollide(x, y, World.NORTH, JUMP_DISTANCE))
+				if (World.willCollide(x, y - JUMP_DISTANCE, World.WEST, JUMP_DISTANCE))
+					return true;
+			break;
+		case SOUTHEAST:
+			if (World.willCollide(x, y, World.NORTH, JUMP_DISTANCE))
+				if (World.willCollide(x, y + JUMP_DISTANCE, World.EAST, JUMP_DISTANCE))
+					return true;
+			break;
+		case SOUTHWEST:
+			if (World.willCollide(x, y, World.NORTH, JUMP_DISTANCE))
+				if (World.willCollide(x, y + JUMP_DISTANCE, World.WEST, JUMP_DISTANCE))
+					return true;
+			break;
+		}
+		return false;
+	}
+
 	private Direction whichWayToJump() {
 		int playerX = World.getThePlayer().getX();
 		int playerY = World.getThePlayer().getY();
-		if(playerX > x) {
-			if(playerY > y)
+		if (playerX > x) {
+			if (playerY > y)
 				return Direction.SOUTHEAST;
 			else
 				return Direction.NORTHEAST;
 		} else {
-			if(playerY > y)
+			if (playerY > y)
 				return Direction.SOUTHWEST;
 			else
 				return Direction.NORTHWEST;
