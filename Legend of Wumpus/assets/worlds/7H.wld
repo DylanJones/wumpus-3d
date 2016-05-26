@@ -2,12 +2,14 @@
 metadata:
 version 0.1
 image 7H.png
-north null.wld
+north 8H.wld
 south 8H.wld
-east null.wld
-west null.wld
+east 8G.wld
+west 8I.wld
 
 walls:
+234 63 272 vertical
+300 90 272 horizontal
 
 music:
 SplashScreenTheme.wav

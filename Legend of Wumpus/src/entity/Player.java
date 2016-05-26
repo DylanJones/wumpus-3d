@@ -60,8 +60,8 @@ public final class Player extends Entity {
 		this.health = 10;
 		this.spriteHeight = northImage.getHeight(null);
 		this.spriteWidth = northImage.getWidth(null);
-		this.x = 300;
-		this.y = 100;
+		this.x = 200;
+		this.y = 200;
 	}
 
 	/**
@@ -148,11 +148,30 @@ public final class Player extends Entity {
 				spriteWidth = westAttackImage.getWidth(null);
 				break;
 			}
+		} else {
+			switch (facing) {
+			case World.NORTH:
+				spriteHeight = northImage.getHeight(null);
+				spriteWidth = northImage.getWidth(null);
+				break;
+			case World.SOUTH:
+				spriteHeight = southImage.getHeight(null);
+				spriteWidth = southImage.getWidth(null);
+				break;
+			case World.EAST:
+				spriteHeight = eastImage.getHeight(null);
+				spriteWidth = eastImage.getWidth(null);
+				break;
+			case World.WEST:
+				spriteHeight = westImage.getHeight(null);
+				spriteWidth = westImage.getWidth(null);
+				break;
+			}
 		}
 	}
 
 	public void move(int pixels) {
-		boolean canMove = !World.willCollide(x, y, facing, pixels);
+		boolean canMove = !World.willCollide(x, y, facing, pixels, this);
 		// Can't move while attacking
 		if (System.currentTimeMillis() - this.attackStartTime < ATTACK_COOLDOWN)
 			canMove = false;
@@ -199,9 +218,5 @@ public final class Player extends Entity {
 	public void attack() {
 		if (System.currentTimeMillis() - this.attackStartTime > ATTACK_COOLDOWN)
 			attackStartTime = System.currentTimeMillis();
-	}
-
-	public int getHealth() {
-		return health;
 	}
 }

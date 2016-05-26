@@ -54,4 +54,8 @@ public abstract class Entity {
 	public int getHeight() {
 		return spriteHeight;
 	}
+
+	public int getHealth() {
+		return health;
+	}
 }
