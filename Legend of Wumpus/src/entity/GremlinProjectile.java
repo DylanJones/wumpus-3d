@@ -7,13 +7,14 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+import display.Direction;
 import display.World;
 
 public class GremlinProjectile extends EntityItem {
 	protected static Image projectileImage;
 	private static final int SPEED = 7;
 	private int damageAmount;
-	private int facing;
+	private Direction facing;
 
 	static {
 		try {
@@ -24,12 +25,12 @@ public class GremlinProjectile extends EntityItem {
 		}
 	}
 
-	public GremlinProjectile(int x, int y, int damageAmount, int direction) {
+	public GremlinProjectile(int x, int y, int damageAmount, Direction facing2) {
 		super();
 		this.x = x;
 		this.y = y;
 		this.damageAmount = damageAmount;
-		this.facing = direction;
+		this.facing = facing2;
 		this.spriteHeight = projectileImage.getHeight(null);
 		this.spriteWidth = projectileImage.getWidth(null);
 	}
@@ -40,16 +41,16 @@ public class GremlinProjectile extends EntityItem {
 		if (this.x > 512 || this.x < 0 || this.y > 384 || this.y < 0)
 			World.deregisterEntity(this);
 		switch (facing) {
-		case World.NORTH:
+		case NORTH:
 			this.y -= SPEED;
 			break;
-		case World.SOUTH:
+		case SOUTH:
 			this.y += SPEED;
 			break;
-		case World.EAST:
+		case EAST:
 			this.x += SPEED;
 			break;
-		case World.WEST:
+		case WEST:
 			this.x -= SPEED;
 			break;
 		}

@@ -2,7 +2,7 @@ package entity;
 
 import javax.imageio.ImageIO;
 
-import display.Wall;
+import display.Direction;
 import display.World;
 
 import java.awt.Graphics;
@@ -26,7 +26,7 @@ public final class Player extends Entity {
 	private static Image eastAttackImage;
 	private static Image westAttackImage;
 
-	private int facing = World.NORTH;
+	private Direction facing = Direction.NORTH;
 	private long lastDamageTime = 0;
 	private long attackStartTime = 0;
 
@@ -71,25 +71,25 @@ public final class Player extends Entity {
 	@Override
 	public void draw(Graphics g) {
 		switch (facing) {
-		case World.NORTH:
+		case NORTH:
 			if (System.currentTimeMillis() - this.attackStartTime < 500)
 				g.drawImage(northAttackImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
 			else
 				g.drawImage(northImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
 			break;
-		case World.SOUTH:
+		case SOUTH:
 			if (System.currentTimeMillis() - this.attackStartTime < 500)
 				g.drawImage(southAttackImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
 			else
 				g.drawImage(southImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
 			break;
-		case World.EAST:
+		case EAST:
 			if (System.currentTimeMillis() - this.attackStartTime < 500)
 				g.drawImage(eastAttackImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
 			else
 				g.drawImage(eastImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
 			break;
-		case World.WEST:
+		case WEST:
 			if (System.currentTimeMillis() - this.attackStartTime < 500)
 				g.drawImage(westAttackImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
 			else
@@ -121,48 +121,44 @@ public final class Player extends Entity {
 	}
 
 	public void turnLeft() {
-		facing = (facing + 1) % 4; // 0, 1, 2, 3
-	}
-
-	public int getDirection() {
-		return facing;
+		facing = facing.getLeft();
 	}
 
 	public void tick() {
 		if (System.currentTimeMillis() - attackStartTime < ATTACK_COOLDOWN) {
 			switch (facing) {
-			case World.NORTH:
+			case NORTH:
 				spriteHeight = northAttackImage.getHeight(null);
 				spriteWidth = northAttackImage.getWidth(null);
 				break;
-			case World.SOUTH:
+			case SOUTH:
 				spriteHeight = southAttackImage.getHeight(null);
 				spriteWidth = southAttackImage.getWidth(null);
 				break;
-			case World.EAST:
+			case EAST:
 				spriteHeight = eastAttackImage.getHeight(null);
 				spriteWidth = eastAttackImage.getWidth(null);
 				break;
-			case World.WEST:
+			case WEST:
 				spriteHeight = westAttackImage.getHeight(null);
 				spriteWidth = westAttackImage.getWidth(null);
 				break;
 			}
 		} else {
 			switch (facing) {
-			case World.NORTH:
+			case NORTH:
 				spriteHeight = northImage.getHeight(null);
 				spriteWidth = northImage.getWidth(null);
 				break;
-			case World.SOUTH:
+			case SOUTH:
 				spriteHeight = southImage.getHeight(null);
 				spriteWidth = southImage.getWidth(null);
 				break;
-			case World.EAST:
+			case EAST:
 				spriteHeight = eastImage.getHeight(null);
 				spriteWidth = eastImage.getWidth(null);
 				break;
-			case World.WEST:
+			case WEST:
 				spriteHeight = westImage.getHeight(null);
 				spriteWidth = westImage.getWidth(null);
 				break;
@@ -178,37 +174,37 @@ public final class Player extends Entity {
 		//Move in specified direction
 		if (canMove) {
 			switch (facing) {
-			case World.NORTH:
+			case NORTH:
 				// IF we are not walking off the screen:
 				if (y - 60 >= pixels) {
 					y -= pixels;
 				} else {
 					y = 384;
-					World.loadWorld(World.NORTH);
+					World.loadWorld(Direction.NORTH);
 				}
 				break;
-			case World.SOUTH:
+			case SOUTH:
 				if (y <= 384 - pixels) {
 					y += pixels;
 				} else {
 					y = 48;
-					World.loadWorld(World.SOUTH);
+					World.loadWorld(Direction.SOUTH);
 				}
 				break;
-			case World.EAST:
+			case EAST:
 				if (x <= 512 - pixels) {
 					x += pixels;
 				} else {
 					x = 0;
-					World.loadWorld(World.EAST);
+					World.loadWorld(Direction.EAST);
 				}
 				break;
-			case World.WEST:
+			case WEST:
 				if (x >= pixels) {
 					x -= pixels;
 				} else {
 					x = 512;
-					World.loadWorld(World.WEST);
+					World.loadWorld(Direction.WEST);
 				}
 				break;
 			}

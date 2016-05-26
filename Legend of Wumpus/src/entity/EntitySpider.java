@@ -8,27 +8,9 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import display.World;
+import display.Direction;
 
 public class EntitySpider extends EntityMinion {
-	// Enum because WHY NOT.rs
-	private enum Direction {
-		NORTHWEST {
-			public final int nextXAdd = JUMP_DISTANCE * -1;
-			public final int nextYAdd = JUMP_DISTANCE;
-		}, SOUTHWEST {
-			public final int nextXAdd = JUMP_DISTANCE;
-			public final int nextYAdd = JUMP_DISTANCE;
-		}, SOUTHEAST {
-			public final int nextXAdd = JUMP_DISTANCE;
-			public final int nextYAdd = JUMP_DISTANCE * -1;
-		}, NORTHEAST {
-			public final int nextXAdd = JUMP_DISTANCE * -1;
-			public final int nextYAdd = JUMP_DISTANCE * -1;
-		};
-		public final int nextXAdd = 0;
-		public final int nextYAdd = 0;
-	}
-
 	private static Image standingImage;
 	private static Image jumpingImage;
 	private static final int JUMP_DISTANCE = 50;
@@ -93,29 +75,8 @@ public class EntitySpider extends EntityMinion {
 	}
 
 	private boolean canJump(Direction dir) {
-		switch (dir) {
-		case NORTHEAST:
-			if (World.willCollide(x, y, World.NORTH, JUMP_DISTANCE))
-				if (World.willCollide(x, y - JUMP_DISTANCE, World.EAST, JUMP_DISTANCE))
-					return true;
-			break;
-		case NORTHWEST:
-			if (World.willCollide(x, y, World.NORTH, JUMP_DISTANCE))
-				if (World.willCollide(x, y - JUMP_DISTANCE, World.WEST, JUMP_DISTANCE))
-					return true;
-			break;
-		case SOUTHEAST:
-			if (World.willCollide(x, y, World.NORTH, JUMP_DISTANCE))
-				if (World.willCollide(x, y + JUMP_DISTANCE, World.EAST, JUMP_DISTANCE))
-					return true;
-			break;
-		case SOUTHWEST:
-			if (World.willCollide(x, y, World.NORTH, JUMP_DISTANCE))
-				if (World.willCollide(x, y + JUMP_DISTANCE, World.WEST, JUMP_DISTANCE))
-					return true;
-			break;
-		}
-		return false;
+		System.out.println("Fix me");
+		return true;
 	}
 
 	private Direction whichWayToJump() {

@@ -21,7 +21,6 @@ public final class World {
 	private static int gameState = 0;
 	private static Image backgroundImage;
 	private static HashSet<Entity> entities = new HashSet<Entity>();
-	private static HashSet<Wall> walls = new HashSet<Wall>();
 	private static Player thePlayer;
 	private static Timer ticker;
 	private static String currentWorld;
@@ -91,19 +90,15 @@ public final class World {
 	 * Called when the player walks off the screen, loads the new section of
 	 * world in the specified direction
 	 */
-	public static void loadWorld(int direction) {
-		WorldTemplate worldTemplate = new WorldTemplate(currentWorld);
-		String nextWorld = worldTemplate.getNextWorld(direction);
+	public static void loadWorld(Direction direction) {
+		System.out.println("Fix me");
+		String nextWorld = null;
 		loadWorld(nextWorld);
 	}
 
 	public static void loadWorld(String worldFile) {
-		entities = new HashSet<Entity>();
-		walls = new HashSet<Wall>();
-		entities.add(thePlayer);
-		currentWorld = worldFile;
-		WorldTemplate worldTemplate = new WorldTemplate(worldFile);
-		worldTemplate.load();
+		//Load the worldfile
+		System.out.println("Fix me");
 	}
 
 	public static void startTicker(JPanel parent, KeyboardHandler kb) {
@@ -114,61 +109,9 @@ public final class World {
 	public static void stopTicker() {
 		ticker.stop();
 	}
-
-	public static void addWall(int x, int y, int length, int direction) {
-		walls.add(new Wall(x, y, length, direction));
-	}
-
-	public static Set<Wall> getWalls() {
-		return walls;
-	}
 	
-	public static boolean willCollide(int x, int y, int facing, int movment, Entity caller) {
-		boolean willCollide = false;
-		switch (facing) {
-		case World.NORTH:
-			for (Wall wall : World.getWalls()) {
-				if ((x > wall.x && x < wall.length + wall.x) && y - movment - (caller.getHeight()/2) <= wall.y && y >= wall.y && wall.facing == World.HORIZONTAL) {
-					willCollide = true;
-				}
-			}
-			break;
-		case World.SOUTH:
-			for (Wall wall : World.getWalls()) {
-				if ((x > wall.x && x < wall.length + wall.x) && y + movment + (caller.getHeight()/2) >= wall.y && y <= wall.y && wall.facing == World.HORIZONTAL) {
-					willCollide = true;
-				}
-			}
-			break;
-		case World.EAST:
-			for (Wall wall : World.getWalls()) {
-				if ((y > wall.y && y < wall.length + wall.y) && x + movment + (caller.getWidth()/2) >= wall.x && x <= wall.x && wall.facing == World.VERTICAL) {
-					willCollide = true;
-				}
-			}
-			break;
-		case World.WEST:
-			for (Wall wall : World.getWalls()) {
-				if ((y > wall.y && y < wall.length + wall.y) && x - movment - (caller.getWidth()/2) <= wall.x && x >= wall.x && wall.facing == World.VERTICAL) {
-					willCollide = true;
-				}
-			}
-			break;
-		}
-		return willCollide;
-	}
-
-	public static Image getBackgroundImage() {
-		return backgroundImage;
-	}
-
-	public static void setBackgroundImage(String filename) {
-		try {
-			backgroundImage = ImageIO.read(new File(filename)).getScaledInstance(512,336,Image.SCALE_REPLICATE);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.err.println("Error loading image file " + filename);
-		}
+	public static boolean willCollide(int x, int y, Direction facing, int movment, Entity caller) {
+		return false;
 	}
 
 	/** World may not be instantiated. */
