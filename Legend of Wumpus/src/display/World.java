@@ -26,10 +26,11 @@ public final class World {
 	private static Timer ticker;
 	private static String currentWorld;
 
-	public static final int NORTH = 0;
-	public static final int EAST = 1;
-	public static final int SOUTH = 2;
-	public static final int WEST = 3;
+	//WE ARE CHANGING TO ENUMS INSTEAD OF INTS
+//	public static final int NORTH = 0;
+//	public static final int EAST = 1;
+//	public static final int SOUTH = 2;
+//	public static final int WEST = 3;
 	
 	public static final int VERTICAL = 1;
 	public static final int HORIZONTAL = 2;

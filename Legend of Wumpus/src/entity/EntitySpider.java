@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 import display.World;
 
 public class EntitySpider extends EntityMinion {
-	// Enum because WHY NOT.
+	// Enum because WHY NOT.rs
 	private enum Direction {
 		NORTHWEST {
 			public final int nextXAdd = JUMP_DISTANCE * -1;
