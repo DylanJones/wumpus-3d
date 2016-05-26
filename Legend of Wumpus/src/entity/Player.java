@@ -171,7 +171,7 @@ public final class Player extends Entity {
 	}
 
 	public void move(int pixels) {
-		boolean canMove = !World.willCollide(x, y, facing, pixels);
+		boolean canMove = !World.willCollide(x, y, facing, pixels, this);
 		// Can't move while attacking
 		if (System.currentTimeMillis() - this.attackStartTime < ATTACK_COOLDOWN)
 			canMove = false;
@@ -218,17 +218,5 @@ public final class Player extends Entity {
 	public void attack() {
 		if (System.currentTimeMillis() - this.attackStartTime > ATTACK_COOLDOWN)
 			attackStartTime = System.currentTimeMillis();
-	}
-
-	public int getHealth() {
-		return health;
-	}
-
-	public int getSpriteHeight() {
-		return spriteHeight;
-	}
-
-	public int getSpriteWidth() {
-		return spriteWidth;
 	}
 }
