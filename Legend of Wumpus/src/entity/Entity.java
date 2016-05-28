@@ -1,8 +1,8 @@
 package entity;
 
 import java.awt.Graphics;
-import java.awt.Image;
 
+import display.Direction;
 import display.World;
 
 /**
@@ -11,9 +11,10 @@ import display.World;
  */
 public abstract class Entity {
 	// Variables are protected so they can be accessed by subclasses
-	protected int x, y;
+	protected double x, y;
 	protected int spriteWidth, spriteHeight; // the size of the sprite
 	protected int health;
+	protected Direction facing;
 
 	// Make sure that ALL entities are registered.
 	public Entity() {
@@ -39,11 +40,11 @@ public abstract class Entity {
 	 */
 	public abstract void draw(Graphics g);
 
-	public int getX() {
+	public double getX() {
 		return x;
 	}
 
-	public int getY() {
+	public double getY() {
 		return y;
 	}
 
@@ -57,5 +58,9 @@ public abstract class Entity {
 
 	public int getHealth() {
 		return health;
+	}
+	
+	public Direction getFacing() {
+		return facing;
 	}
 }

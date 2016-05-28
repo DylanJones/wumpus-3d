@@ -60,8 +60,8 @@ public final class Player extends Entity {
 		this.health = 10;
 		this.spriteHeight = northImage.getHeight(null);
 		this.spriteWidth = northImage.getWidth(null);
-		this.x = 200;
-		this.y = 200;
+		this.x = 2;
+		this.y = 2;
 	}
 
 	/**
@@ -70,30 +70,31 @@ public final class Player extends Entity {
 	 */
 	@Override
 	public void draw(Graphics g) {
+		int[] sCoords = World.getScreenCoordinates(x, y);
 		switch (facing) {
 		case NORTH:
 			if (System.currentTimeMillis() - this.attackStartTime < 500)
-				g.drawImage(northAttackImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
+				g.drawImage(northAttackImage, sCoords[0], sCoords[1], null);
 			else
-				g.drawImage(northImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
+				g.drawImage(northImage, sCoords[0], sCoords[1], null);
 			break;
 		case SOUTH:
 			if (System.currentTimeMillis() - this.attackStartTime < 500)
-				g.drawImage(southAttackImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
+				g.drawImage(southAttackImage, sCoords[0], sCoords[1], null);
 			else
-				g.drawImage(southImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
+				g.drawImage(southImage, sCoords[0], sCoords[1], null);
 			break;
 		case EAST:
 			if (System.currentTimeMillis() - this.attackStartTime < 500)
-				g.drawImage(eastAttackImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
+				g.drawImage(eastAttackImage, sCoords[0], sCoords[1], null);
 			else
-				g.drawImage(eastImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
+				g.drawImage(eastImage, sCoords[0], sCoords[1], null);
 			break;
 		case WEST:
 			if (System.currentTimeMillis() - this.attackStartTime < 500)
-				g.drawImage(westAttackImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
+				g.drawImage(westAttackImage, sCoords[0], sCoords[1], null);
 			else
-				g.drawImage(westImage, getX() - this.getWidth() / 2, getY() - this.getHeight() / 2, null);
+				g.drawImage(westImage, sCoords[0], sCoords[1], null);
 			break;
 		}
 	}
@@ -166,8 +167,8 @@ public final class Player extends Entity {
 		}
 	}
 
-	public void move(int pixels) {
-		boolean canMove = !World.willCollide(x, y, facing, pixels, this);
+	public void move(double amount) {
+		boolean canMove = !World.willCollide(this, amount);
 		// Can't move while attacking
 		if (System.currentTimeMillis() - this.attackStartTime < ATTACK_COOLDOWN)
 			canMove = false;
@@ -176,34 +177,34 @@ public final class Player extends Entity {
 			switch (facing) {
 			case NORTH:
 				// IF we are not walking off the screen:
-				if (y - 60 >= pixels) {
-					y -= pixels;
+				if (y >= amount) {
+					y -= amount;
 				} else {
-					y = 384;
+					y = 11.9;
 					World.loadWorld(Direction.NORTH);
 				}
 				break;
 			case SOUTH:
-				if (y <= 384 - pixels) {
-					y += pixels;
+				if (y <= 11.9 - amount) {
+					y += amount;
 				} else {
-					y = 48;
+					y = 0;
 					World.loadWorld(Direction.SOUTH);
 				}
 				break;
 			case EAST:
-				if (x <= 512 - pixels) {
-					x += pixels;
+				if (x <= 16 - amount) {
+					x += amount;
 				} else {
 					x = 0;
 					World.loadWorld(Direction.EAST);
 				}
 				break;
 			case WEST:
-				if (x >= pixels) {
-					x -= pixels;
+				if (x >= amount) {
+					x -= amount;
 				} else {
-					x = 512;
+					x = 16;
 					World.loadWorld(Direction.WEST);
 				}
 				break;

@@ -2,37 +2,33 @@ package display;
 
 import javax.swing.Timer;
 
-import java.awt.Image;
+import java.awt.Graphics;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.Scanner;
 import java.util.Set;
 
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import entity.Entity;
 import entity.Player;
+import tiles.*;
 
 /** This is a class of constants. It will contain global variables. */
 public final class World {
 	// Game state: 0 = overworld, 1 = bossfight, 2 = dead, 3 = dungeon
 	// 4 = title screen / loading
+	private static final int WORLD_HEIGHT = 11;
+	private static final int WORLD_WIDTH = 16;
+
 	private static int gameState = 0;
-	private static Image backgroundImage;
-	private static HashSet<Entity> entities = new HashSet<Entity>();
+	private static Set<Entity> entities = new HashSet<Entity>();
+	private static WorldTile[][] tiles = new WorldTile[WORLD_WIDTH][WORLD_HEIGHT]; // 24x32
+																					// matrix
 	private static Player thePlayer;
 	private static Timer ticker;
-	private static String currentWorld;
-
-	//WE ARE CHANGING TO ENUMS INSTEAD OF INTS
-//	public static final int NORTH = 0;
-//	public static final int EAST = 1;
-//	public static final int SOUTH = 2;
-//	public static final int WEST = 3;
-	
-	public static final int VERTICAL = 1;
-	public static final int HORIZONTAL = 2;
 
 	static {
 		thePlayer = new Player();
@@ -47,6 +43,17 @@ public final class World {
 	 */
 	public static void registerEntity(Entity e) {
 		entities.add(e);
+	}
+
+	/**
+	 * For drawing methods. Given the abstract float coordinates x and y, return
+	 * the coordinates for where on the screen to draw.
+	 * @param x The x coordinate (in-world)
+	 * @param y The y coordinate (in-world)
+	 * @return int[] of {x, y} which tells you where on the screen to draw
+	 */
+	public static int[] getScreenCoordinates(double x, double y) {
+		return new int[] { (int) (Math.round(x * 32)), (int) (Math.round(y * 32 + 32)) };
 	}
 
 	/**
@@ -96,9 +103,43 @@ public final class World {
 		loadWorld(nextWorld);
 	}
 
-	public static void loadWorld(String worldFile) {
-		//Load the worldfile
+	public static void loadWorld(String filename) {
+		// Delete all entites and tiles
+		entities = new HashSet<Entity>();
+		entities.add(thePlayer);
+		Scanner theScanner = null;
+		try {
+			theScanner = new Scanner(new File("assets/worlds/" + filename));
+		} catch (IOException e) {
+			System.err.println("Error reading file assets/worlds/" + filename);
+			System.exit(1);
+		}
+		String tileFileName = theScanner.nextLine().replace("tiles ", "");
+		loadTiles(tileFileName);
+
 		System.out.println("Fix me");
+	}
+
+	private static void loadTiles(String filename) {
+		Scanner s = null;
+		try {
+			s = new Scanner(new File("assets/worlds/" + filename));
+		} catch (FileNotFoundException e) {
+		}
+		for (int y = 0; y < WORLD_HEIGHT; y++) {
+			String[] nums = s.nextLine().split("\\s+");
+			for (int x = 0; x < WORLD_WIDTH; x++) {
+				tiles[x][y] = OverworldTile.getTileFromCode(Integer.parseInt(nums[x], 16));
+			}
+		}
+	}
+
+	public static void renderTiles(Graphics g) {
+		for (int x = 0; x < WORLD_WIDTH; x++) {
+			for (int y = 0; y < WORLD_HEIGHT; y++) {
+				tiles[x][y].draw(x, y, g);
+			}
+		}
 	}
 
 	public static void startTicker(JPanel parent, KeyboardHandler kb) {
@@ -109,8 +150,8 @@ public final class World {
 	public static void stopTicker() {
 		ticker.stop();
 	}
-	
-	public static boolean willCollide(int x, int y, Direction facing, int movment, Entity caller) {
+
+	public static boolean willCollide(Entity e, double movement) {
 		return false;
 	}
 

@@ -30,7 +30,7 @@ public class EntitySpider extends EntityMinion {
 		}
 	}
 
-	public EntitySpider(int x, int y) {
+	public EntitySpider(double x, double y) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -59,10 +59,11 @@ public class EntitySpider extends EntityMinion {
 
 	@Override
 	public void draw(Graphics g) {
+		int[] sCoords = World.getScreenCoordinates(x, y);
 		if (jumping) {
-			g.drawImage(jumpingImage, x + spriteWidth / 2, y + spriteHeight / 2, null);
+			g.drawImage(jumpingImage, sCoords[0] + spriteWidth / 2, sCoords[1] + spriteHeight / 2, null);
 		} else {
-			g.drawImage(standingImage, x + spriteWidth / 2, y + spriteHeight / 2, null);
+			g.drawImage(standingImage, sCoords[0] + spriteWidth / 2, sCoords[1] + spriteHeight / 2, null);
 		}
 	}
 
@@ -80,8 +81,8 @@ public class EntitySpider extends EntityMinion {
 	}
 
 	private Direction whichWayToJump() {
-		int playerX = World.getThePlayer().getX();
-		int playerY = World.getThePlayer().getY();
+		double playerX = World.getThePlayer().getX();
+		double playerY = World.getThePlayer().getY();
 		if (playerX > x) {
 			if (playerY > y)
 				return Direction.SOUTHEAST;

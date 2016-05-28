@@ -21,15 +21,12 @@ public class Tick implements ActionListener {
 		movePlayer();
 		entityTick();
 		collideEntities();
-		if (World.getGameState() == 2) { // Stop the world engine
-			World.stopTicker();
-		}
 		container.update(container.getGraphics());
 	}
 
 	private void movePlayer() {
 		if (kb.isKeyPressed('w'))
-			World.getThePlayer().move(5);
+			World.getThePlayer().move(0.1);
 		if (kb.isKeyPressed('q'))
 			World.getThePlayer().attack();
 	}

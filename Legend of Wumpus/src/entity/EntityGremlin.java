@@ -16,11 +16,12 @@ public class EntityGremlin extends EntityMinion {
 	private static Image gremlinEast;
 	private static Image gremlinWest;
 	private Direction facing = Direction.NORTH;
+	private static final double SPEED = 0.1;
 	// For its walking square
-	private int squareX1 = 0;
-	private int squareY1 = 0;
-	private int squareX2 = 0;
-	private int squareY2 = 0;
+	private double squareX1 = 0;
+	private double squareY1 = 0;
+	private double squareX2 = 0;
+	private double squareY2 = 0;
 	private boolean clockwise;
 
 	static {
@@ -88,28 +89,28 @@ public class EntityGremlin extends EntityMinion {
 				if (this.x == squareX2) {
 					this.facing = Direction.SOUTH;
 				} else {
-					this.x += 1;
+					this.x += SPEED;
 				}
 				break;
 			case SOUTH:
 				if (this.y == squareY2) {
 					this.facing = Direction.WEST;
 				} else {
-					this.y += 1;
+					this.y += SPEED;
 				}
 				break;
 			case WEST:
 				if (this.x == squareX1) {
 					this.facing = Direction.NORTH;
 				} else {
-					this.x -= 1;
+					this.x -= SPEED;
 				}
 				break;
 			case NORTH:
 				if (this.y == squareY1) {
 					this.facing = Direction.EAST;
 				} else {
-					this.y -= 1;
+					this.y -= SPEED;
 				}
 				break;
 			}
@@ -119,28 +120,28 @@ public class EntityGremlin extends EntityMinion {
 				if (this.x == squareX2) {
 					this.facing = Direction.NORTH;
 				} else {
-					this.x += 1;
+					this.x += SPEED;
 				}
 				break;
 			case SOUTH:
 				if (this.y == squareY2) {
 					this.facing = Direction.EAST;
 				} else {
-					this.y += 1;
+					this.y += SPEED;
 				}
 				break;
 			case WEST:
 				if (this.x == squareX1) {
 					this.facing = Direction.SOUTH;
 				} else {
-					this.x -= 1;
+					this.x -= SPEED;
 				}
 				break;
 			case NORTH:
 				if (this.y == squareY1) {
 					this.facing = Direction.WEST;
 				} else {
-					this.y -= 1;
+					this.y -= SPEED;
 				}
 				break;
 			}
@@ -149,18 +150,19 @@ public class EntityGremlin extends EntityMinion {
 
 	@Override
 	public void draw(Graphics g) {
+		int[] sCoords = World.getScreenCoordinates(x, y);
 		switch (facing) {
 		case NORTH:
-			g.drawImage(gremlinNorth, x - this.getWidth() / 2, y - this.getHeight() / 2, null);
+			g.drawImage(gremlinNorth, sCoords[0], sCoords[1], null);
 			break;
 		case SOUTH:
-			g.drawImage(gremlinSouth, x - this.getWidth() / 2, y - this.getHeight() / 2, null);
+			g.drawImage(gremlinSouth, sCoords[0], sCoords[1], null);
 			break;
 		case EAST:
-			g.drawImage(gremlinEast, x - this.getWidth() / 2, y - this.getHeight() / 2, null);
+			g.drawImage(gremlinEast, sCoords[0], sCoords[1], null);
 			break;
 		case WEST:
-			g.drawImage(gremlinWest, x - this.getWidth() / 2, y - this.getHeight() / 2, null);
+			g.drawImage(gremlinWest, sCoords[0], sCoords[1], null);
 			break;
 		}
 	}

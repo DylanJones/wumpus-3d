@@ -18,15 +18,13 @@ public class WumpusPanel extends JPanel {
 		addKeyListener(kb);
 		setFocusable(true);
 		World.startTicker(this, kb);
-		World.loadWorld("8H.wld");
+		World.loadWorld("test.wld");
 	}
 
 	@Override
 	public void paintComponent(Graphics g) {
-		// Clear the screen
-		g.setColor(Color.BLACK);
-		g.setFont(Font.getFont(Font.SANS_SERIF));
-		g.drawString("FIX MEEEE", 100, 100);
+		// Draw tiles
+		World.renderTiles(g);
 		HUD.drawHud(g);
 		for (Entity e : World.getAllEntities()) {
 			e.draw(g);

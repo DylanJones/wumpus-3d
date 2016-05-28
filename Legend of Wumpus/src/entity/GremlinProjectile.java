@@ -25,7 +25,7 @@ public class GremlinProjectile extends EntityItem {
 		}
 	}
 
-	public GremlinProjectile(int x, int y, int damageAmount, Direction facing2) {
+	public GremlinProjectile(double x, double y, int damageAmount, Direction facing2) {
 		super();
 		this.x = x;
 		this.y = y;
@@ -71,7 +71,8 @@ public class GremlinProjectile extends EntityItem {
 
 	@Override
 	public void draw(Graphics g) {
-		g.drawImage(projectileImage, x, y, null);
+		int[] sCoords = World.getScreenCoordinates(x, y);
+		g.drawImage(projectileImage, sCoords[0], sCoords[1], null);
 	}
 
 }
