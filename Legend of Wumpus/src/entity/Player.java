@@ -11,8 +11,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * This class should handle all of the things re
- * lated to the Player. It should
+ * This class should handle all of the things re lated to the Player. It should
  * NOT handle drawing the GUI (beyond drawing the player sprite).
  */
 public final class Player extends Entity {
@@ -26,20 +25,19 @@ public final class Player extends Entity {
 	private static Image eastAttackImage;
 	private static Image westAttackImage;
 
-	private Direction facing = Direction.NORTH;
 	private long lastDamageTime = 0;
 	private long attackStartTime = 0;
 
 	static {
 		try {
 			// Walking images
-			northImage = ImageIO.read(new File("assets/wumpus/north.png")).getScaledInstance(28, 30,
+			northImage = ImageIO.read(new File("assets/wumpus/north1.png")).getScaledInstance(28, 30,
 					Image.SCALE_REPLICATE);
-			southImage = ImageIO.read(new File("assets/wumpus/south.png")).getScaledInstance(28, 30,
+			southImage = ImageIO.read(new File("assets/wumpus/south1.png")).getScaledInstance(28, 30,
 					Image.SCALE_REPLICATE);
-			eastImage = ImageIO.read(new File("assets/wumpus/east.png")).getScaledInstance(28, 30,
+			eastImage = ImageIO.read(new File("assets/wumpus/east1.png")).getScaledInstance(28, 30,
 					Image.SCALE_REPLICATE);
-			westImage = ImageIO.read(new File("assets/wumpus/west.png")).getScaledInstance(28, 30,
+			westImage = ImageIO.read(new File("assets/wumpus/west1.png")).getScaledInstance(28, 30,
 					Image.SCALE_REPLICATE);
 			// Attacking images
 			northAttackImage = ImageIO.read(new File("assets/wumpus/attack_north.png")).getScaledInstance(32, 56,
@@ -60,8 +58,9 @@ public final class Player extends Entity {
 		this.health = 10;
 		this.spriteHeight = northImage.getHeight(null);
 		this.spriteWidth = northImage.getWidth(null);
-		this.x = 2;
-		this.y = 2;
+		this.x = 5;
+		this.y = 5;
+		this.facing = Direction.NORTH;
 	}
 
 	/**
@@ -71,6 +70,8 @@ public final class Player extends Entity {
 	@Override
 	public void draw(Graphics g) {
 		int[] sCoords = World.getScreenCoordinates(x, y);
+		sCoords[0] = sCoords[0] - spriteWidth / 2;
+		sCoords[1] = sCoords[1] - spriteHeight / 2;
 		switch (facing) {
 		case NORTH:
 			if (System.currentTimeMillis() - this.attackStartTime < 500)
@@ -168,47 +169,30 @@ public final class Player extends Entity {
 	}
 
 	public void move(double amount) {
-		boolean canMove = !World.willCollide(this, amount);
+		boolean canMove = !World.willCollideTile(this, amount);
 		// Can't move while attacking
 		if (System.currentTimeMillis() - this.attackStartTime < ATTACK_COOLDOWN)
 			canMove = false;
-		//Move in specified direction
+		// Move in specified direction
 		if (canMove) {
-			switch (facing) {
-			case NORTH:
-				// IF we are not walking off the screen:
-				if (y >= amount) {
-					y -= amount;
-				} else {
-					y = 11.9;
-					World.loadWorld(Direction.NORTH);
-				}
-				break;
-			case SOUTH:
-				if (y <= 11.9 - amount) {
-					y += amount;
-				} else {
-					y = 0;
-					World.loadWorld(Direction.SOUTH);
-				}
-				break;
-			case EAST:
-				if (x <= 16 - amount) {
-					x += amount;
-				} else {
-					x = 0;
-					World.loadWorld(Direction.EAST);
-				}
-				break;
-			case WEST:
-				if (x >= amount) {
-					x -= amount;
-				} else {
-					x = 16;
-					World.loadWorld(Direction.WEST);
-				}
-				break;
-			}
+			x = facing.moveInDirection(x, y, amount)[0];
+			y = facing.moveInDirection(x, y, amount)[1];
+//			if (x < 0) {
+//				x = 15.9;
+//				// World.loadWorld(Direction.WEST);
+//			}
+//			if (x < 15.9) {
+//				x = 0.01;
+//				// World.loadWorld(Direction.EAST);
+//			}
+//			if (y < 0.01) {
+//				y = 10.9;
+//				// World.loadWorld(Direction.SOUTH);
+//			}
+//			if (y > 10.9) {
+//				y = 0.1;
+//				// World.loadWorld(Direction.NORTH);
+//			}
 		}
 	}
 

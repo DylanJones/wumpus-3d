@@ -15,7 +15,7 @@ public interface WorldTile {
 	 * 
 	 * @return if the tile can be walked on
 	 */
-	public boolean canCollide();
+	public boolean isSolid();
 
 	/**
 	 * Draw the tile at the specified coordinates. These are the int coords, not
@@ -29,4 +29,9 @@ public interface WorldTile {
 	 *            the Graphics object to draw on
 	 */
 	public void draw(int x, int y, Graphics g);
+
+	/**
+	 * Perform the action for when a tile is interacted with. Player can
+	 */
+	// public void interact(Entity e);
 }

@@ -18,7 +18,6 @@ public class WumpusPanel extends JPanel {
 		addKeyListener(kb);
 		setFocusable(true);
 		World.startTicker(this, kb);
-		World.loadWorld("test.wld");
 	}
 
 	@Override

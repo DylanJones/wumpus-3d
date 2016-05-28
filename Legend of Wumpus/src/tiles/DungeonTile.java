@@ -17,7 +17,7 @@ public enum DungeonTile implements WorldTile {
 	}
 
 	@Override
-	public boolean canCollide() {
+	public boolean isSolid() {
 		// TODO Auto-generated method stub
 		return false;
 	}

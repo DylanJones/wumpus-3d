@@ -26,7 +26,7 @@ public class Tick implements ActionListener {
 
 	private void movePlayer() {
 		if (kb.isKeyPressed('w'))
-			World.getThePlayer().move(0.1);
+			World.getThePlayer().move(0.15);
 		if (kb.isKeyPressed('q'))
 			World.getThePlayer().attack();
 	}

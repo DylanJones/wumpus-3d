@@ -48,12 +48,49 @@ public final class World {
 	/**
 	 * For drawing methods. Given the abstract float coordinates x and y, return
 	 * the coordinates for where on the screen to draw.
-	 * @param x The x coordinate (in-world)
-	 * @param y The y coordinate (in-world)
+	 * 
+	 * @param x
+	 *            The x coordinate (in-world)
+	 * @param y
+	 *            The y coordinate (in-world)
 	 * @return int[] of {x, y} which tells you where on the screen to draw
 	 */
 	public static int[] getScreenCoordinates(double x, double y) {
-		return new int[] { (int) (Math.round(x * 32)), (int) (Math.round(y * 32 + 32)) };
+		return new int[] { (int) (Math.round(x * 32)), (int) (Math.round(y * 32 + 112)) };
+	}
+
+	/**
+	 * Get the WorldTile at the specified x,y coordiantes
+	 * 
+	 * @param x
+	 *            the x coordinate of tile
+	 * @param y
+	 *            the y coordinate of tile
+	 * @return the WorldTile at specified location
+	 */
+	public static WorldTile getTileAt(int x, int y) {
+		if (tiles[x][y] != null)
+			return tiles[x][y];
+		else
+			return OverworldTile.ground;
+	}
+
+	/**
+	 * Get the WorldTile at the specified x,y coordiantes
+	 * 
+	 * @param x
+	 *            the x coordinate of tile
+	 * @param y
+	 *            the y coordinate of tile
+	 * @return the WorldTile at specified location
+	 */
+	public static WorldTile getTileAt(double x, double y) {
+		int nx = (int) Math.floor(x);
+		int ny = (int) Math.floor(y);
+		if (tiles[nx][ny] != null)
+			return tiles[nx][ny];
+		else
+			return OverworldTile.ground;
 	}
 
 	/**
@@ -137,7 +174,7 @@ public final class World {
 	public static void renderTiles(Graphics g) {
 		for (int x = 0; x < WORLD_WIDTH; x++) {
 			for (int y = 0; y < WORLD_HEIGHT; y++) {
-				tiles[x][y].draw(x, y, g);
+				World.getTileAt(x, y).draw(x, y, g);
 			}
 		}
 	}
@@ -151,8 +188,11 @@ public final class World {
 		ticker.stop();
 	}
 
-	public static boolean willCollide(Entity e, double movement) {
-		return false;
+	public static boolean willCollideTile(Entity e, double movement) {
+		double[] newCoords = e.getFacing().moveInDirection(e.getX(), e.getY(), movement);
+		double newX = newCoords[0];
+		double newY = newCoords[1];
+		return World.getTileAt(newX, newY).isSolid();
 	}
 
 	/** World may not be instantiated. */
