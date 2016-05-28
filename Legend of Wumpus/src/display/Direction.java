@@ -46,7 +46,7 @@ public enum Direction {
 
 		@Override
 		public double[] moveInDirection(double x, double y, double movement) {
-			return new double[] { x - movement, y };
+			return new double[] { x + movement, y };
 		}
 	},
 	WEST {
@@ -62,7 +62,7 @@ public enum Direction {
 
 		@Override
 		public double[] moveInDirection(double x, double y, double movement) {
-			return new double[] { x + movement, y };
+			return new double[] { x - movement, y };
 		}
 	},
 	NORTHWEST {

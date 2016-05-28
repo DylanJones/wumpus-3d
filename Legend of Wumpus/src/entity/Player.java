@@ -177,22 +177,22 @@ public final class Player extends Entity {
 		if (canMove) {
 			x = facing.moveInDirection(x, y, amount)[0];
 			y = facing.moveInDirection(x, y, amount)[1];
-//			if (x < 0) {
-//				x = 15.9;
-//				// World.loadWorld(Direction.WEST);
-//			}
-//			if (x < 15.9) {
-//				x = 0.01;
-//				// World.loadWorld(Direction.EAST);
-//			}
-//			if (y < 0.01) {
-//				y = 10.9;
-//				// World.loadWorld(Direction.SOUTH);
-//			}
-//			if (y > 10.9) {
-//				y = 0.1;
-//				// World.loadWorld(Direction.NORTH);
-//			}
+			if (x < 0) {
+				x = 15.9;
+				World.loadWorld(Direction.WEST);
+			}
+			if (x > 15.9) {
+				x = 0.01;
+				World.loadWorld(Direction.EAST);
+			}
+			if (y < 0.01) {
+				y = 10.9;
+				World.loadWorld(Direction.SOUTH);
+			}
+			if (y > 10.9) {
+				y = 0.1;
+				World.loadWorld(Direction.NORTH);
+			}
 		}
 	}
 

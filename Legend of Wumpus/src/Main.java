@@ -14,7 +14,6 @@ public class Main {
 		frame.setVisible(true);
 		frame.setResizable(false);
 		// Testing, remove
-		Thread.sleep(1000);
 		World.loadWorld("test.wld");
 	}
 }

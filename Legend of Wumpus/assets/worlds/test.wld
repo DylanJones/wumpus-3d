@@ -1,6 +1,6 @@
 tiles test.tiles
-music null
-north test.wld
-south test.wld
-east test.wld
-west test.wld
+music SplashScreenTheme.wav
+north test2.wld
+south test2.wld
+east test2.wld
+west test2.wld

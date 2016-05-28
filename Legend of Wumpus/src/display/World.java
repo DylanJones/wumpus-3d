@@ -1,6 +1,7 @@
 package display;
 
 import javax.swing.Timer;
+import javax.swing.JPanel;
 
 import java.awt.Graphics;
 import java.io.File;
@@ -10,11 +11,10 @@ import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 
-import javax.swing.JPanel;
-
 import entity.Entity;
 import entity.Player;
-import tiles.*;
+import tiles.WorldTile;
+import tiles.OverworldTile;
 
 /** This is a class of constants. It will contain global variables. */
 public final class World {
@@ -25,10 +25,13 @@ public final class World {
 
 	private static int gameState = 0;
 	private static Set<Entity> entities = new HashSet<Entity>();
-	private static WorldTile[][] tiles = new WorldTile[WORLD_WIDTH][WORLD_HEIGHT]; // 24x32
-																					// matrix
+	private static WorldTile[][] tiles = new WorldTile[WORLD_WIDTH][WORLD_HEIGHT];
 	private static Player thePlayer;
 	private static Timer ticker;
+	private static String northWorld;
+	private static String southWorld;
+	private static String eastWorld;
+	private static String westWorld;
 
 	static {
 		thePlayer = new Player();
@@ -69,10 +72,10 @@ public final class World {
 	 * @return the WorldTile at specified location
 	 */
 	public static WorldTile getTileAt(int x, int y) {
-		if (tiles[x][y] != null)
-			return tiles[x][y];
-		else
-			return OverworldTile.ground;
+		if(x >= 0 && y >= 0 && x < tiles.length && y < tiles[0].length)
+			if (tiles[x][y] != null)
+				return tiles[x][y];
+		return OverworldTile.ground;
 	}
 
 	/**
@@ -87,10 +90,7 @@ public final class World {
 	public static WorldTile getTileAt(double x, double y) {
 		int nx = (int) Math.floor(x);
 		int ny = (int) Math.floor(y);
-		if (tiles[nx][ny] != null)
-			return tiles[nx][ny];
-		else
-			return OverworldTile.ground;
+		return getTileAt(nx, ny);
 	}
 
 	/**
@@ -135,9 +135,23 @@ public final class World {
 	 * world in the specified direction
 	 */
 	public static void loadWorld(Direction direction) {
-		System.out.println("Fix me");
-		String nextWorld = null;
-		loadWorld(nextWorld);
+		switch (direction) {
+		case NORTH:
+			loadWorld(northWorld);
+			break;
+		case SOUTH:
+			loadWorld(southWorld);
+			break;
+		case EAST:
+			loadWorld(eastWorld);
+			break;
+		case WEST:
+			loadWorld(westWorld);
+			break;
+		default:
+			System.err.println("Invalid world direction " + direction);
+			System.exit(1);
+		}
 	}
 
 	public static void loadWorld(String filename) {
@@ -152,9 +166,13 @@ public final class World {
 			System.exit(1);
 		}
 		String tileFileName = theScanner.nextLine().replace("tiles ", "");
+		String musicName = theScanner.nextLine().replace("music ", "");
+		northWorld = theScanner.nextLine().replace("north ", "");
+		southWorld = theScanner.nextLine().replace("south ", "");
+		eastWorld = theScanner.nextLine().replace("east ", "");
+		westWorld = theScanner.nextLine().replace("west ", "");
+		MusicPlayer.changePlayingMusic("assets/music/" + musicName);
 		loadTiles(tileFileName);
-
-		System.out.println("Fix me");
 	}
 
 	private static void loadTiles(String filename) {
@@ -198,5 +216,4 @@ public final class World {
 	/** World may not be instantiated. */
 	private World() {
 	}
-
 }

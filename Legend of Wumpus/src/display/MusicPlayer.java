@@ -1,5 +1,6 @@
 package display;
 
+import java.io.File;
 import java.io.IOException;
 
 import javax.sound.sampled.*;
@@ -21,7 +22,7 @@ public class MusicPlayer {
 
 	private static void loopSound(String file)
 			throws UnsupportedAudioFileException, IOException, LineUnavailableException {
-		audioIn = AudioSystem.getAudioInputStream(MusicPlayer.class.getResource(file));
+		audioIn = AudioSystem.getAudioInputStream(new File(file));
 		clip = AudioSystem.getClip();
 		clip.open(audioIn);
 		clip.loop(Clip.LOOP_CONTINUOUSLY);

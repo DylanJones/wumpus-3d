@@ -37,14 +37,10 @@ public class Tick implements ActionListener {
 	 */
 	private void collideEntities() {
 		for (Entity e : World.getAllEntities()) {
-			for (Entity x : World.getAllEntities()) {
-				if (x == e)
-					continue;// So it doesn't collide with itself
-				// If they are within each others boxes
-				if ((Math.abs(e.getX() - x.getX()) * 2 < e.getWidth() + x.getWidth())
-						&& (Math.abs(e.getY() - x.getY()) * 2 < e.getHeight() + x.getHeight())) {
-					e.collide(x);
-				}
+			Entity x = World.getThePlayer();
+			if ((Math.abs(e.getX() - x.getX()) * 2 < e.getWidth() + x.getWidth())
+					&& (Math.abs(e.getY() - x.getY()) * 2 < e.getHeight() + x.getHeight())) {
+				e.collide(x);
 			}
 		}
 	}
