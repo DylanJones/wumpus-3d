@@ -32,8 +32,8 @@ public class Tick implements ActionListener {
 	}
 
 	/**
-	 * Takes all the entities in the world and computes if any are touching. If
-	 * they are touching, call <entity>.collide().
+	 * Takes all the entities in the world and computes if any are touching the
+	 * player. If they are touching, call <entity>.collide().
 	 */
 	private void collideEntities() {
 		for (Entity e : World.getAllEntities()) {
