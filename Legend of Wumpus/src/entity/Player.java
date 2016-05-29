@@ -15,11 +15,16 @@ import java.io.IOException;
  * NOT handle drawing the GUI (beyond drawing the player sprite).
  */
 public final class Player extends Entity {
-	private static final int ATTACK_COOLDOWN = 500; // attack cooldown in millis
-	private static Image northImage;
-	private static Image southImage;
-	private static Image eastImage;
-	private static Image westImage;
+	private static final int ATTACK_TIME = 500; // attack duration in millis
+	private static final int ATTACK_COOLDOWN = 200; // attack cooldown in millis
+	private static Image northImage1;
+	private static Image northImage2;
+	private static Image southImage1;
+	private static Image southImage2;
+	private static Image eastImage1;
+	private static Image eastImage2;
+	private static Image westImage1;
+	private static Image westImage2;
 	private static Image northAttackImage;
 	private static Image southAttackImage;
 	private static Image eastAttackImage;
@@ -27,17 +32,26 @@ public final class Player extends Entity {
 
 	private long lastDamageTime = 0;
 	private long attackStartTime = 0;
+	private boolean attacking = false;
 
 	static {
 		try {
 			// Walking images
-			northImage = ImageIO.read(new File("assets/wumpus/north1.png")).getScaledInstance(28, 30,
+			northImage1 = ImageIO.read(new File("assets/wumpus/north1.png")).getScaledInstance(32, 32,
 					Image.SCALE_REPLICATE);
-			southImage = ImageIO.read(new File("assets/wumpus/south1.png")).getScaledInstance(28, 30,
+			northImage2 = ImageIO.read(new File("assets/wumpus/north2.png")).getScaledInstance(32, 32,
 					Image.SCALE_REPLICATE);
-			eastImage = ImageIO.read(new File("assets/wumpus/east1.png")).getScaledInstance(28, 30,
+			southImage1 = ImageIO.read(new File("assets/wumpus/south1.png")).getScaledInstance(32, 32,
 					Image.SCALE_REPLICATE);
-			westImage = ImageIO.read(new File("assets/wumpus/west1.png")).getScaledInstance(28, 30,
+			southImage2 = ImageIO.read(new File("assets/wumpus/south2.png")).getScaledInstance(32, 32,
+					Image.SCALE_REPLICATE);
+			eastImage1 = ImageIO.read(new File("assets/wumpus/east1.png")).getScaledInstance(32, 32,
+					Image.SCALE_REPLICATE);
+			eastImage2 = ImageIO.read(new File("assets/wumpus/east2.png")).getScaledInstance(32, 32,
+					Image.SCALE_REPLICATE);
+			westImage1 = ImageIO.read(new File("assets/wumpus/west1.png")).getScaledInstance(32, 32,
+					Image.SCALE_REPLICATE);
+			westImage2 = ImageIO.read(new File("assets/wumpus/west2.png")).getScaledInstance(32, 32,
 					Image.SCALE_REPLICATE);
 			// Attacking images
 			northAttackImage = ImageIO.read(new File("assets/wumpus/attack_north.png")).getScaledInstance(32, 56,
@@ -56,8 +70,8 @@ public final class Player extends Entity {
 
 	public Player() {
 		this.health = 10;
-		this.spriteHeight = northImage.getHeight(null);
-		this.spriteWidth = northImage.getWidth(null);
+		this.spriteHeight = northImage1.getHeight(null);
+		this.spriteWidth = northImage1.getWidth(null);
 		this.x = 5;
 		this.y = 5;
 		this.facing = Direction.NORTH;
@@ -72,37 +86,55 @@ public final class Player extends Entity {
 		int[] sCoords = World.getScreenCoordinates(x, y);
 		sCoords[0] = sCoords[0] - spriteWidth / 2;
 		sCoords[1] = sCoords[1] - spriteHeight / 2;
+		boolean whichImage = (((int)(x * 2) % 2) == 1) ^ (((int)(y * 2) % 2) == 1);
+		Image imageToDraw;
 		switch (facing) {
 		case NORTH:
-			if (System.currentTimeMillis() - this.attackStartTime < 500)
-				g.drawImage(northAttackImage, sCoords[0], sCoords[1], null);
+			if (System.currentTimeMillis() - this.attackStartTime < ATTACK_TIME)
+				imageToDraw = northAttackImage; 
 			else
-				g.drawImage(northImage, sCoords[0], sCoords[1], null);
+				if(whichImage)
+					imageToDraw = northImage1;
+				else
+					imageToDraw = northImage2;
 			break;
 		case SOUTH:
-			if (System.currentTimeMillis() - this.attackStartTime < 500)
-				g.drawImage(southAttackImage, sCoords[0], sCoords[1], null);
+			if (System.currentTimeMillis() - this.attackStartTime < ATTACK_TIME)
+				imageToDraw = southAttackImage;
 			else
-				g.drawImage(southImage, sCoords[0], sCoords[1], null);
+				if(whichImage)
+					imageToDraw = southImage1;
+				else
+					imageToDraw = southImage2;
 			break;
 		case EAST:
-			if (System.currentTimeMillis() - this.attackStartTime < 500)
-				g.drawImage(eastAttackImage, sCoords[0], sCoords[1], null);
+			if (System.currentTimeMillis() - this.attackStartTime < ATTACK_TIME)
+				imageToDraw = eastAttackImage;
 			else
-				g.drawImage(eastImage, sCoords[0], sCoords[1], null);
+				if(whichImage)
+					imageToDraw = eastImage1;
+				else
+					imageToDraw = eastImage2;
 			break;
 		case WEST:
-			if (System.currentTimeMillis() - this.attackStartTime < 500)
-				g.drawImage(westAttackImage, sCoords[0], sCoords[1], null);
+			if (System.currentTimeMillis() - this.attackStartTime < ATTACK_TIME)
+				imageToDraw = westAttackImage;
 			else
-				g.drawImage(westImage, sCoords[0], sCoords[1], null);
+				if(whichImage)
+					imageToDraw = westImage1;
+				else
+					imageToDraw = westImage2;
 			break;
+		default:
+			System.err.println("Invalid player facing");
+			imageToDraw = null;
 		}
+		g.drawImage(imageToDraw, sCoords[0], sCoords[1], null);
 	}
 
 	@Override
 	public void collide(Entity e) {
-		if (System.currentTimeMillis() - this.attackStartTime < ATTACK_COOLDOWN)
+		if (System.currentTimeMillis() - this.attackStartTime < ATTACK_TIME)
 			e.damage(2, this);
 	}
 
@@ -111,7 +143,7 @@ public final class Player extends Entity {
 		if (System.currentTimeMillis() - lastDamageTime > 1000) {
 			lastDamageTime = System.currentTimeMillis();
 			// We're invulrnaberale while attacking
-			if (System.currentTimeMillis() - this.attackStartTime > ATTACK_COOLDOWN) {
+			if (System.currentTimeMillis() - this.attackStartTime > ATTACK_TIME) {
 				if (health > 0) {// Stops player from having negative health
 					health -= amount;
 					if (health <= 0) // did it go below 0?
@@ -127,7 +159,7 @@ public final class Player extends Entity {
 	}
 
 	public void tick() {
-		if (System.currentTimeMillis() - attackStartTime < ATTACK_COOLDOWN) {
+		if (System.currentTimeMillis() - attackStartTime < ATTACK_TIME) {
 			switch (facing) {
 			case NORTH:
 				spriteHeight = northAttackImage.getHeight(null);
@@ -149,20 +181,20 @@ public final class Player extends Entity {
 		} else {
 			switch (facing) {
 			case NORTH:
-				spriteHeight = northImage.getHeight(null);
-				spriteWidth = northImage.getWidth(null);
+				spriteHeight = northImage1.getHeight(null);
+				spriteWidth = northImage1.getWidth(null);
 				break;
 			case SOUTH:
-				spriteHeight = southImage.getHeight(null);
-				spriteWidth = southImage.getWidth(null);
+				spriteHeight = southImage1.getHeight(null);
+				spriteWidth = southImage1.getWidth(null);
 				break;
 			case EAST:
-				spriteHeight = eastImage.getHeight(null);
-				spriteWidth = eastImage.getWidth(null);
+				spriteHeight = eastImage1.getHeight(null);
+				spriteWidth = eastImage1.getWidth(null);
 				break;
 			case WEST:
-				spriteHeight = westImage.getHeight(null);
-				spriteWidth = westImage.getWidth(null);
+				spriteHeight = westImage1.getHeight(null);
+				spriteWidth = westImage1.getWidth(null);
 				break;
 			}
 		}
@@ -171,7 +203,7 @@ public final class Player extends Entity {
 	public void move(double amount) {
 		boolean canMove = !World.willCollideTile(this, amount);
 		// Can't move while attacking
-		if (System.currentTimeMillis() - this.attackStartTime < ATTACK_COOLDOWN)
+		if (System.currentTimeMillis() - this.attackStartTime < ATTACK_TIME)
 			canMove = false;
 		// Move in specified direction
 		if (canMove) {
@@ -197,7 +229,7 @@ public final class Player extends Entity {
 	}
 
 	public void attack() {
-		if (System.currentTimeMillis() - this.attackStartTime > ATTACK_COOLDOWN)
+		if (System.currentTimeMillis() - this.attackStartTime - ATTACK_COOLDOWN > ATTACK_TIME)
 			attackStartTime = System.currentTimeMillis();
 	}
 }
