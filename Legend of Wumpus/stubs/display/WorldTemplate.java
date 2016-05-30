@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import entity.EntityGremlin;
+import entity.EntityOctorcRed;
 
 /** A class to contain the World template data */
 public final class WorldTemplate {

@@ -14,6 +14,6 @@ public class Main {
 		frame.setVisible(true);
 		frame.setResizable(false);
 		// Testing, remove
-		World.loadWorld("test.wld");
+		World.loadWorld("8H.wld");
 	}
 }

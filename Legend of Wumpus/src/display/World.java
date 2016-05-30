@@ -156,6 +156,7 @@ public final class World {
 
 	public static void loadWorld(String filename) {
 		// Delete all entites and tiles
+		System.out.println("Loading world " + filename);
 		entities = new HashSet<Entity>();
 		entities.add(thePlayer);
 		Scanner theScanner = null;
@@ -178,7 +179,7 @@ public final class World {
 	private static void loadTiles(String filename) {
 		Scanner s = null;
 		try {
-			s = new Scanner(new File("assets/worlds/" + filename));
+			s = new Scanner(new File("assets/worlds/tiles/" + filename));
 		} catch (FileNotFoundException e) {
 		}
 		for (int y = 0; y < WORLD_HEIGHT; y++) {

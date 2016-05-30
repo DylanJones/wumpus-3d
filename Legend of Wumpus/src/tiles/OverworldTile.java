@@ -36,7 +36,9 @@ public enum OverworldTile implements WorldTile{
 	shore_nw("shore_nw.png", false, 0x15), 
 	shore_ne("shore_ne.png", false, 0x16), 
 	shore_sw("shore_sw.png", false, 0x17), 
-	shore_se("shore_se.png", false, 0x18);
+	shore_se("shore_se.png", false, 0x18),
+	lake("lake.png", true, 0x19),
+	door("door.png", false, 0x1A);
 	
 	public static WorldTile getTileFromCode(int code) {
 		switch (code) {
@@ -88,6 +90,8 @@ public enum OverworldTile implements WorldTile{
 			return shore_sw;
 		case 0x18:
 			return shore_se;
+		case 0x19:
+			return lake;
 		default:
 			return null;
 		}
