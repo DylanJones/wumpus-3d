@@ -17,6 +17,7 @@ import java.io.IOException;
 public final class Player extends Entity {
 	private static final int ATTACK_TIME = 500; // attack duration in millis
 	private static final int ATTACK_COOLDOWN = 200; // attack cooldown in millis
+	private static int MaxHealth = 6;
 	private static Image northImage1;
 	private static Image northImage2;
 	private static Image southImage1;
@@ -69,7 +70,7 @@ public final class Player extends Entity {
 	}
 
 	public Player() {
-		this.health = 10;
+		this.health = 3;
 		this.spriteHeight = northImage1.getHeight(null);
 		this.spriteWidth = northImage1.getWidth(null);
 		this.x = 5;
@@ -231,5 +232,15 @@ public final class Player extends Entity {
 	public void attack() {
 		if (System.currentTimeMillis() - this.attackStartTime - ATTACK_COOLDOWN > ATTACK_TIME)
 			attackStartTime = System.currentTimeMillis();
+	}
+
+	public int getMaxHealth()
+	{
+		return MaxHealth;
+	}
+
+	public void setMaxHealth(int heath_value)
+	{
+		MaxHealth = heath_value;
 	}
 }

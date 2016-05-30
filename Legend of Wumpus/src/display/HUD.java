@@ -8,12 +8,16 @@ import javax.imageio.ImageIO;
 
 public final class HUD {
 	private static Image heart = null;
+	private static Image half_heart = null;
+	private static Image empty_heart = null;
 
 	static {
 		try {
-			heart = ImageIO.read(new File("assets/items/heart.png")).getScaledInstance(20, 20, Image.SCALE_REPLICATE);
+			heart = ImageIO.read(new File("assets/items/heart.png")).getScaledInstance(14, 16, Image.SCALE_REPLICATE);
+			half_heart = ImageIO.read(new File("assets/items/half_heart.png")).getScaledInstance(14, 16, Image.SCALE_REPLICATE);
+			empty_heart = ImageIO.read(new File("assets/items/empty_heart.png")).getScaledInstance(14, 16, Image.SCALE_REPLICATE);
 		} catch (IOException e) {
-			System.err.print("Error reading item image files");
+			System.err.print("Error loading files for HUD");
 			System.exit(1);
 		}
 	}
@@ -22,8 +26,28 @@ public final class HUD {
 	 * Draws the health bar and anything else related to health. (e.g. amount)
 	 */
 	private static void drawHealth(Graphics g) {
-		for (int i = 0; i < World.getThePlayer().getHealth(); i++) {
-			g.drawImage(heart, 480 - (25 * i), 15, null);
+		int full_hearts = World.getThePlayer().getMaxHealth()/2;
+		boolean hasHalf = false;
+
+		if(World.getThePlayer().getMaxHealth() > World.getThePlayer().getHealth())
+			full_hearts = (World.getThePlayer().getHealth()/2);
+
+		if(World.getThePlayer().getHealth()%2==1)
+			hasHalf = true;
+
+		int only_once = 0;
+		for (int i = 0; i < (World.getThePlayer().getMaxHealth()/2); i++) {
+			if(i<full_hearts)
+			{
+				g.drawImage(heart, 400 + (20 * i), 75, null);
+			} else {
+				if(hasHalf && only_once == 0){
+					g.drawImage(half_heart, 400 + (20 * i), 75, null);
+					only_once++;
+				} else {
+					g.drawImage(empty_heart, 400 + (20 * i), 75, null);
+				}
+			}	
 		}
 	}
 
