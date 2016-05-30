@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 import display.Direction;
 import display.World;
 
-public class EntityOctorcRed extends EntityMinion {
+public class EntityOctorokRed extends EntityMinion {
 	private static Image gremlinNorth;
 	private static Image gremlinSouth;
 	private static Image gremlinEast;
@@ -42,7 +42,7 @@ public class EntityOctorcRed extends EntityMinion {
 	}
 
 	// Gremlins walk in squares
-	public EntityOctorcRed(int squareX1, int squareY1, int squareX2, int squareY2) {
+	public EntityOctorokRed(int squareX1, int squareY1, int squareX2, int squareY2) {
 		super();
 		this.x = squareX1;
 		this.y = squareY1;
