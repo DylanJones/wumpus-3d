@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import display.World;
 
 public enum WorldTile {
+	/////////////////////////////OVERWORLD/TREE WORLD///////////////////////
 	// Misc objects
 	stairs1("stairs1.png", false, 0x01), 
 	square_shrub("square_shrub.png", true, 0x02), 
@@ -38,8 +39,62 @@ public enum WorldTile {
 	shore_sw("shore_sw.png", false, 0x17), 
 	shore_se("shore_se.png", false, 0x18),
 	lake("lake.png", true, 0x19),
-	door("door.png", false, 0x1A);
-	
+	door("door.png", false, 0x1A),
+	////////////////////////ROCK WORLD///////////////////////////
+	rbridge("rbridge.png", false, 0x1B),
+	//The face thing
+	rface_00("rface_00.png", true, 0x1C),
+	rface_01("rface_01.png", true, 0x1D),
+	rface_10("rface_10.png", true, 0x1E),
+	rface_20("rface_20.png", true, 0x1F),
+	rface_21("rface_21.png", true, 0x20),
+	//Lake
+	rlake("rlake.png", true, 0x21),
+	rlake_east("rlake_east.png", true, 0x22),
+	rlake_west("rlake_west.png", true, 0x23),
+	rlake_south("rlake_south.png", true, 0x24),
+	rlake_north("rlake_north.png", true, 0x25),
+	rlake_ne("rlake_ne.png", true, 0x26),
+	rlake_nw("rlake_nw.png", true, 0x27),
+	rlake_se("rlake_se.png", true, 0x28),
+	rlake_sw("rlake_sw.png", true, 0x29),
+	//Shore
+	rshore_ne("rshore_ne.png", false, 0x2A),
+	rshore_se("rshore_se.png", false, 0x2B),
+	rshore_nw("rshore_nw.png", false, 0x2C),
+	rshore_sw("rshore_sw.png", false, 0x2D),
+	//Those rock things that are everywhere
+	rock("rock.png", true, 0x2E),
+	rock_ne("rock_ne.png", true, 0x2F),
+	rock_nw("rock_nw.png", true, 0x30),
+	rock_se("rock_se.png", true, 0x31),
+	rock_sw("rock_sw.png", true, 0x32),
+	rock_north("rock_north.png", true, 0x33),
+	//Sand in rock world
+	rsand1("rsand1.png", false, 0x34),
+	rsand2("rsand2.png", false, 0x35),
+	rsand_east("rsand_east.png", false, 0x36),
+	rsand_west("rsand_west.png", false, 0x37),
+	rsand_north("rsand_north.png", false, 0x38),
+	rsand_south("rsand_south.png", false, 0x39),
+	rsand_ne("rsand_ne.png", false, 0x3A),
+	rsand_nw("rsand_nw.png", false, 0x3B),
+	rsand_se("rsand_se.png", false, 0x3C),
+	rsand_sw("rsand_sw.png", false, 0x3D),
+	//more random things
+	rshrub("rshrub.png", true, 0x3E),
+	rstatue("rstatue.png", true, 0x3F),
+	//Tree dungeon entrence
+	rtree_00("rtree_00.png", true, 0x40),
+	rtree_01("rtree_01.png", true, 0x41),
+	rtree_10("rtree_10.png", true, 0x42),
+	rtree_20("rtree_20.png", true, 0x43),
+	rtree_21("rtree_21.png", true, 0x44),
+	square_rock("square_rock.png", true, 0x45),
+	rwaterfall("rwaterfall.png", true, 0x46),
+	stairs3("stairs3.png", false, 0x47),
+	stairs4("stairs4.png", false, 0x48)
+	;
 	public static WorldTile getTileFromCode(int code) {
 		switch (code) {
 		case 0x01:
@@ -94,6 +149,52 @@ public enum WorldTile {
 			return lake;
 		case 0x1A:
 			return door;
+		case 0x1B:
+		case 0x1C:
+		case 0x1D:
+		case 0x1E:
+		case 0x1F:
+		case 0x20:
+		case 0x21:
+		case 0x22:
+		case 0x23:
+		case 0x24:
+		case 0x25:
+		case 0x26:
+		case 0x27:
+		case 0x28:
+		case 0x29:
+		case 0x2A:
+		case 0x2B:
+		case 0x2C:
+		case 0x2D:
+		case 0x2E:
+		case 0x2F:
+		case 0x30:
+		case 0x31:
+		case 0x32:
+		case 0x33:
+		case 0x34:
+		case 0x35:
+		case 0x36:
+		case 0x37:
+		case 0x38:
+		case 0x39:
+		case 0x3A:
+		case 0x3B:
+		case 0x3C:
+		case 0x3D:
+		case 0x3E:
+		case 0x3F:
+		case 0x40:
+		case 0x41:
+		case 0x42:
+		case 0x43:
+		case 0x44:
+		case 0x45:
+		case 0x46:
+		case 0x47:
+		case 0x48:
 		default:
 			return null;
 		}
