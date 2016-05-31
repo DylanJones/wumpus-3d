@@ -92,6 +92,8 @@ public enum OverworldTile implements WorldTile{
 			return shore_se;
 		case 0x19:
 			return lake;
+		case 0x1A:
+			return door;
 		default:
 			return null;
 		}

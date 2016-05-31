@@ -22,7 +22,7 @@ def findCode(img):
     for tile in tiles:
         if equals(img, tile[0]):
             return tile[1]
-    return '16' #shore_ne tile
+    return '1A' #shore_ne tile
 
 print('Parsing Tiles...')
 for file in to_parse:
@@ -36,7 +36,7 @@ for file in to_parse:
             out_file.write(code + " ")
         out_file.write("\n")
     out_file.close()
-            
+
 print('Creating World Files...')
 letters = 'ABCDEFGHIJKLMNOP'
 numbers = '12345678'
@@ -50,5 +50,5 @@ for x in range(len(letters)):
             file.write('south ' + numbers[y - 1 if y - 1 >= 0 else len(numbers) - 1] + letters[x] + '.wld\n')
             file.write('east ' + numbers[y] + letters[(x + 1) %  len(letters)] + '.wld\n')
             file.write('west ' + numbers[y] + letters[x - 1 if x - 1 >= 0 else len(letters) - 1] + '.wld\n')
-        
-        
+
+
