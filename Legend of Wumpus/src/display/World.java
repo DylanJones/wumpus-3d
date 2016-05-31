@@ -14,7 +14,7 @@ import java.util.Set;
 import entity.Entity;
 import entity.Player;
 import tiles.WorldTile;
-import tiles.OverworldTile;
+import tiles.WorldTile;
 
 /** This is a class of constants. It will contain global variables. */
 public final class World {
@@ -75,7 +75,7 @@ public final class World {
 		if(x >= 0 && y >= 0 && x < tiles.length && y < tiles[0].length)
 			if (tiles[x][y] != null)
 				return tiles[x][y];
-		return OverworldTile.ground;
+		return WorldTile.ground;
 	}
 
 	/**
@@ -185,7 +185,7 @@ public final class World {
 		for (int y = 0; y < WORLD_HEIGHT; y++) {
 			String[] nums = s.nextLine().split("\\s+");
 			for (int x = 0; x < WORLD_WIDTH; x++) {
-				tiles[x][y] = OverworldTile.getTileFromCode(Integer.parseInt(nums[x], 16));
+				tiles[x][y] = WorldTile.getTileFromCode(Integer.parseInt(nums[x], 16));
 			}
 		}
 	}
