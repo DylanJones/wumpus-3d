@@ -271,7 +271,7 @@ public enum WorldTile {
 			myImage = ImageIO.read(new File("assets/tiles/" + imageName)).getScaledInstance(32, 32,
 					Image.SCALE_REPLICATE);
 		} catch (IOException e) {
-			System.err.println("Error reading image file: assets/tiles/overworld/" + imageName);
+			System.err.println("Error reading image file: assets/tiles/" + imageName);
 			System.exit(1);
 		}
 		isSolid = solid;
