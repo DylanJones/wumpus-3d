@@ -70,7 +70,7 @@ public final class Player extends Entity {
 	}
 
 	public Player() {
-		this.health = this.MaxHealth;
+		this.health = 3;
 		this.spriteHeight = northImage1.getHeight(null);
 		this.spriteWidth = northImage1.getWidth(null);
 		this.x = 5;

@@ -13,8 +13,6 @@ import java.util.Set;
 
 import entity.Entity;
 import entity.Player;
-import tiles.WorldTile;
-import tiles.WorldTile;
 
 /** This is a class of constants. It will contain global variables. */
 public final class World {
@@ -62,6 +60,10 @@ public final class World {
 		return new int[] { (int) (Math.round(x * 32)), (int) (Math.round(y * 32 + 112)) };
 	}
 
+	public static double[] getWorldCoordinates(int x, int y) {
+		return new double[] { (double) x / 32D, (double) y / 32D };
+	}
+
 	/**
 	 * Get the WorldTile at the specified x,y coordiantes
 	 * 
@@ -72,7 +74,7 @@ public final class World {
 	 * @return the WorldTile at specified location
 	 */
 	public static WorldTile getTileAt(int x, int y) {
-		if(x >= 0 && y >= 0 && x < tiles.length && y < tiles[0].length)
+		if (x >= 0 && y >= 0 && x < tiles.length && y < tiles[0].length)
 			if (tiles[x][y] != null)
 				return tiles[x][y];
 		return WorldTile.ground;
@@ -172,8 +174,14 @@ public final class World {
 		southWorld = theScanner.nextLine().replace("south ", "");
 		eastWorld = theScanner.nextLine().replace("east ", "");
 		westWorld = theScanner.nextLine().replace("west ", "");
+//		String line = "";
+//		do { line = theScanner.nextLine(); } while (!line.equals("entities:"));
 		MusicPlayer.changePlayingMusic("assets/music/" + musicName);
 		loadTiles(tileFileName);
+	}
+	
+	private static void createEntity(String entityLine) {
+		
 	}
 
 	private static void loadTiles(String filename) {
@@ -209,8 +217,21 @@ public final class World {
 
 	public static boolean willCollideTile(Entity e, double movement) {
 		double[] newCoords = e.getFacing().moveInDirection(e.getX(), e.getY(), movement);
+		double[] entityDimensions = World.getWorldCoordinates(e.getWidth(), e.getHeight());
 		double newX = newCoords[0];
 		double newY = newCoords[1];
+		switch (e.getFacing()) {
+		case SOUTH:
+			newY += entityDimensions[1] / 2;
+			break;
+		case EAST:
+			System.out.println("east");
+			newX += entityDimensions[0] / 2;
+			break;
+		case WEST:
+			newX -= entityDimensions[0] / 2;
+			break;
+		}
 		return World.getTileAt(newX, newY).isSolid();
 	}
 

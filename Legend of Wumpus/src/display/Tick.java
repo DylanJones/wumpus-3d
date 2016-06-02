@@ -2,9 +2,11 @@ package display;
 
 import entity.*;
 
-import javax.swing.JPanel;
+
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JPanel;
 
 /** This class does the majority of the world engine work. */
 public class Tick implements ActionListener {
@@ -37,10 +39,13 @@ public class Tick implements ActionListener {
 	 */
 	private void collideEntities() {
 		for (Entity e : World.getAllEntities()) {
-			Entity x = World.getThePlayer();
-			if ((Math.abs(e.getX() - x.getX()) * 2 < e.getWidth() + x.getWidth())
-					&& (Math.abs(e.getY() - x.getY()) * 2 < e.getHeight() + x.getHeight())) {
-				e.collide(x);
+			for (Entity x : World.getAllEntities()) {
+				if (x == e)
+					continue;
+				if ((Math.abs(e.getX() - x.getX()) * 2 < e.getWidth() + x.getWidth())
+						&& (Math.abs(e.getY() - x.getY()) * 2 < e.getHeight() + x.getHeight())) {
+					e.collide(x);
+				}
 			}
 		}
 	}
