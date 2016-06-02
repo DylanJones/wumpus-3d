@@ -93,8 +93,7 @@ public enum WorldTile {
 	square_rock("square_rock.png", true, 0x45),
 	rwaterfall("rwaterfall.png", true, 0x46),
 	stairs3("stairs3.png", false, 0x47),
-	stairs4("stairs4.png", false, 0x48)
-	;
+	stairs4("stairs4.png", false, 0x48);
 	public static WorldTile getTileFromCode(int code) {
 		switch (code) {
 		case 0x01:
@@ -150,51 +149,97 @@ public enum WorldTile {
 		case 0x1A:
 			return door;
 		case 0x1B:
+			return rbridge;
 		case 0x1C:
+			return rface_00;
 		case 0x1D:
+			return rface_01;
 		case 0x1E:
+			return rface_10;
 		case 0x1F:
+			return rface_20;
 		case 0x20:
-		case 0x21:
+			return rface_21;
+		case 0x21: 
+			return rlake;
 		case 0x22:
+			return rlake_east;
 		case 0x23:
+			return rlake_west;
 		case 0x24:
+			return rlake_south;
 		case 0x25:
+			return rlake_north;
 		case 0x26:
+			return rlake_ne;
 		case 0x27:
+			return rlake_nw;
 		case 0x28:
+			return rlake_se;
 		case 0x29:
+			return rlake_sw;
 		case 0x2A:
+			return rshore_ne;
 		case 0x2B:
+			return rshore_se;
 		case 0x2C:
+			return rshore_nw;
 		case 0x2D:
+			return rshore_sw;
 		case 0x2E:
+			return rock;
 		case 0x2F:
+			return rock_ne;
 		case 0x30:
+			return rock_nw;
 		case 0x31:
+			return rock_se;
 		case 0x32:
+			return rock_sw;
 		case 0x33:
+			return rock_north;
 		case 0x34:
+			return rsand1;
 		case 0x35:
+			return rsand2;
 		case 0x36:
+			return rsand_east;
 		case 0x37:
+			return rsand_west;
 		case 0x38:
+			return rsand_north;
 		case 0x39:
+			return rsand_south;
 		case 0x3A:
+			return rsand_ne;
 		case 0x3B:
+			return rsand_nw;
 		case 0x3C:
+			return rsand_se;
 		case 0x3D:
+			return rsand_sw;
 		case 0x3E:
+			return rshrub;
 		case 0x3F:
+			return rstatue;
 		case 0x40:
+			return rtree_00;
 		case 0x41:
+			return rtree_01;
 		case 0x42:
+			return rtree_10;
 		case 0x43:
+			return rtree_20;
 		case 0x44:
+			return rtree_21;
 		case 0x45:
+			return square_rock;
 		case 0x46:
+			return rwaterfall;
 		case 0x47:
+			return stairs3;
 		case 0x48:
+			return stairs4;
 		default:
 			return null;
 		}
@@ -223,7 +268,7 @@ public enum WorldTile {
 
 	private WorldTile(String imageName, boolean solid, int byteCode) {
 		try {
-			myImage = ImageIO.read(new File("assets/tiles/overworld/" + imageName)).getScaledInstance(32, 32,
+			myImage = ImageIO.read(new File("assets/tiles/" + imageName)).getScaledInstance(32, 32,
 					Image.SCALE_REPLICATE);
 		} catch (IOException e) {
 			System.err.println("Error reading image file: assets/tiles/overworld/" + imageName);
