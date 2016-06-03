@@ -13,17 +13,21 @@ import display.Direction;
 public class EntitySpider extends EntityMinion {
 	private static Image standingImage;
 	private static Image jumpingImage;
-	private static final int JUMP_DISTANCE = 50;
+	private static final double JUMP_DISTANCE = 3;
+	private static final double SPEED = 0.1;
 
 	private boolean jumping = false;
 	private long lastJumpTime = 0;
-	private int jumpXDest = 0;
-	private int jumpYDest = 0;
+	private double jumpXDest = 0;
+	private double jumpYDest = 0;
 
 	static {
 		try {
-			standingImage = ImageIO.read(new File("assets/spider/standing.png"));
-			jumpingImage = ImageIO.read(new File("assets/spider/jumping.png"));
+			standingImage = ImageIO
+					.read(new File("assets/spider/standing.png"))
+					.getScaledInstance(32, 30, Image.SCALE_REPLICATE);
+			jumpingImage = ImageIO.read(new File("assets/spider/jumping.png"))
+					.getScaledInstance(32, 24, Image.SCALE_REPLICATE);
 		} catch (IOException e) {
 			System.err.println("Error reading Spider images!");
 			System.exit(1);
@@ -43,13 +47,29 @@ public class EntitySpider extends EntityMinion {
 
 	@Override
 	public void tick() {
-		// TODO Auto-generated method stub
-
+		if (jumping) {
+			spriteWidth = jumpingImage.getWidth(null);
+			spriteHeight = jumpingImage.getHeight(null);
+		} else {
+			spriteWidth = standingImage.getWidth(null);
+			spriteHeight = standingImage.getHeight(null);
+		}
+		if(jumping) {
+			double[] nc = facing.moveInDirection(x, y, SPEED);
+			x = nc[0];
+			y = nc[1];
+			if (Math.abs(x - jumpXDest) < 0.1)
+				jumping = false;
+		}
+		System.out.println(jumping);
+		if (Math.random() < 0.1 && !jumping)
+			startJump();
 	}
 
 	@Override
 	public void collide(Entity e) {
-		// TODO Auto-generated method stub
+		if (e instanceof Player)
+			e.damage(1, this);
 	}
 
 	@Override
@@ -61,38 +81,35 @@ public class EntitySpider extends EntityMinion {
 	public void draw(Graphics g) {
 		int[] sCoords = World.getScreenCoordinates(x, y);
 		if (jumping) {
-			g.drawImage(jumpingImage, sCoords[0] + spriteWidth / 2, sCoords[1] + spriteHeight / 2, null);
+			g.drawImage(jumpingImage, sCoords[0] - spriteWidth / 2, sCoords[1]
+					- spriteHeight / 2, null);
 		} else {
-			g.drawImage(standingImage, sCoords[0] + spriteWidth / 2, sCoords[1] + spriteHeight / 2, null);
+			g.drawImage(standingImage, sCoords[0] - spriteWidth / 2, sCoords[1]
+					- spriteHeight / 2, null);
 		}
 	}
 
 	private void startJump() {
-		Direction d = whichWayToJump();
-		if (canJump(d)) {
+		facing = whichWayToJump();
+		if (!World.willCollideTile(this, JUMP_DISTANCE)) {
 			jumping = true;
 			lastJumpTime = System.currentTimeMillis();
+			double[] coords = facing.moveInDirection(x, y, JUMP_DISTANCE);
+			jumpXDest = coords[0];
+			jumpYDest = coords[1];
 		}
-	}
-
-	private boolean canJump(Direction dir) {
-		System.out.println("Fix me");
-		return true;
 	}
 
 	private Direction whichWayToJump() {
-		double playerX = World.getThePlayer().getX();
-		double playerY = World.getThePlayer().getY();
-		if (playerX > x) {
-			if (playerY > y)
+		if (Math.random() < 0.5)
+			if (Math.random() < 0.5)
 				return Direction.SOUTHEAST;
 			else
 				return Direction.NORTHEAST;
-		} else {
-			if (playerY > y)
+		else
+			if (Math.random() < 0.5)
 				return Direction.SOUTHWEST;
 			else
 				return Direction.NORTHWEST;
-		}
 	}
 }

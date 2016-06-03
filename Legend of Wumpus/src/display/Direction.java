@@ -79,8 +79,7 @@ public enum Direction {
 		@Override
 		public double[] moveInDirection(double x, double y, double movement) {
 			// Use pythagorean theorem to find the length moved in north and
-			// south directions.
-			System.out.println("Not sure if diagonal enums work");
+			// west directions.
 			double sideLength = movement * Math.sin(Math.toRadians(45));
 			return new double[] { WEST.moveInDirection(x, y, sideLength)[0],
 					NORTH.moveInDirection(x, y, sideLength)[1] };
@@ -99,9 +98,8 @@ public enum Direction {
 
 		@Override
 		public double[] moveInDirection(double x, double y, double movement) {
-			// Use pythagorean theorem to find the length moved in north and
-			// south directions.
-			System.out.println("Not sure if diagonal enums work");
+			// Use trigonometry to find the length moved in south and
+			// west directions.
 			double sideLength = movement * Math.sin(Math.toRadians(45));
 			return new double[] { WEST.moveInDirection(x, y, sideLength)[0],
 					SOUTH.moveInDirection(x, y, sideLength)[1] };
@@ -120,9 +118,8 @@ public enum Direction {
 
 		@Override
 		public double[] moveInDirection(double x, double y, double movement) {
-			// Use pythagorean theorem to find the length moved in north and
-			// south directions.
-			System.out.println("Not sure if diagonal enums work");
+			// Use trigonometry to find the length moved in north and
+			// east directions.
 			double sideLength = movement * Math.sin(Math.toRadians(45));
 			return new double[] { EAST.moveInDirection(x, y, sideLength)[0],
 					NORTH.moveInDirection(x, y, sideLength)[1] };
@@ -141,9 +138,8 @@ public enum Direction {
 
 		@Override
 		public double[] moveInDirection(double x, double y, double movement) {
-			// Use pythagorean theorem to find the length moved in north and
+			// Use trigonometry to find the length moved in east and
 			// south directions.
-			System.out.println("Not sure if diagonal enums work");
 			double sideLength = movement * Math.sin(Math.toRadians(45));
 			return new double[] { EAST.moveInDirection(x, y, sideLength)[0],
 					SOUTH.moveInDirection(x, y, sideLength)[1] };

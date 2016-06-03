@@ -12,7 +12,8 @@ import display.World;
 public abstract class Entity {
 	// Variables are protected so they can be accessed by subclasses
 	protected double x, y;
-	protected int spriteWidth, spriteHeight; // the size of the sprite
+	/** Sprite size in PIXELS */
+	protected int spriteWidth, spriteHeight;
 	protected int health;
 	protected Direction facing;
 
@@ -59,7 +60,7 @@ public abstract class Entity {
 	public int getHealth() {
 		return health;
 	}
-	
+
 	public Direction getFacing() {
 		return facing;
 	}

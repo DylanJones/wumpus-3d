@@ -14,6 +14,7 @@ import java.util.Set;
 
 import entity.Entity;
 import entity.EntityOctorokRed;
+import entity.EntitySpider;
 import entity.Player;
 
 /** This is a class of constants. It will contain global variables. */
@@ -192,10 +193,14 @@ public final class World {
 	private static void createEntity(String entityLine) {
 		String[] elements = entityLine.split(" ");
 		elements[0] = elements[0].toLowerCase();
+		double[] coords = randomEmptyCoordinates();
 		switch (elements[0]) {
 		case "octorokred":
-			double[] coords = randomEmptyCoordinates();
 			new EntityOctorokRed(coords[0], coords[1]);
+			break;
+		case "spider":
+			new EntitySpider(coords[0], coords[1]);
+			break;
 		}
 	}
 
