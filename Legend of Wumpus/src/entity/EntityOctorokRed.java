@@ -98,6 +98,8 @@ public class EntityOctorokRed extends EntityMinion {
 	@Override
 	public void draw(Graphics g) {
 		int[] sCoords = World.getScreenCoordinates(x, y);
+		sCoords[0] = sCoords[0] - this.spriteWidth / 2;
+		sCoords[1] = sCoords[1] - this.spriteHeight / 2;
 		switch (facing) {
 		case NORTH:
 			g.drawImage(gremlinNorth, sCoords[0], sCoords[1], null);
