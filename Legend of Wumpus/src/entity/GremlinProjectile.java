@@ -35,6 +35,7 @@ public class GremlinProjectile extends EntityItem {
 		this.spriteWidth = projectileImage.getWidth(null);
 	}
 
+	@SuppressWarnings("incomplete-switch")
 	@Override
 	public void tick() {
 		// Die if we fall off the screen

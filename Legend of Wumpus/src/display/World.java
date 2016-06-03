@@ -12,6 +12,7 @@ import java.util.Scanner;
 import java.util.Set;
 
 import entity.Entity;
+import entity.EntityOctorokRed;
 import entity.Player;
 
 /** This is a class of constants. It will contain global variables. */
@@ -57,7 +58,8 @@ public final class World {
 	 * @return int[] of {x, y} which tells you where on the screen to draw
 	 */
 	public static int[] getScreenCoordinates(double x, double y) {
-		return new int[] { (int) (Math.round(x * 32)), (int) (Math.round(y * 32 + 112)) };
+		return new int[] { (int) (Math.round(x * 32)),
+				(int) (Math.round(y * 32 + 112)) };
 	}
 
 	public static double[] getWorldCoordinates(int x, int y) {
@@ -169,19 +171,39 @@ public final class World {
 			System.exit(1);
 		}
 		String tileFileName = theScanner.nextLine().replace("tiles ", "");
+		loadTiles(tileFileName);
 		String musicName = theScanner.nextLine().replace("music ", "");
 		northWorld = theScanner.nextLine().replace("north ", "");
 		southWorld = theScanner.nextLine().replace("south ", "");
 		eastWorld = theScanner.nextLine().replace("east ", "");
 		westWorld = theScanner.nextLine().replace("west ", "");
-//		String line = "";
-//		do { line = theScanner.nextLine(); } while (!line.equals("entities:"));
+		String line = "";
+		do {
+			line = theScanner.nextLine();
+		} while (!line.equals("entities:"));
+		while (theScanner.hasNext()) {
+			createEntity(theScanner.nextLine());
+		}
 		MusicPlayer.changePlayingMusic("assets/music/" + musicName);
-		loadTiles(tileFileName);
 	}
-	
+
 	private static void createEntity(String entityLine) {
-		
+		String[] elements = entityLine.split(" ");
+		elements[0] = elements[0].toLowerCase();
+		switch (elements[0]) {
+		case "octorokred":
+			double[] coords = randomEmptyCoordinates();
+			new EntityOctorokRed(coords[0], coords[1]);
+		}
+	}
+
+	private static double[] randomEmptyCoordinates() {
+		double x, y;
+		do {
+			x = Math.random() * 16;
+			y = Math.random() * 12;
+		} while (World.getTileAt(x, y).isSolid());
+		return new double[] { x, y };
 	}
 
 	private static void loadTiles(String filename) {
@@ -193,7 +215,8 @@ public final class World {
 		for (int y = 0; y < WORLD_HEIGHT; y++) {
 			String[] nums = s.nextLine().split("\\s+");
 			for (int x = 0; x < WORLD_WIDTH; x++) {
-				tiles[x][y] = WorldTile.getTileFromCode(Integer.parseInt(nums[x], 16));
+				tiles[x][y] = WorldTile.getTileFromCode(Integer.parseInt(
+						nums[x], 16));
 			}
 		}
 	}
@@ -215,9 +238,12 @@ public final class World {
 		ticker.stop();
 	}
 
+	@SuppressWarnings("incomplete-switch")
 	public static boolean willCollideTile(Entity e, double movement) {
-		double[] newCoords = e.getFacing().moveInDirection(e.getX(), e.getY(), movement);
-		double[] entityDimensions = World.getWorldCoordinates(e.getWidth(), e.getHeight());
+		double[] newCoords = e.getFacing().moveInDirection(e.getX(), e.getY(),
+				movement);
+		double[] entityDimensions = World.getWorldCoordinates(e.getWidth(),
+				e.getHeight());
 		double newX = newCoords[0];
 		double newY = newCoords[1];
 		switch (e.getFacing()) {
@@ -225,13 +251,14 @@ public final class World {
 			newY += entityDimensions[1] / 2;
 			break;
 		case EAST:
-			System.out.println("east");
 			newX += entityDimensions[0] / 2;
 			break;
 		case WEST:
 			newX -= entityDimensions[0] / 2;
 			break;
 		}
+		if(newX < 0 || newX >= 16 || newY < 0 || newY >= 12)
+			return true;
 		return World.getTileAt(newX, newY).isSolid();
 	}
 

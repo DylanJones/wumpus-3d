@@ -159,6 +159,7 @@ public final class Player extends Entity {
 		facing = facing.getLeft();
 	}
 
+	@SuppressWarnings("incomplete-switch")
 	public void tick() {
 		if (System.currentTimeMillis() - attackStartTime < ATTACK_TIME) {
 			switch (facing) {
