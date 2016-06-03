@@ -33,7 +33,6 @@ public final class Player extends Entity {
 
 	private long lastDamageTime = 0;
 	private long attackStartTime = 0;
-	private boolean attacking = false;
 
 	static {
 		try {
@@ -70,7 +69,7 @@ public final class Player extends Entity {
 	}
 
 	public Player() {
-		this.health = 3;
+		this.health = 6;
 		this.spriteHeight = northImage1.getHeight(null);
 		this.spriteWidth = northImage1.getWidth(null);
 		this.x = 5;

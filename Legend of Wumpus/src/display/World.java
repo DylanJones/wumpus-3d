@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashSet;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -60,10 +61,6 @@ public final class World {
 	public static int[] getScreenCoordinates(double x, double y) {
 		return new int[] { (int) (Math.round(x * 32)),
 				(int) (Math.round(y * 32 + 112)) };
-	}
-
-	public static double[] getWorldCoordinates(int x, int y) {
-		return new double[] { (double) x / 32D, (double) y / 32D };
 	}
 
 	/**
@@ -124,6 +121,8 @@ public final class World {
 	 *            the new GameState
 	 */
 	public static void setGameState(int gameState) {
+		if (gameState == 2)
+			World.stopTicker();
 		World.gameState = gameState;
 	}
 
@@ -173,18 +172,21 @@ public final class World {
 		String tileFileName = theScanner.nextLine().replace("tiles ", "");
 		loadTiles(tileFileName);
 		String musicName = theScanner.nextLine().replace("music ", "");
+		MusicPlayer.changePlayingMusic("assets/music/" + musicName);
 		northWorld = theScanner.nextLine().replace("north ", "");
 		southWorld = theScanner.nextLine().replace("south ", "");
 		eastWorld = theScanner.nextLine().replace("east ", "");
 		westWorld = theScanner.nextLine().replace("west ", "");
-		String line = "";
-		do {
-			line = theScanner.nextLine();
-		} while (!line.equals("entities:"));
-		while (theScanner.hasNext()) {
-			createEntity(theScanner.nextLine());
+		try {
+			String line = "";
+			do {
+				line = theScanner.nextLine();
+			} while (!line.equals("entities:"));
+			while (theScanner.hasNext()) {
+				createEntity(theScanner.nextLine());
+			}
+		} catch (NoSuchElementException e) {
 		}
-		MusicPlayer.changePlayingMusic("assets/music/" + musicName);
 	}
 
 	private static void createEntity(String entityLine) {
@@ -200,8 +202,8 @@ public final class World {
 	private static double[] randomEmptyCoordinates() {
 		double x, y;
 		do {
-			x = Math.random() * 16;
-			y = Math.random() * 12;
+			x = Math.random() * WORLD_WIDTH;
+			y = Math.random() * WORLD_HEIGHT;
 		} while (World.getTileAt(x, y).isSolid());
 		return new double[] { x, y };
 	}
@@ -242,23 +244,23 @@ public final class World {
 	public static boolean willCollideTile(Entity e, double movement) {
 		double[] newCoords = e.getFacing().moveInDirection(e.getX(), e.getY(),
 				movement);
-		double[] entityDimensions = World.getWorldCoordinates(e.getWidth(),
-				e.getHeight());
 		double newX = newCoords[0];
 		double newY = newCoords[1];
 		switch (e.getFacing()) {
 		case SOUTH:
-			newY += entityDimensions[1] / 2;
+			newY += e.getHeight() / 2;
 			break;
 		case EAST:
-			newX += entityDimensions[0] / 2;
+			newX += e.getWidth() / 2;
 			break;
 		case WEST:
-			newX -= entityDimensions[0] / 2;
+			newX -= e.getWidth() / 2;
 			break;
 		}
-		if(newX < 0 || newX >= 16 || newY < 0 || newY >= 12)
-			return true;
+		if (!(e instanceof Player))
+			if (newX < 0 || newX >= WORLD_WIDTH || newY < 0
+					|| newY >= WORLD_HEIGHT)
+				return true;
 		return World.getTileAt(newX, newY).isSolid();
 	}
 

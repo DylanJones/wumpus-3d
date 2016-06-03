@@ -10,9 +10,9 @@ import javax.imageio.ImageIO;
 import display.Direction;
 import display.World;
 
-public class GremlinProjectile extends EntityItem {
+public class OctorokProjectile extends EntityItem {
 	protected static Image projectileImage;
-	private static final int SPEED = 7;
+	private static final double SPEED = 0.3;
 	private int damageAmount;
 	private Direction facing;
 
@@ -25,7 +25,7 @@ public class GremlinProjectile extends EntityItem {
 		}
 	}
 
-	public GremlinProjectile(double x, double y, int damageAmount, Direction facing2) {
+	public OctorokProjectile(double x, double y, int damageAmount, Direction facing2) {
 		super();
 		this.x = x;
 		this.y = y;

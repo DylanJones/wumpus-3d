@@ -71,7 +71,7 @@ public class EntityOctorokRed extends EntityMinion {
 	public void tick() {
 		// Shoot player
 		if (Math.random() < 0.03) {
-			new GremlinProjectile(this.x, this.y, 1, facing);
+			new OctorokProjectile(this.x, this.y, 1, facing);
 		}
 		// TODO make random movement
 		if (Math.random() < 0.01)

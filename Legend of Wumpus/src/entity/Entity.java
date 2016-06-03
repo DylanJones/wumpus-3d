@@ -48,12 +48,12 @@ public abstract class Entity {
 		return y;
 	}
 
-	public int getWidth() {
-		return spriteWidth;
+	public double getWidth() {
+		return spriteWidth / 32D;
 	}
 
-	public int getHeight() {
-		return spriteHeight;
+	public double getHeight() {
+		return spriteHeight / 32D;
 	}
 
 	public int getHealth() {
