@@ -13,9 +13,9 @@ public final class HUD {
 
 	static {
 		try {
-			heart = ImageIO.read(new File("assets/items/heart.png")).getScaledInstance(14, 16, Image.SCALE_REPLICATE);
-			half_heart = ImageIO.read(new File("assets/items/half_heart.png")).getScaledInstance(14, 16, Image.SCALE_REPLICATE);
-			empty_heart = ImageIO.read(new File("assets/items/empty_heart.png")).getScaledInstance(14, 16, Image.SCALE_REPLICATE);
+			heart = ImageIO.read(new File("assets/items/heart.png")).getScaledInstance(16, 16, Image.SCALE_REPLICATE);
+			half_heart = ImageIO.read(new File("assets/items/half_heart.png")).getScaledInstance(16, 16, Image.SCALE_REPLICATE);
+			empty_heart = ImageIO.read(new File("assets/items/empty_heart.png")).getScaledInstance(16, 16, Image.SCALE_REPLICATE);
 		} catch (IOException e) {
 			System.err.print("Error loading files for HUD");
 			System.exit(1);
@@ -39,13 +39,13 @@ public final class HUD {
 		for (int i = 0; i < (World.getThePlayer().getMaxHealth()/2); i++) {
 			if(i<full_hearts)
 			{
-				g.drawImage(heart, 400 + (20 * i), 75, null);
+				g.drawImage(heart, 400 + (17 * i), 75, null);
 			} else {
 				if(hasHalf && only_once == 0){
-					g.drawImage(half_heart, 400 + (20 * i), 75, null);
+					g.drawImage(half_heart, 400 + (17 * i), 75, null);
 					only_once++;
 				} else {
-					g.drawImage(empty_heart, 400 + (20 * i), 75, null);
+					g.drawImage(empty_heart, 400 + (17 * i), 75, null);
 				}
 			}	
 		}
