@@ -1,6 +1,6 @@
 package entity;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
@@ -15,6 +15,7 @@ public class EntityOctorokRed extends EntityMinion {
 	private static Image gremlinSouth;
 	private static Image gremlinEast;
 	private static Image gremlinWest;
+	private static Image projectileImage;
 	private static final double SPEED = 0.1;
 
 	static {
@@ -31,6 +32,8 @@ public class EntityOctorokRed extends EntityMinion {
 			gremlinWest = ImageIO.read(
 					new File("assets/gremlin/gremlin-west.png"))
 					.getScaledInstance(32, 32, Image.SCALE_FAST);
+			projectileImage = ImageIO.read(new File(
+					"assets/gremlin/projectile.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.err.println("Error reading Gremlin images");
@@ -46,6 +49,7 @@ public class EntityOctorokRed extends EntityMinion {
 		this.spriteWidth = gremlinNorth.getWidth(null);
 		this.health = 1;
 		this.facing = Direction.NORTH;
+		setHitbox(gremlinNorth);
 	}
 
 	@Override
@@ -55,7 +59,6 @@ public class EntityOctorokRed extends EntityMinion {
 
 	@Override
 	public void damage(int amount, Entity damageSource) {
-		System.out.println("gremlin damage");
 		health -= amount;
 		if (health <= 0)
 			World.deregisterEntity(this);
@@ -71,15 +74,15 @@ public class EntityOctorokRed extends EntityMinion {
 	public void tick() {
 		// Shoot player
 		if (Math.random() < 0.03) {
-			new OctorokProjectile(this.x, this.y, 1, facing);
+			new EntityProjectile(this.x, this.y, 1, facing, projectileImage);
 		}
-		// TODO make random movement
+		// Randomly turn
 		if (Math.random() < 0.01)
 			randomTurn();
-
+		// Move
 		if (World.willCollideTile(this, SPEED)) {
 			randomTurn();
-		} else {
+		} else { // Turn
 			double[] newCoords = facing.moveInDirection(x, y, SPEED);
 			x = newCoords[0];
 			y = newCoords[1];
@@ -96,22 +99,26 @@ public class EntityOctorokRed extends EntityMinion {
 
 	@SuppressWarnings("incomplete-switch")
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics2D g) {
 		int[] sCoords = World.getScreenCoordinates(x, y);
 		sCoords[0] = sCoords[0] - this.spriteWidth / 2;
 		sCoords[1] = sCoords[1] - this.spriteHeight / 2;
 		switch (facing) {
 		case NORTH:
 			g.drawImage(gremlinNorth, sCoords[0], sCoords[1], null);
+			setHitbox(gremlinNorth);
 			break;
 		case SOUTH:
 			g.drawImage(gremlinSouth, sCoords[0], sCoords[1], null);
+			setHitbox(gremlinSouth);
 			break;
 		case EAST:
 			g.drawImage(gremlinEast, sCoords[0], sCoords[1], null);
+			setHitbox(gremlinEast);
 			break;
 		case WEST:
 			g.drawImage(gremlinWest, sCoords[0], sCoords[1], null);
+			setHitbox(gremlinWest);
 			break;
 		}
 	}

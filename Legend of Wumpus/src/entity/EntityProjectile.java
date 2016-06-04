@@ -1,32 +1,20 @@
 package entity;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 import display.Direction;
 import display.World;
 
-public class OctorokProjectile extends EntityItem {
-	protected static Image projectileImage;
+public class EntityProjectile extends EntityItem {
+	private final Image projectileImage;
 	private static final double SPEED = 0.3;
 	private int damageAmount;
 	private Direction facing;
 
-	static {
-		try {
-			projectileImage = ImageIO.read(new File("assets/items/projectile.png"));
-		} catch (IOException e) {
-			System.err.println("Error reading projectile images");
-			System.exit(1);
-		}
-	}
-
-	public OctorokProjectile(double x, double y, int damageAmount, Direction facing2) {
+	public EntityProjectile(double x, double y, int damageAmount, Direction facing2, Image image) {
 		super();
+		this.projectileImage = image;
 		this.x = x;
 		this.y = y;
 		this.damageAmount = damageAmount;
@@ -35,26 +23,14 @@ public class OctorokProjectile extends EntityItem {
 		this.spriteWidth = projectileImage.getWidth(null);
 	}
 
-	@SuppressWarnings("incomplete-switch")
 	@Override
 	public void tick() {
 		// Die if we fall off the screen
-		if (this.x > 512 || this.x < 0 || this.y > 384 || this.y < 0)
+		if (this.x > World.WORLD_WIDTH || this.x < 0 || this.y > World.WORLD_HEIGHT || this.y < 0)
 			World.deregisterEntity(this);
-		switch (facing) {
-		case NORTH:
-			this.y -= SPEED;
-			break;
-		case SOUTH:
-			this.y += SPEED;
-			break;
-		case EAST:
-			this.x += SPEED;
-			break;
-		case WEST:
-			this.x -= SPEED;
-			break;
-		}
+		double[] coords = facing.moveInDirection(x, y, SPEED);
+		x = coords[0];
+		y = coords[1];
 	}
 
 	@Override
@@ -71,7 +47,7 @@ public class OctorokProjectile extends EntityItem {
 	}
 
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics2D g) {
 		int[] sCoords = World.getScreenCoordinates(x, y);
 		g.drawImage(projectileImage, sCoords[0], sCoords[1], null);
 	}

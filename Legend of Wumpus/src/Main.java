@@ -1,7 +1,6 @@
 import display.*;
 
 import javax.swing.*;
-import entity.*;
 
 public class Main {
 

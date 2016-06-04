@@ -1,6 +1,7 @@
 package entity;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
 
 import display.Direction;
 import display.World;
@@ -35,11 +36,16 @@ public abstract class Entity {
 	 * here.
 	 */
 	public abstract void damage(int amount, Entity damageSource);
+	
+	protected void setHitbox(Image imageIn) {
+		this.spriteHeight = imageIn.getHeight(null);
+		this.spriteWidth = imageIn.getWidth(null);
+	}
 
 	/**
 	 * Called every tick to draw the entity on the screen.
 	 */
-	public abstract void draw(Graphics g);
+	public abstract void draw(Graphics2D g);
 
 	public double getX() {
 		return x;

@@ -5,7 +5,7 @@ import javax.imageio.ImageIO;
 import display.Direction;
 import display.World;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
@@ -82,7 +82,7 @@ public final class Player extends Entity {
 	 *            the graphics object to graw on
 	 */
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics2D g) {
 		int[] sCoords = World.getScreenCoordinates(x, y);
 		sCoords[0] = sCoords[0] - spriteWidth / 2;
 		sCoords[1] = sCoords[1] - spriteHeight / 2;
@@ -129,6 +129,7 @@ public final class Player extends Entity {
 			System.err.println("Invalid player facing");
 			imageToDraw = null;
 		}
+		setHitbox(imageToDraw);
 		g.drawImage(imageToDraw, sCoords[0], sCoords[1], null);
 	}
 
@@ -158,47 +159,7 @@ public final class Player extends Entity {
 		facing = facing.getLeft();
 	}
 
-	@SuppressWarnings("incomplete-switch")
 	public void tick() {
-		if (System.currentTimeMillis() - attackStartTime < ATTACK_TIME) {
-			switch (facing) {
-			case NORTH:
-				spriteHeight = northAttackImage.getHeight(null);
-				spriteWidth = northAttackImage.getWidth(null);
-				break;
-			case SOUTH:
-				spriteHeight = southAttackImage.getHeight(null);
-				spriteWidth = southAttackImage.getWidth(null);
-				break;
-			case EAST:
-				spriteHeight = eastAttackImage.getHeight(null);
-				spriteWidth = eastAttackImage.getWidth(null);
-				break;
-			case WEST:
-				spriteHeight = westAttackImage.getHeight(null);
-				spriteWidth = westAttackImage.getWidth(null);
-				break;
-			}
-		} else {
-			switch (facing) {
-			case NORTH:
-				spriteHeight = northImage1.getHeight(null);
-				spriteWidth = northImage1.getWidth(null);
-				break;
-			case SOUTH:
-				spriteHeight = southImage1.getHeight(null);
-				spriteWidth = southImage1.getWidth(null);
-				break;
-			case EAST:
-				spriteHeight = eastImage1.getHeight(null);
-				spriteWidth = eastImage1.getWidth(null);
-				break;
-			case WEST:
-				spriteHeight = westImage1.getHeight(null);
-				spriteWidth = westImage1.getWidth(null);
-				break;
-			}
-		}
 	}
 
 	public void move(double amount) {

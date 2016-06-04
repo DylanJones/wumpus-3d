@@ -13,6 +13,7 @@ import java.util.Scanner;
 import java.util.Set;
 
 import entity.Entity;
+import entity.EntityMolblin;
 import entity.EntityOctorokRed;
 import entity.EntitySpider;
 import entity.Player;
@@ -21,8 +22,8 @@ import entity.Player;
 public final class World {
 	// Game state: 0 = overworld, 1 = bossfight, 2 = dead, 3 = dungeon
 	// 4 = title screen / loading
-	private static final int WORLD_HEIGHT = 11;
-	private static final int WORLD_WIDTH = 16;
+	public static final int WORLD_HEIGHT = 11;
+	public static final int WORLD_WIDTH = 16;
 
 	private static int gameState = 0;
 	private static Set<Entity> entities = new HashSet<Entity>();
@@ -201,6 +202,12 @@ public final class World {
 		case "spider":
 			new EntitySpider(coords[0], coords[1]);
 			break;
+		case "molblin":
+			new EntityMolblin(coords[0], coords[1]);
+			break;
+		default:
+			System.err.println("WARNING: Unknown entity type \"" + elements[0]
+					+ "\"!");
 		}
 	}
 

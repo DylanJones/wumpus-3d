@@ -1,6 +1,6 @@
 package entity;
 
-import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
@@ -17,9 +17,7 @@ public class EntitySpider extends EntityMinion {
 	private static final double SPEED = 0.1;
 
 	private boolean jumping = false;
-	private long lastJumpTime = 0;
 	private double jumpXDest = 0;
-	private double jumpYDest = 0;
 
 	static {
 		try {
@@ -61,7 +59,6 @@ public class EntitySpider extends EntityMinion {
 			if (Math.abs(x - jumpXDest) < 0.1)
 				jumping = false;
 		}
-		System.out.println(jumping);
 		if (Math.random() < 0.1 && !jumping)
 			startJump();
 	}
@@ -78,14 +75,16 @@ public class EntitySpider extends EntityMinion {
 	}
 
 	@Override
-	public void draw(Graphics g) {
+	public void draw(Graphics2D g) {
 		int[] sCoords = World.getScreenCoordinates(x, y);
 		if (jumping) {
 			g.drawImage(jumpingImage, sCoords[0] - spriteWidth / 2, sCoords[1]
 					- spriteHeight / 2, null);
+			setHitbox(jumpingImage);
 		} else {
 			g.drawImage(standingImage, sCoords[0] - spriteWidth / 2, sCoords[1]
 					- spriteHeight / 2, null);
+			setHitbox(standingImage);
 		}
 	}
 
@@ -93,10 +92,8 @@ public class EntitySpider extends EntityMinion {
 		facing = whichWayToJump();
 		if (!World.willCollideTile(this, JUMP_DISTANCE)) {
 			jumping = true;
-			lastJumpTime = System.currentTimeMillis();
 			double[] coords = facing.moveInDirection(x, y, JUMP_DISTANCE);
 			jumpXDest = coords[0];
-			jumpYDest = coords[1];
 		}
 	}
 
