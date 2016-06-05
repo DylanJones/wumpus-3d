@@ -21,7 +21,7 @@ public final class Player extends Entity {
 	private static final long serialVersionUID = -7931553165420215402L;
 	private static final int ATTACK_TIME = 500; // attack duration in millis
 	private static final int ATTACK_COOLDOWN = 200; // attack cooldown in millis
-	private static int maxHealth = 200;
+	private static int maxHealth = 16;
 	private static Image northImage1;
 	private static Image northImage2;
 	private static Image southImage1;
