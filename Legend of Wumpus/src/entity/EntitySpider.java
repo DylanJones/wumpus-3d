@@ -11,6 +11,10 @@ import display.World;
 import display.Direction;
 
 public class EntitySpider extends EntityMinion {
+	/**
+	 * Serial ID for Serialization to disk
+	 */
+	private static final long serialVersionUID = -4075609416053801173L;
 	private static Image standingImage;
 	private static Image jumpingImage;
 	private static final double JUMP_DISTANCE = 3;

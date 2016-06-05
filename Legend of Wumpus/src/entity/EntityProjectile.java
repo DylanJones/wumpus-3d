@@ -7,6 +7,10 @@ import display.Direction;
 import display.World;
 
 public class EntityProjectile extends EntityItem {
+	/**
+	 * Serial ID for Serialization to disk
+	 */
+	private static final long serialVersionUID = -9148100153596301390L;
 	private final Image projectileImage;
 	private static final double SPEED = 0.3;
 	private int damageAmount;
@@ -39,11 +43,6 @@ public class EntityProjectile extends EntityItem {
 			e.damage(damageAmount, this);
 			World.deregisterEntity(this);
 		}
-	}
-
-	@Override
-	public void damage(int amount, Entity damageSource) {
-		// Do nothing; projectiles are immune to damage
 	}
 
 	@Override

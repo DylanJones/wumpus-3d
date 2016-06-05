@@ -2,6 +2,7 @@ package entity;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.io.Serializable;
 
 import display.Direction;
 import display.World;
@@ -10,7 +11,11 @@ import display.World;
  * This is the abstract Entity class. It is the superclass of pretty much
  * everything that moves.
  */
-public abstract class Entity {
+public abstract class Entity implements Serializable{
+	/**
+	 * Serial ID for Serialization to disk
+	 */
+	private static final long serialVersionUID = 9080843028633986388L;
 	// Variables are protected so they can be accessed by subclasses
 	protected double x, y;
 	/** Sprite size in PIXELS */

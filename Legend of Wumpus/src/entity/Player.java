@@ -15,9 +15,13 @@ import java.io.IOException;
  * NOT handle drawing the GUI (beyond drawing the player sprite).
  */
 public final class Player extends Entity {
+	/**
+	 * Serial ID for Serialization to disk
+	 */
+	private static final long serialVersionUID = -7931553165420215402L;
 	private static final int ATTACK_TIME = 500; // attack duration in millis
 	private static final int ATTACK_COOLDOWN = 200; // attack cooldown in millis
-	private static int MaxHealth = 6;
+	private static int maxHealth = 6;
 	private static Image northImage1;
 	private static Image northImage2;
 	private static Image southImage1;
@@ -37,31 +41,35 @@ public final class Player extends Entity {
 	static {
 		try {
 			// Walking images
-			northImage1 = ImageIO.read(new File("assets/wumpus/north1.png")).getScaledInstance(32, 32,
-					Image.SCALE_REPLICATE);
-			northImage2 = ImageIO.read(new File("assets/wumpus/north2.png")).getScaledInstance(32, 32,
-					Image.SCALE_REPLICATE);
-			southImage1 = ImageIO.read(new File("assets/wumpus/south1.png")).getScaledInstance(32, 32,
-					Image.SCALE_REPLICATE);
-			southImage2 = ImageIO.read(new File("assets/wumpus/south2.png")).getScaledInstance(32, 32,
-					Image.SCALE_REPLICATE);
-			eastImage1 = ImageIO.read(new File("assets/wumpus/east1.png")).getScaledInstance(32, 32,
-					Image.SCALE_REPLICATE);
-			eastImage2 = ImageIO.read(new File("assets/wumpus/east2.png")).getScaledInstance(32, 32,
-					Image.SCALE_REPLICATE);
-			westImage1 = ImageIO.read(new File("assets/wumpus/west1.png")).getScaledInstance(32, 32,
-					Image.SCALE_REPLICATE);
-			westImage2 = ImageIO.read(new File("assets/wumpus/west2.png")).getScaledInstance(32, 32,
-					Image.SCALE_REPLICATE);
+			northImage1 = ImageIO.read(new File("assets/wumpus/north1.png"))
+					.getScaledInstance(32, 32, Image.SCALE_REPLICATE);
+			northImage2 = ImageIO.read(new File("assets/wumpus/north2.png"))
+					.getScaledInstance(32, 32, Image.SCALE_REPLICATE);
+			southImage1 = ImageIO.read(new File("assets/wumpus/south1.png"))
+					.getScaledInstance(32, 32, Image.SCALE_REPLICATE);
+			southImage2 = ImageIO.read(new File("assets/wumpus/south2.png"))
+					.getScaledInstance(32, 32, Image.SCALE_REPLICATE);
+			eastImage1 = ImageIO.read(new File("assets/wumpus/east1.png"))
+					.getScaledInstance(32, 32, Image.SCALE_REPLICATE);
+			eastImage2 = ImageIO.read(new File("assets/wumpus/east2.png"))
+					.getScaledInstance(32, 32, Image.SCALE_REPLICATE);
+			westImage1 = ImageIO.read(new File("assets/wumpus/west1.png"))
+					.getScaledInstance(32, 32, Image.SCALE_REPLICATE);
+			westImage2 = ImageIO.read(new File("assets/wumpus/west2.png"))
+					.getScaledInstance(32, 32, Image.SCALE_REPLICATE);
 			// Attacking images
-			northAttackImage = ImageIO.read(new File("assets/wumpus/attack_north.png")).getScaledInstance(32, 56,
-					Image.SCALE_REPLICATE);
-			southAttackImage = ImageIO.read(new File("assets/wumpus/attack_south.png")).getScaledInstance(32, 54,
-					Image.SCALE_REPLICATE);
-			eastAttackImage = ImageIO.read(new File("assets/wumpus/attack_east.png")).getScaledInstance(54, 30,
-					Image.SCALE_REPLICATE);
-			westAttackImage = ImageIO.read(new File("assets/wumpus/attack_west.png")).getScaledInstance(54, 30,
-					Image.SCALE_REPLICATE);
+			northAttackImage = ImageIO.read(
+					new File("assets/wumpus/attack_north.png"))
+					.getScaledInstance(32, 56, Image.SCALE_REPLICATE);
+			southAttackImage = ImageIO.read(
+					new File("assets/wumpus/attack_south.png"))
+					.getScaledInstance(32, 54, Image.SCALE_REPLICATE);
+			eastAttackImage = ImageIO.read(
+					new File("assets/wumpus/attack_east.png"))
+					.getScaledInstance(54, 30, Image.SCALE_REPLICATE);
+			westAttackImage = ImageIO.read(
+					new File("assets/wumpus/attack_west.png"))
+					.getScaledInstance(54, 30, Image.SCALE_REPLICATE);
 		} catch (IOException e) {
 			System.err.print("Error reading Player image files");
 			System.exit(1);
@@ -86,44 +94,41 @@ public final class Player extends Entity {
 		int[] sCoords = World.getScreenCoordinates(x, y);
 		sCoords[0] = sCoords[0] - spriteWidth / 2;
 		sCoords[1] = sCoords[1] - spriteHeight / 2;
-		boolean whichImage = (((int)(x * 2) % 2) == 1) ^ (((int)(y * 2) % 2) == 1);
+		boolean whichImage = (((int) (x * 2) % 2) == 1)
+				^ (((int) (y * 2) % 2) == 1);
 		Image imageToDraw;
 		switch (facing) {
 		case NORTH:
 			if (System.currentTimeMillis() - this.attackStartTime < ATTACK_TIME)
-				imageToDraw = northAttackImage; 
+				imageToDraw = northAttackImage;
+			else if (whichImage)
+				imageToDraw = northImage1;
 			else
-				if(whichImage)
-					imageToDraw = northImage1;
-				else
-					imageToDraw = northImage2;
+				imageToDraw = northImage2;
 			break;
 		case SOUTH:
 			if (System.currentTimeMillis() - this.attackStartTime < ATTACK_TIME)
 				imageToDraw = southAttackImage;
+			else if (whichImage)
+				imageToDraw = southImage1;
 			else
-				if(whichImage)
-					imageToDraw = southImage1;
-				else
-					imageToDraw = southImage2;
+				imageToDraw = southImage2;
 			break;
 		case EAST:
 			if (System.currentTimeMillis() - this.attackStartTime < ATTACK_TIME)
 				imageToDraw = eastAttackImage;
+			else if (whichImage)
+				imageToDraw = eastImage1;
 			else
-				if(whichImage)
-					imageToDraw = eastImage1;
-				else
-					imageToDraw = eastImage2;
+				imageToDraw = eastImage2;
 			break;
 		case WEST:
 			if (System.currentTimeMillis() - this.attackStartTime < ATTACK_TIME)
 				imageToDraw = westAttackImage;
+			else if (whichImage)
+				imageToDraw = westImage1;
 			else
-				if(whichImage)
-					imageToDraw = westImage1;
-				else
-					imageToDraw = westImage2;
+				imageToDraw = westImage2;
 			break;
 		default:
 			System.err.println("Invalid player facing");
@@ -145,7 +150,8 @@ public final class Player extends Entity {
 			lastDamageTime = System.currentTimeMillis();
 			// We're invulrnaberale while attacking
 			if (System.currentTimeMillis() - this.attackStartTime > ATTACK_TIME) {
-				if (health > 0 /*&& !godmode*/) {// Stops player from having negative health
+				if (health > 0 /* && !godmode */) {// Stops player from having
+													// negative health
 					health -= amount;
 					if (health <= 0) // did it go below 0?
 						World.setGameState(2);
@@ -194,14 +200,18 @@ public final class Player extends Entity {
 		if (System.currentTimeMillis() - this.attackStartTime - ATTACK_COOLDOWN > ATTACK_TIME)
 			attackStartTime = System.currentTimeMillis();
 	}
-
-	public int getMaxHealth()
-	{
-		return MaxHealth;
+	
+	public void heal(int amount) {
+		health += amount;
+		if (health > maxHealth)
+			health = maxHealth;
 	}
 
-	public void setMaxHealth(int heath_value)
-	{
-		MaxHealth = heath_value;
+	public int getMaxHealth() {
+		return maxHealth;
+	}
+
+	public void setMaxHealth(int healthValue) {
+		maxHealth = healthValue;
 	}
 }

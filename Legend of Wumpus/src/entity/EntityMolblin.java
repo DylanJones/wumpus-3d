@@ -1,9 +1,11 @@
 package entity;
 
 import java.awt.Graphics2D;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import java.awt.Image;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
+import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -14,6 +16,10 @@ import display.Direction;
 import display.World;
 
 public class EntityMolblin extends EntityMinion {
+	/**
+	 * Serial ID for Serialization to disk
+	 */
+	private static final long serialVersionUID = -8833066142798127669L;
 	private static Image northImage1;
 	private static Image southImage1;
 	private static Image eastImage1;
@@ -58,8 +64,7 @@ public class EntityMolblin extends EntityMinion {
 					32, Image.SCALE_REPLICATE);
 			// Convert to BufferedImage
 			// Create a buffered image with transparency
-			arrowImage = new BufferedImage(
-					arrowImageTemp.getWidth(null),
+			arrowImage = new BufferedImage(arrowImageTemp.getWidth(null),
 					arrowImageTemp.getHeight(null), BufferedImage.TYPE_INT_ARGB);
 
 			// Draw the image on to the buffered image
@@ -85,15 +90,19 @@ public class EntityMolblin extends EntityMinion {
 	}
 
 	private void shoot() {
-		Image rotated = arrowImage;
-		switch (facing) { // Taking advantage of case fallthrough
+		BufferedImage rotated = arrowImage;
+		switch (facing) {
 		case WEST:
-			rotated = rotate90Deg(arrowImage);
+			rotated = rotate(arrowImage, 270);
+			break;
 		case SOUTH:
-			rotated = rotate90Deg(rotated);
+			rotated = rotate(rotated, 180);
+			break;
 		case EAST:
-			rotated = rotate90Deg(rotated);
+			rotated = rotate(rotated, 90);
+			break;
 		case NORTH:
+			rotated = arrowImage;
 			break;
 		default:
 			rotated = arrowImage;
@@ -107,12 +116,37 @@ public class EntityMolblin extends EntityMinion {
 	 * 
 	 * @param img
 	 *            The image to be rotated
-	 * @param angle
+	 * @param angleDegrees
 	 *            The angle in degrees
 	 * @return The rotated image
 	 */
-	private static Image rotate90Deg(Image img) {
-		return arrowImage;
+	public static BufferedImage rotate(BufferedImage image, double angleDegrees) {
+		double angleRadians = Math.toRadians(angleDegrees);
+		// Find new width and height
+		double sin = Math.abs(Math.sin(angleRadians)), cos = Math.abs(Math
+				.cos(angleRadians));
+		int w = image.getWidth(), h = image.getHeight();
+		int neww = (int) Math.floor(w * cos + h * sin), newh = (int) Math
+				.floor(h * cos + w * sin);
+		// Use GraphicsConfiguration to create a compatable BufferedImage
+		GraphicsConfiguration gc = getDefaultConfiguration();
+		BufferedImage result = gc.createCompatibleImage(neww, newh,
+				Transparency.TRANSLUCENT);
+		// Use Graphics2D to rotate "image" and draw it on the new one
+		Graphics2D g = result.createGraphics();
+		g.translate((neww - w) / 2, (newh - h) / 2);
+		g.rotate(angleRadians, w / 2, h / 2);
+		g.drawRenderedImage(image, null);
+		g.dispose();
+		// Return the new image
+		return result;
+	}
+
+	private static GraphicsConfiguration getDefaultConfiguration() {
+		GraphicsEnvironment ge = GraphicsEnvironment
+				.getLocalGraphicsEnvironment();
+		GraphicsDevice gd = ge.getDefaultScreenDevice();
+		return gd.getDefaultConfiguration();
 	}
 
 	@Override

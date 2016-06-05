@@ -11,6 +11,10 @@ import display.Direction;
 import display.World;
 
 public class EntityOctorokRed extends EntityMinion {
+	/**
+	 * Serial ID for Serialization to disk
+	 */
+	private static final long serialVersionUID = -5085421657242795653L;
 	private static Image gremlinNorth;
 	private static Image gremlinSouth;
 	private static Image gremlinEast;

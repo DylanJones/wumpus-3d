@@ -215,7 +215,7 @@ public final class World {
 		double x, y;
 		do {
 			x = Math.random() * WORLD_WIDTH;
-			y = Math.random() * WORLD_HEIGHT;
+			y = 2 + (Math.random() * WORLD_HEIGHT - 3);
 		} while (World.getTileAt(x, y).isSolid());
 		return new double[] { x, y };
 	}
