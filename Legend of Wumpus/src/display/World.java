@@ -22,7 +22,7 @@ import entity.Player;
 public final class World {
 	// Game state: 0 = overworld, 1 = bossfight, 2 = dead, 3 = dungeon
 	// 4 = title screen / loading
-	public static final int WORLD_HEIGHT = 11;
+	public static final int WORLD_HEIGHT = 10;
 	public static final int WORLD_WIDTH = 16;
 
 	private static int gameState = 0;
