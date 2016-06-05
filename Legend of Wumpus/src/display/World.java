@@ -30,6 +30,7 @@ public final class World {
 	private static WorldTile[][] tiles = new WorldTile[WORLD_WIDTH][WORLD_HEIGHT];
 	private static Player thePlayer;
 	private static Timer ticker;
+	private static String worldName;
 	private static String northWorld;
 	private static String southWorld;
 	private static String eastWorld;
@@ -136,6 +137,15 @@ public final class World {
 	}
 
 	/**
+	 * Get the name of the current world.
+	 * 
+	 * @return the name of the current world
+	 * */
+	public static String getWorldName() {
+		return worldName;
+	}
+
+	/**
 	 * Called when the player walks off the screen, loads the new section of
 	 * world in the specified direction
 	 */
@@ -162,8 +172,10 @@ public final class World {
 	public static void loadWorld(String filename) {
 		// Delete all entites and tiles
 		System.out.println("Loading world " + filename);
+		SaveLoader.onWorldLeave();
 		entities = new HashSet<Entity>();
 		entities.add(thePlayer);
+		worldName = filename;
 		Scanner theScanner = null;
 		try {
 			theScanner = new Scanner(new File("assets/worlds/" + filename));
@@ -179,15 +191,20 @@ public final class World {
 		southWorld = theScanner.nextLine().replace("south ", "");
 		eastWorld = theScanner.nextLine().replace("east ", "");
 		westWorld = theScanner.nextLine().replace("west ", "");
-		try {
-			String line = "";
-			do {
-				line = theScanner.nextLine();
-			} while (!line.equals("entities:"));
-			while (theScanner.hasNext()) {
-				createEntity(theScanner.nextLine());
+		if (!SaveLoader.hasVisited(worldName)) {
+			// Load entites from file
+			try {
+				String line = "";
+				do {
+					line = theScanner.nextLine();
+				} while (!line.equals("entities:"));
+				while (theScanner.hasNext()) {
+					createEntity(theScanner.nextLine());
+				}
+			} catch (NoSuchElementException e) {
 			}
-		} catch (NoSuchElementException e) {
+		} else {
+			SaveLoader.loadEntities(worldName);
 		}
 	}
 

@@ -1,6 +1,8 @@
 package display;
 
-public enum Direction {
+import java.io.Serializable;
+
+public enum Direction implements Serializable {
 	NORTH {
 		@Override
 		public Direction getLeft() {
@@ -145,7 +147,12 @@ public enum Direction {
 					SOUTH.moveInDirection(x, y, sideLength)[1] };
 		}
 	};
-
+	
+	/*
+	 * Serial ID for Serialization to disk 
+	 */
+	private static final long serialVersionUID = 33544444444435342L;
+	
 	public abstract double[] moveInDirection(double x, double y, double movement);
 
 	public abstract Direction getLeft();

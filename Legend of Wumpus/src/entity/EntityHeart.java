@@ -15,7 +15,7 @@ public class EntityHeart extends EntityItem {
 	 */
 	private static final long serialVersionUID = -808919570444662375L;
 	private static Image heartImage;
-	private final int healAmount;
+	private int healAmount;
 	
 	static {
 		try {
