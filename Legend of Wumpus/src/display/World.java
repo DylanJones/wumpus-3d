@@ -232,7 +232,8 @@ public final class World {
 		double x, y;
 		do {
 			x = Math.random() * WORLD_WIDTH;
-			y = 2 + (Math.random() * WORLD_HEIGHT - 3);
+			// Tiles near the top and bottom are unreliable
+			y = 1 + (Math.random() * (WORLD_HEIGHT - 2));
 		} while (World.getTileAt(x, y).isSolid());
 		return new double[] { x, y };
 	}

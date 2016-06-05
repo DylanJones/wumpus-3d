@@ -19,7 +19,7 @@ public class EntityHeart extends EntityItem {
 	
 	static {
 		try {
-			heartImage = ImageIO.read(new File(""));
+			heartImage = ImageIO.read(new File("assets/items/heart_canister.png"));
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.err.println("Error reading Heart images!");

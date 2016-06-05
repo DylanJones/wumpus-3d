@@ -1,4 +1,6 @@
-package entity;
+package entity.boss;
+
+import entity.Entity;
 
 public abstract class EntityBoss extends Entity {
 
@@ -7,4 +9,7 @@ public abstract class EntityBoss extends Entity {
 	 */
 	private static final long serialVersionUID = 1565443232121111L;
 
+	public EntityBoss() {
+		super();
+	}
 }

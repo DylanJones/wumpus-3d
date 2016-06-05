@@ -184,8 +184,12 @@ public class EntityMolblin extends EntityMinion {
 	@Override
 	public void damage(int amount, Entity damageSource) {
 		health -= amount;
-		if (health <= 0)
+		if (health <= 0) { 
 			World.deregisterEntity(this);
+			if (Math.random() < 0.9) {
+				new EntityHeart(x, y, 2);
+			}
+		}
 	}
 
 	@SuppressWarnings("incomplete-switch")

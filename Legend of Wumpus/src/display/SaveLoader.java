@@ -26,4 +26,8 @@ public class SaveLoader {
 			World.registerEntity(e);
 		}
 	}
+	
+	public static void saveToFile(String filename) {
+		
+	}
 }
