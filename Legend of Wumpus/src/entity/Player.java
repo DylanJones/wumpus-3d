@@ -87,7 +87,7 @@ public final class Player extends Entity {
 
 	/**
 	 * @param g
-	 *            the graphics object to graw on
+	 *            the graphics object to draw on
 	 */
 	@Override
 	public void draw(Graphics2D g) {

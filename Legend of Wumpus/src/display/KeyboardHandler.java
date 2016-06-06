@@ -13,9 +13,9 @@ public class KeyboardHandler implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		// System.out.println("KeyPress: " + e.getKeyChar());
-		//Only execute once per keypress
-		if(e.getKeyChar() == 'e' && !isKeyPressed('e')) {
+		// Only execute once per keypress
+		if (e.getKeyChar() == 'e' && !isKeyPressed('e')
+				&& Tick.getPlayerControl()) {
 			World.getThePlayer().turnLeft();
 		}
 		keysPressed.put(e.getKeyChar(), true);

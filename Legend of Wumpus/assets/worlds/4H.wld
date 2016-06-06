@@ -4,3 +4,5 @@ north 5H.wld
 south 3H.wld
 east 4I.wld
 west 4G.wld
+entities:
+nullpointerexception

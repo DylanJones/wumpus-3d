@@ -13,6 +13,6 @@ public class Main {
 		frame.setVisible(true);
 		frame.setResizable(false);
 		// Testing, remove
-		World.loadWorld("8H.wld");
+		World.loadWorld("4I.wld");
 	}
 }

@@ -2,7 +2,6 @@ package display;
 
 import entity.*;
 
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -13,6 +12,8 @@ public class Tick implements ActionListener {
 	private JPanel container;
 	private KeyboardHandler kb;
 
+	private static boolean playerHasControl = true;
+
 	public Tick(JPanel parent, KeyboardHandler kb) {
 		container = parent;
 		this.kb = kb;
@@ -20,7 +21,8 @@ public class Tick implements ActionListener {
 
 	/** Absolutely NOTHING related to GUI may happen here. */
 	public void actionPerformed(ActionEvent e) {
-		movePlayer();
+		if (playerHasControl)
+			movePlayer();
 		entityTick();
 		collideEntities();
 		container.update(container.getGraphics());
@@ -42,8 +44,10 @@ public class Tick implements ActionListener {
 			for (Entity x : World.getAllEntities()) {
 				if (x == e)
 					continue;
-				if ((Math.abs(e.getX() - x.getX()) * 2 < e.getWidth() + x.getWidth())
-						&& (Math.abs(e.getY() - x.getY()) * 2 < e.getHeight() + x.getHeight())) {
+				if ((Math.abs(e.getX() - x.getX()) * 2 < e.getWidth()
+						+ x.getWidth())
+						&& (Math.abs(e.getY() - x.getY()) * 2 < e.getHeight()
+								+ x.getHeight())) {
 					e.collide(x);
 				}
 			}
@@ -56,4 +60,11 @@ public class Tick implements ActionListener {
 		}
 	}
 
+	public static void setPlayerControl(boolean control) {
+		playerHasControl = control;
+	}
+	
+	public static boolean getPlayerControl() {
+		return playerHasControl;
+	}
 }

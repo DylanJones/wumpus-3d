@@ -67,6 +67,20 @@ public final class World {
 	}
 
 	/**
+	 * Changes the tile at <x, y> to <tile>.
+	 * 
+	 * @param x
+	 *            the x coordinate of tile
+	 * @param y
+	 *            the y coordinate of tile
+	 * @param tile
+	 *            the to which to set
+	 * */
+	public static void setTile(int x, int y, WorldTile tile) {
+		tiles[x][y] = tile;
+	}
+
+	/**
 	 * Get the WorldTile at the specified x,y coordiantes
 	 * 
 	 * @param x
@@ -107,12 +121,15 @@ public final class World {
 		entities.remove(e);
 	}
 
-	/** @return a Set view of all current Entities */
+	/**
+	 * Get a list of all entities. 
+	 * @return a Set view of all current Entities */
 	public static Set<Entity> getAllEntities() {
 		return new HashSet<Entity>(entities);
 	}
 
 	/**
+	 * Get the gameState.
 	 * @return the gameState
 	 */
 	public static int getGameState() {
@@ -120,6 +137,7 @@ public final class World {
 	}
 
 	/**
+	 * Set the gameState to the specifed value.
 	 * @param gameState
 	 *            the new GameState
 	 */
@@ -130,6 +148,7 @@ public final class World {
 	}
 
 	/**
+	 * Get the player of the curent world.
 	 * @return The player for the current world.
 	 */
 	public static Player getThePlayer() {
@@ -148,6 +167,8 @@ public final class World {
 	/**
 	 * Called when the player walks off the screen, loads the new section of
 	 * world in the specified direction
+	 * @param direction
+	 * 				the direction in which to load the world
 	 */
 	public static void loadWorld(Direction direction) {
 		switch (direction) {
@@ -222,6 +243,9 @@ public final class World {
 		case "molblin":
 			new EntityMolblin(coords[0], coords[1]);
 			break;
+		case "nullpointerexception":
+			new entity.boss.NullPointerException();
+			break;
 		default:
 			System.err.println("WARNING: Unknown entity type \"" + elements[0]
 					+ "\"!");
@@ -261,11 +285,18 @@ public final class World {
 		}
 	}
 
+	public static void startTicker() {
+		ticker.start();
+	}
+	
 	public static void startTicker(JPanel parent, KeyboardHandler kb) {
 		ticker = new Timer(33, new Tick(parent, kb));
 		ticker.start();
 	}
-
+	
+	/**
+	 * Stop the world clock, which stops the game.
+	 * */
 	public static void stopTicker() {
 		ticker.stop();
 	}
