@@ -14,6 +14,7 @@ import javax.imageio.ImageIO;
 
 import display.Direction;
 import display.World;
+import display.MusicPlayer;
 
 public class EntityMolblin extends EntityMinion {
 	/**
@@ -109,6 +110,11 @@ public class EntityMolblin extends EntityMinion {
 			break;
 		}
 		new EntityProjectile(x, y, 1, facing, rotated);
+		try {
+			MusicPlayer.playSoundEffect("assets/music/Arrow.wav");
+		} catch(Exception e) {
+			System.out.println("Music files missing");
+		}
 	}
 
 	/**
@@ -186,8 +192,19 @@ public class EntityMolblin extends EntityMinion {
 		health -= amount;
 		if (health <= 0) { 
 			World.deregisterEntity(this);
+			try {
+				MusicPlayer.playSoundEffect("assets/music/Kill.wav");
+			} catch(Exception e) {
+				System.out.println("Music files missing");
+			}
 			if (Math.random() < 0.9) {
 				new EntityHeart(x, y, 2);
+			}
+		} else {
+			try {
+				MusicPlayer.playSoundEffect("assets/music/Hit.wav");
+			} catch(Exception e) {
+				System.out.println("Music files missing");
 			}
 		}
 	}

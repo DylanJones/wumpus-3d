@@ -4,6 +4,7 @@ import javax.imageio.ImageIO;
 
 import display.Direction;
 import display.World;
+import display.MusicPlayer;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -153,10 +154,22 @@ public final class Player extends Entity {
 				if (health > 0 /* && !godmode */) {// Stops player from having
 													// negative health
 					health -= amount;
-					if (health <= 0) // did it go below 0?
+					if (health <= 0){ // did it go below 0?
 						World.setGameState(2);
+						try {
+							MusicPlayer.changePlayingMusic("stop");
+							MusicPlayer.playSoundEffect("assets/music/Die.wav");
+						} catch(Exception e) {
+							System.out.println("Music files missing");
+						}
+					}	
 				}
 				System.out.println("Player damaged! Health: " + health);
+				try {
+					MusicPlayer.playSoundEffect("assets/music/Hurt.wav");
+				} catch(Exception e) {
+					System.out.println("Music files missing");
+				}
 			}
 		}
 	}
@@ -197,8 +210,14 @@ public final class Player extends Entity {
 	}
 
 	public void attack() {
-		if (System.currentTimeMillis() - this.attackStartTime - ATTACK_COOLDOWN > ATTACK_TIME)
+		if (System.currentTimeMillis() - this.attackStartTime - ATTACK_COOLDOWN > ATTACK_TIME){
 			attackStartTime = System.currentTimeMillis();
+			try {
+				MusicPlayer.playSoundEffect("assets/music/Sword.wav");
+			} catch(Exception e) {
+				System.out.println("Music files missing");
+			}
+		}
 	}
 	
 	public void heal(int amount) {
