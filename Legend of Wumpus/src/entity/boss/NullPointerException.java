@@ -40,13 +40,13 @@ public class NullPointerException extends EntityBoss {
 	static {
 		try {
 			boss1 = ImageIO.read(new File(
-					"assets/nullpointerexception/boss1.png"));
+					"assets/nullpointerexception/boss1.png")).getScaledInstance(48, 64, Image.SCALE_REPLICATE);
 			boss2 = ImageIO.read(new File(
-					"assets/nullpointerexception/boss2.png"));
+					"assets/nullpointerexception/boss2.png")).getScaledInstance(48, 64, Image.SCALE_REPLICATE);
 			boss3 = ImageIO.read(new File(
-					"assets/nullpointerexception/boss3.png"));
+					"assets/nullpointerexception/boss3.png")).getScaledInstance(48, 64, Image.SCALE_REPLICATE);
 			boss4 = ImageIO.read(new File(
-					"assets/nullpointerexception/boss4.png"));
+					"assets/nullpointerexception/boss4.png")).getScaledInstance(48, 64, Image.SCALE_REPLICATE);
 			pointerImage = ImageIO.read(
 					new File("assets/nullpointerexception/pointer.png"))
 					.getScaledInstance(18, 6, Image.SCALE_REPLICATE);
