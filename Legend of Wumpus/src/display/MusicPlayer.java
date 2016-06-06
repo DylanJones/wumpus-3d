@@ -34,6 +34,8 @@ public class MusicPlayer {
 			try {
 				if (clip != null)
 					clip.stop();
+				if(newMusic == "stop")
+					return;
 				loopSound(newMusic);
 				currentMusic = newMusic;
 			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {

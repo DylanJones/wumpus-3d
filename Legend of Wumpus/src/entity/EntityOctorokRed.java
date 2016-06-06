@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 
 import display.Direction;
 import display.World;
+import display.MusicPlayer;
 
 public class EntityOctorokRed extends EntityMinion {
 	/**
@@ -64,8 +65,23 @@ public class EntityOctorokRed extends EntityMinion {
 	@Override
 	public void damage(int amount, Entity damageSource) {
 		health -= amount;
-		if (health <= 0)
+		if (health <= 0) {
+			try {
+				MusicPlayer.playSoundEffect("assets/music/Kill.wav");
+			} catch(Exception e) {
+				System.out.println("Music files missing");
+			}
 			World.deregisterEntity(this);
+			if (Math.random() < 0.5) {
+				new EntityHeart(x, y, 2);
+			}
+		} else {
+			try {
+				MusicPlayer.playSoundEffect("assets/music/Hit.wav");
+			} catch(Exception e) {
+				System.out.println("Music files missing");
+			}
+		}
 	}
 
 	@Override

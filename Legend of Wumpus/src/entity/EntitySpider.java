@@ -9,6 +9,7 @@ import javax.imageio.ImageIO;
 
 import display.World;
 import display.Direction;
+import display.MusicPlayer;
 
 public class EntitySpider extends EntityMinion {
 	/**
@@ -75,6 +76,11 @@ public class EntitySpider extends EntityMinion {
 
 	@Override
 	public void damage(int amount, Entity damageSource) {
+		try {
+			MusicPlayer.playSoundEffect("assets/music/Kill.wav");
+		} catch(Exception e) {
+			System.out.println("Music files missing");
+		}
 		World.deregisterEntity(this);
 	}
 
