@@ -8,6 +8,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import display.World;
+import display.MusicPlayer;
 
 public class EntityHeart extends EntityItem {
 	/**
@@ -49,6 +50,11 @@ public class EntityHeart extends EntityItem {
 		if (e instanceof Player) {
 			((Player) e).heal(healAmount);
 			World.deregisterEntity(this);
+			try {
+				MusicPlayer.playSoundEffect("assets/music/Get_Heart.wav");
+			} catch(Exception r) {
+				System.out.println("Music files missing");
+			}
 		}
 	}
 
