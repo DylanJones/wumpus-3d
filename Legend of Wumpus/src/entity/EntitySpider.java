@@ -11,6 +11,7 @@ import display.World;
 import display.Direction;
 import display.MusicPlayer;
 
+/** Enemy that jumps around the screen diagonally. */
 public class EntitySpider extends EntityMinion {
 	/**
 	 * Serial ID for Serialization to disk

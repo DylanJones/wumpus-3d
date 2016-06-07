@@ -1,5 +1,6 @@
 package entity;
 
+/** Abstract superclass of all Items, Projectiles, etc. */
 public abstract class EntityItem extends Entity {
 	/**
 	 * Serial ID for Serialization to disk

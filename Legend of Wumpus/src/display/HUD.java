@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+/** This class handles rendering of the health and triforce on the screen. */
 public final class HUD {
 	private static Image heart = null;
 	private static Image half_heart = null;

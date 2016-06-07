@@ -2,6 +2,10 @@ package display;
 
 import java.io.Serializable;
 
+/**
+ * Simple enum for direction of an entity. Provides methods to move in a
+ * specified direction.
+ */
 public enum Direction implements Serializable {
 	NORTH {
 		@Override
@@ -147,15 +151,38 @@ public enum Direction implements Serializable {
 					SOUTH.moveInDirection(x, y, sideLength)[1] };
 		}
 	};
-	
+
 	/*
-	 * Serial ID for Serialization to disk 
+	 * Serial ID for Serialization to disk
 	 */
 	private static final long serialVersionUID = 33544444444435342L;
-	
+
+	/**
+	 * Move in the direction and return the new coordinates.
+	 * 
+	 * @param x
+	 *            the starting x coord
+	 * @param y
+	 *            the starting y coord
+	 * @param movement
+	 *            how far to move
+	 * @return the new coordinates after moving
+	 */
 	public abstract double[] moveInDirection(double x, double y, double movement);
 
+	/**
+	 * Get the direction to the left of this one (NORTH's left is WEST, WEST's
+	 * left is SOUTH, etc.
+	 * 
+	 * @return the Direction to the left
+	 */
 	public abstract Direction getLeft();
 
+	/**
+	 * Get the direction to the right of this one (NORTH's right is EAST, EAST's
+	 * right is SOUTH, etc.
+	 * 
+	 * @return the Direction to the right
+	 */
 	public abstract Direction getRight();
 }

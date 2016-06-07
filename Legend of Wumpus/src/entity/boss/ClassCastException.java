@@ -16,7 +16,8 @@ import entity.Entity;
 import entity.EntityProjectile;
 import entity.Player;
 
-public class ClassCastException extends EntityBoss {
+/** The ClassCastException boss, the hardest one */
+public class ClassCastException extends Entity {
 
 	/**
 	 * For serialization to disk
@@ -56,7 +57,7 @@ public class ClassCastException extends EntityBoss {
 
 	public ClassCastException() {
 		super();
-		MusicPlayer.changePlayingMusic("assets/music/Dungeon.wav");
+		MusicPlayer.changePlayingMusic("assets/music/DeathMountain.wav");
 		this.x = 7.5;
 		this.y = 4.0;
 		this.health = 20;

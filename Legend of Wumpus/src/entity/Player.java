@@ -185,7 +185,6 @@ public final class Player extends Entity {
 
 	//Movment method for player
 	public void move(double amount) {
-		System.out.println(x + " " + y);
 		boolean canMove = !World.willCollideTile(this, amount);
 		// Can't move while attacking
 		if (System.currentTimeMillis() - this.attackStartTime < ATTACK_TIME)

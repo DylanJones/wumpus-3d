@@ -1,6 +1,5 @@
 package display;
 
-import javax.swing.JButton;
 import javax.swing.Timer;
 import javax.swing.JPanel;
 
@@ -170,12 +169,11 @@ public final class World {
 	 */
 	public static void setGameState(int gameState) {
 		if (gameState == 2) { //Death
-			MusicPlayer.changePlayingMusic(null);
-			MusicPlayer.playSoundEffect("music/Die.wav");
+			MusicPlayer.changePlayingMusic("assets/music/TitleScreen.wav");
+			MusicPlayer.playSoundEffect("assets/music/Die.wav");
 			World.stopTicker();
-			
 		} else if (gameState == 1) {
-			World.loadWorld("5M.wld");
+			World.loadWorld("8E.wld");
 			World.startTicker(panel, panel.kb);
 			panel.hideStartButton();
 		} else if (gameState == 0) {

@@ -6,24 +6,18 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.*;
-import java.net.MalformedURLException;
-import java.net.URL;
-
 import javax.swing.*;
-import javax.imageio.ImageIO;
 
-@SuppressWarnings("serial")
 /**
  * This is the class which loads everything into the JPanel and sets up a few
  * global variables. There should only ever be one instance of WumpusPanel.
  */
 public class WumpusPanel extends JPanel {
+	private static final long serialVersionUID = 4170582039177761054L;
 	KeyboardHandler kb;
-	private boolean start;
 	private JButton startButton;
-	private JButton continueButton;
 
+	/** Default constructor for WumpusPanel.  Starts the title screen animation.*/
 	public WumpusPanel() {
 		super();
 		startButton = new JButton(new ImageIcon(
@@ -41,6 +35,7 @@ public class WumpusPanel extends JPanel {
 		World.setGameState(0);
 	}
 
+	// Documentation provided by superclass
 	@Override
 	public void paintComponent(Graphics g) {
 		// Draw tiles
@@ -55,11 +50,14 @@ public class WumpusPanel extends JPanel {
 		g.drawImage(buffer, 0, 0, null);
 	}
 
+	/** Hide the start game button. */
 	public void hideStartButton() {
 		this.remove(startButton);
 	}
 
+	/** Show the start game button. */
 	public void showStartButton() {
 		this.add(startButton);
 	}
+
 }

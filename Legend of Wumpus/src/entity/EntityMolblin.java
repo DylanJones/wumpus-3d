@@ -16,6 +16,7 @@ import display.Direction;
 import display.World;
 import display.MusicPlayer;
 
+/** Another enemy that lives in the world.  It has 3 health and shoots arrows. */
 public class EntityMolblin extends EntityMinion {
 	/**
 	 * Serial ID for Serialization to disk
@@ -120,7 +121,7 @@ public class EntityMolblin extends EntityMinion {
 	/**
 	 * Rotates img by angle degrees. Returns a copy of the rotated image.
 	 * 
-	 * @param img
+	 * @param image
 	 *            The image to be rotated
 	 * @param angleDegrees
 	 *            The angle in degrees

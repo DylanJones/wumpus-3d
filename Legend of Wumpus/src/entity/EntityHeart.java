@@ -10,6 +10,7 @@ import javax.imageio.ImageIO;
 import display.World;
 import display.MusicPlayer;
 
+/** The thing dropped by enemies that restores your health. */
 public class EntityHeart extends EntityItem {
 	/**
 	 * Serial ID for Serialization to disk

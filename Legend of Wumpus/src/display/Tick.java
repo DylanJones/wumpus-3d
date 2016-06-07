@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
-/** This class does the majority of the world engine work. */
+/** This class supervises the majority of the world engine work. */
 public class Tick implements ActionListener {
 	private JPanel container;
 	private KeyboardHandler kb;
@@ -60,10 +60,21 @@ public class Tick implements ActionListener {
 		}
 	}
 
+	/**
+	 * Set wheter or not the player can be controlled by the keyboard
+	 * 
+	 * @param control
+	 *            whether or not the player can be controlled
+	 */
 	public static void setPlayerControl(boolean control) {
 		playerHasControl = control;
 	}
-	
+
+	/**
+	 * Get wheter or not the player can be controlled by the keyboard
+	 * 
+	 * @return whether or not the player can be controlled
+	 */
 	public static boolean getPlayerControl() {
 		return playerHasControl;
 	}

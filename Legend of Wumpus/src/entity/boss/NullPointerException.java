@@ -16,8 +16,8 @@ import entity.Entity;
 import entity.EntityProjectile;
 import entity.Player;
 
-/** The "Null Pointer Exception" boss. */
-public class NullPointerException extends EntityBoss {
+/** The "Null Pointer Exception" boss, the easiest one. */
+public class NullPointerException extends Entity {
 
 	/**
 	 * For serialization to disk

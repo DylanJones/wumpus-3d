@@ -11,6 +11,7 @@ import display.Direction;
 import display.World;
 import display.MusicPlayer;
 
+/** Red enemies that walk around randomly and shoot red projectiles. */
 public class EntityOctorokRed extends EntityMinion {
 	/**
 	 * Serial ID for Serialization to disk

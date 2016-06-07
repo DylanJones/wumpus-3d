@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import display.Direction;
 import display.World;
 
+/** Class that can be used to create any projectile. */
 public class EntityProjectile extends EntityItem implements Serializable {
 	/**
 	 * Serial ID for Serialization to disk
