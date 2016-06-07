@@ -170,7 +170,7 @@ public final class World {
 	 */
 	public static void setGameState(int gameState) {
 		if (gameState == 2) { // Death
-			MusicPlayer.changePlayingMusic("/assets/music/TitleScreen.wav");
+			MusicPlayer.changePlayingMusic(null);
 			MusicPlayer.playSoundEffect("/assets/music/Die.wav");
 			World.stopTicker();
 			JOptionPane.showMessageDialog(null, "You Lose!", "Wumpus",
