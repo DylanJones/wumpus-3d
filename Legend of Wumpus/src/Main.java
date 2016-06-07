@@ -12,7 +12,6 @@ public class Main {
 		frame.setSize(512, 448);
 		frame.setVisible(true);
 		frame.setResizable(false);
-		// Testing, remove
 		World.loadWorld("4I.wld");
 	}
 }

@@ -19,7 +19,6 @@ public class WumpusPanel extends JPanel {
 
 	public WumpusPanel() {
 		super();
-		start = true;
 		kb = new KeyboardHandler();
 		addKeyListener(kb);
 		setFocusable(true);
