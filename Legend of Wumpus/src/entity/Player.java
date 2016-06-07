@@ -8,8 +8,6 @@ import display.MusicPlayer;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
 
 /**
  * This class should handle all of the things re lated to the Player. It should
