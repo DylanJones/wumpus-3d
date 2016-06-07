@@ -2,6 +2,7 @@ package display;
 
 import java.io.File;
 import java.io.IOException;
+
 import javax.sound.sampled.*;
 
 public class MusicPlayer {
@@ -9,14 +10,17 @@ public class MusicPlayer {
 	private static Clip clip;
 	private static String currentMusic = null;
 
-	public static void playSoundEffect(String file)
-			throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+	public static void playSoundEffect(String file) {
+		try {
 		AudioInputStream tempAudioIn = AudioSystem.getAudioInputStream(new File(file));
 		Clip tempClip = AudioSystem.getClip();
 		tempClip.open(tempAudioIn);
 		tempClip.setFramePosition(0);
 		tempClip.loop(0);
 		tempClip.start();
+		} catch (IOException | UnsupportedAudioFileException | LineUnavailableException e) {
+			System.err.println("Unable to find music file " + file);
+		}
 	}
 
 	private static void loopSound(String file)

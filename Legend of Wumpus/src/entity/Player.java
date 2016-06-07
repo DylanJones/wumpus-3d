@@ -157,12 +157,6 @@ public final class Player extends Entity {
 					health -= amount;
 					if (health <= 0){ // did it go below 0?
 						World.setGameState(2);
-						try {
-							MusicPlayer.changePlayingMusic("stop");
-							MusicPlayer.playSoundEffect("assets/music/Die.wav");
-						} catch(Exception e) {
-							System.out.println("Music files missing");
-						}
 					}	
 				}
 				System.out.println("Player damaged! Health: " + health);

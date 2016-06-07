@@ -1,5 +1,6 @@
 package display;
 
+import javax.swing.JButton;
 import javax.swing.Timer;
 import javax.swing.JPanel;
 
@@ -18,13 +19,17 @@ import entity.EntityOctorokRed;
 import entity.EntitySpider;
 import entity.Player;
 
-/** This is a class of constants. It will contain global variables. */
+/**
+ * The class that does almost all the work relating to the game. It handles
+ * coordinates, tiles, and any other miscellaneous things that need to be done.
+ */
 public final class World {
 	// Game state: 0 = overworld, 1 = bossfight, 2 = dead, 3 = dungeon
 	// 4 = title screen / loading
 	public static final int WORLD_HEIGHT = 10;
 	public static final int WORLD_WIDTH = 16;
 
+	private static WumpusPanel panel;
 	private static int gameState = 0;
 	private static Set<Entity> entities = new HashSet<Entity>();
 	private static WorldTile[][] tiles = new WorldTile[WORLD_WIDTH][WORLD_HEIGHT];
@@ -38,6 +43,24 @@ public final class World {
 
 	static {
 		thePlayer = new Player();
+	}
+
+	/**
+	 * @return the WumpusPanel of the application
+	 */
+	public static WumpusPanel getPanel() {
+		return panel;
+	}
+
+	/**
+	 * Set the WumpusPanel of the world. Should be called once and only once by
+	 * WumpusPanel's constructor.
+	 * 
+	 * @param panel
+	 *            the panel to set
+	 */
+	public static void setPanel(WumpusPanel panel) {
+		World.panel = panel;
 	}
 
 	/**
@@ -122,14 +145,17 @@ public final class World {
 	}
 
 	/**
-	 * Get a list of all entities. 
-	 * @return a Set view of all current Entities */
+	 * Get a list of all entities.
+	 * 
+	 * @return a Set view of all current Entities
+	 */
 	public static Set<Entity> getAllEntities() {
 		return new HashSet<Entity>(entities);
 	}
 
 	/**
 	 * Get the gameState.
+	 * 
 	 * @return the gameState
 	 */
 	public static int getGameState() {
@@ -138,17 +164,29 @@ public final class World {
 
 	/**
 	 * Set the gameState to the specifed value.
+	 * 
 	 * @param gameState
 	 *            the new GameState
 	 */
 	public static void setGameState(int gameState) {
-		if (gameState == 2)
+		if (gameState == 2) { //Death
+			MusicPlayer.changePlayingMusic(null);
+			MusicPlayer.playSoundEffect("music/Die.wav");
 			World.stopTicker();
+		} else if (gameState == 1) {
+			World.loadWorld("4I.wld");
+			World.startTicker(panel, panel.kb);
+			panel.hideButton();
+		} else if (gameState == 0) {
+			MusicPlayer.changePlayingMusic("assets/music/TitleScreen.wav");
+			panel.showButton();
+		}
 		World.gameState = gameState;
 	}
 
 	/**
 	 * Get the player of the curent world.
+	 * 
 	 * @return The player for the current world.
 	 */
 	public static Player getThePlayer() {
@@ -167,8 +205,9 @@ public final class World {
 	/**
 	 * Called when the player walks off the screen, loads the new section of
 	 * world in the specified direction
+	 * 
 	 * @param direction
-	 * 				the direction in which to load the world
+	 *            the direction in which to load the world
 	 */
 	public static void loadWorld(Direction direction) {
 		switch (direction) {
@@ -190,6 +229,10 @@ public final class World {
 		}
 	}
 
+	/**
+	 * Load the specified World file from disk. If the world has already been
+	 * visited, the entities will not be loaded from disk.
+	 */
 	public static void loadWorld(String filename) {
 		// Delete all entites and tiles
 		System.out.println("Loading world " + filename);
@@ -285,15 +328,11 @@ public final class World {
 		}
 	}
 
-	public static void startTicker() {
-		ticker.start();
-	}
-	
-	public static void startTicker(JPanel parent, KeyboardHandler kb) {
+	private static void startTicker(JPanel parent, KeyboardHandler kb) {
 		ticker = new Timer(33, new Tick(parent, kb));
 		ticker.start();
 	}
-	
+
 	/**
 	 * Stop the world clock, which stops the game.
 	 * */
@@ -301,6 +340,15 @@ public final class World {
 		ticker.stop();
 	}
 
+	/**
+	 * Method to see whether or not an Entity will collide if they move forward.
+	 * 
+	 * @param e
+	 *            the Entity to test
+	 * @param movement
+	 *            how far the Entity wants to move
+	 * @return Whether or not the Entity will collide
+	 * */
 	@SuppressWarnings("incomplete-switch")
 	public static boolean willCollideTile(Entity e, double movement) {
 		double[] newCoords = e.getFacing().moveInDirection(e.getX(), e.getY(),
