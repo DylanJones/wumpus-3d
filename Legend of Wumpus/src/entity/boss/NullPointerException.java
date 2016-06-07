@@ -11,6 +11,7 @@ import display.Direction;
 import display.Tick;
 import display.World;
 import display.WorldTile;
+import display.MusicPlayer;
 import entity.Entity;
 import entity.EntityProjectile;
 import entity.Player;
@@ -102,8 +103,18 @@ public class NullPointerException extends EntityBoss {
 			lastDamageTime = System.currentTimeMillis();
 			this.health -= amount;
 			System.out.println(health);
+			try {
+				MusicPlayer.playSoundEffect("assets/music/Boss_Scream1.wav");
+			} catch(Exception r) {
+				System.out.println("Music files missing");
+			}
 			if (this.health <= 0) { //Dying
 				World.deregisterEntity(this);
+				try {
+					MusicPlayer.playSoundEffect("assets/music/Boss_Scream2.wav");
+				} catch(Exception r) {
+					System.out.println("Music files missing");
+				}
 				World.setTile(14, 5, WorldTile.ground);
 			}
 		}
