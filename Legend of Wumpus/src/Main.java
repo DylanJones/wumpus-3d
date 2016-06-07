@@ -12,5 +12,6 @@ public class Main {
 		frame.setSize(512, 448);
 		frame.setVisible(true);
 		frame.setResizable(false);
+		frame.setTitle("The Legend of Wumpus");
 	}
 }
