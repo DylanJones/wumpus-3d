@@ -4,3 +4,6 @@ north 7F.wld
 south 5F.wld
 east 6G.wld
 west 6E.wld
+entities:
+spider
+spider

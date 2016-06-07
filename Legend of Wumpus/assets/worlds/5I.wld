@@ -4,3 +4,5 @@ north 6I.wld
 south 4I.wld
 east 5J.wld
 west 5H.wld
+entities:
+molblin

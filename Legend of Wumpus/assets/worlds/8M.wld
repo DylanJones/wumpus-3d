@@ -4,3 +4,5 @@ north 1M.wld
 south 7M.wld
 east 8N.wld
 west 8L.wld
+entities:
+OctorokRed

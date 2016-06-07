@@ -4,3 +4,5 @@ north 6G.wld
 south 4G.wld
 east 5H.wld
 west 5F.wld
+entities:
+OctorokRed

@@ -4,3 +4,6 @@ north 8N.wld
 south 6N.wld
 east 7O.wld
 west 7M.wld
+entities:
+molblin
+molblin
