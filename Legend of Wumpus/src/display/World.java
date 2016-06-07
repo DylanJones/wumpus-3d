@@ -173,6 +173,9 @@ public final class World {
 			MusicPlayer.changePlayingMusic("assets/music/TitleScreen.wav");
 			MusicPlayer.playSoundEffect("assets/music/Die.wav");
 			World.stopTicker();
+			JOptionPane.showMessageDialog(null, "You Lose!", "Wumpus",
+					JOptionPane.INFORMATION_MESSAGE);
+			System.exit(0);
 		} else if (gameState == 1) {
 			World.loadWorld("8H.wld");
 			World.startTicker(panel, panel.kb);
