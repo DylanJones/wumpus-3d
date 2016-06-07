@@ -22,6 +22,7 @@ public class WumpusPanel extends JPanel {
 	KeyboardHandler kb;
 	private boolean start;
 	private JButton startButton;
+	private JButton continueButton;
 
 	public WumpusPanel() {
 		super();
@@ -54,11 +55,11 @@ public class WumpusPanel extends JPanel {
 		g.drawImage(buffer, 0, 0, null);
 	}
 
-	public void hideButton() {
+	public void hideStartButton() {
 		this.remove(startButton);
 	}
 
-	public void showButton() {
+	public void showStartButton() {
 		this.add(startButton);
 	}
 }

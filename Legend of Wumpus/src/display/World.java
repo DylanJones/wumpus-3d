@@ -173,13 +173,14 @@ public final class World {
 			MusicPlayer.changePlayingMusic(null);
 			MusicPlayer.playSoundEffect("music/Die.wav");
 			World.stopTicker();
+			
 		} else if (gameState == 1) {
 			World.loadWorld("4I.wld");
 			World.startTicker(panel, panel.kb);
-			panel.hideButton();
+			panel.hideStartButton();
 		} else if (gameState == 0) {
 			MusicPlayer.changePlayingMusic("assets/music/TitleScreen.wav");
-			panel.showButton();
+			panel.showStartButton();
 		}
 		World.gameState = gameState;
 	}
