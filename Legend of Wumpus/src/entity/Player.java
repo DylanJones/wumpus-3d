@@ -37,6 +37,7 @@ public final class Player extends Entity {
 	private static Image eastAttackImage;
 	private static Image westAttackImage;
 
+	private boolean canTakeDamage = true;
 	private long lastDamageTime = 0; //Last time something attacked it
 	private long attackStartTime = 0; //Last time it attacked
 	private int triforcePieces = 0; //Number of triforce pieces the player has
@@ -155,7 +156,7 @@ public final class Player extends Entity {
 	//Called when something collides with Player
 	@Override
 	public void damage(int amount, Entity damageSource) {
-		if (System.currentTimeMillis() - lastDamageTime > 1000) {
+		if (System.currentTimeMillis() - lastDamageTime > 1000 && canTakeDamage) {
 			lastDamageTime = System.currentTimeMillis();
 			// We're invulrnaberale while attacking
 			if (System.currentTimeMillis() - this.attackStartTime > ATTACK_TIME) {
@@ -253,5 +254,19 @@ public final class Player extends Entity {
 		if (triforcePieces >= 3) {
 			World.setGameState(3);
 		}
+	}
+
+	/**
+	 * @return the canTakeDamage
+	 */
+	public boolean getCanTakeDamage() {
+		return canTakeDamage;
+	}
+
+	/**
+	 * @param canTakeDamage the canTakeDamage to set
+	 */
+	public void setCanTakeDamage(boolean canTakeDamage) {
+		this.canTakeDamage = canTakeDamage;
 	}
 }

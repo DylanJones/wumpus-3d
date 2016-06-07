@@ -11,6 +11,7 @@ import javax.swing.JPanel;
 public class Tick implements ActionListener {
 	private JPanel container;
 	private KeyboardHandler kb;
+	private long lastITime = 0;
 
 	private static boolean playerHasControl = true;
 
@@ -33,6 +34,12 @@ public class Tick implements ActionListener {
 			World.getThePlayer().move(0.15);
 		if (kb.isKeyPressed('q'))
 			World.getThePlayer().attack();
+		if (kb.isKeyPressed('i')
+				&& System.currentTimeMillis() - lastITime > 1000) {
+			lastITime = System.currentTimeMillis();
+			World.getThePlayer().setCanTakeDamage(
+					!World.getThePlayer().getCanTakeDamage());
+		}
 	}
 
 	/**
