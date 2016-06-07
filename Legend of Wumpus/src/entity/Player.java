@@ -38,6 +38,7 @@ public final class Player extends Entity {
 
 	private long lastDamageTime = 0;
 	private long attackStartTime = 0;
+	private int triforcePieces = 0;
 
 	static {
 		try {
@@ -232,5 +233,13 @@ public final class Player extends Entity {
 
 	public void setMaxHealth(int healthValue) {
 		maxHealth = healthValue;
+	}
+
+	public int getTriforces(){
+		return triforcePieces;
+	}
+
+	public void addTriforce(){
+		triforcePieces+=1;
 	}
 }

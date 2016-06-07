@@ -11,6 +11,7 @@ public final class HUD {
 	private static Image half_heart = null;
 	private static Image empty_heart = null;
 	private static Image life_text = null;
+	private static Image triforce = null;
 
 	static {
 		try {
@@ -18,6 +19,7 @@ public final class HUD {
 			half_heart = ImageIO.read(new File("assets/items/half_heart.png")).getScaledInstance(16, 16, Image.SCALE_REPLICATE);
 			empty_heart = ImageIO.read(new File("assets/items/empty_heart.png")).getScaledInstance(16, 16, Image.SCALE_REPLICATE);
 			life_text = ImageIO.read(new File("assets/text/HUD_text.png")).getScaledInstance(96, 20, Image.SCALE_REPLICATE);
+			triforce = ImageIO.read(new File("assets/items/triforce_orange.png")).getScaledInstance(20, 20, Image.SCALE_REPLICATE);
 		} catch (IOException e) {
 			System.err.print("Error loading files for HUD");
 			System.exit(1);
@@ -55,10 +57,11 @@ public final class HUD {
 		}
 	}
 
-	/** Draws the tri-force logo. */
+	/** Draws the tri-force logo as player gets them. */
 	private static void drawTriForce(Graphics g) {
-		// TODO: stub
-		// it needs to draw the triangle thing
+		int itemsToDraw = World.getThePlayer().getTriforces();
+		for(int i = 0; i < itemsToDraw; i++)
+			g.drawImage(triforce, 100 + (22 * i), 80, null);
 	}
 
 	/** Draws the HUD on top of the Graphics object. */
