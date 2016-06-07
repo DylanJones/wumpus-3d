@@ -16,12 +16,13 @@ public final class HUD {
 
 	static {
 		try {
-			heart = ImageIO.read(new File("assets/items/heart.png")).getScaledInstance(16, 16, Image.SCALE_REPLICATE);
-			half_heart = ImageIO.read(new File("assets/items/half_heart.png")).getScaledInstance(16, 16, Image.SCALE_REPLICATE);
-			empty_heart = ImageIO.read(new File("assets/items/empty_heart.png")).getScaledInstance(16, 16, Image.SCALE_REPLICATE);
-			life_text = ImageIO.read(new File("assets/text/HUD_text.png")).getScaledInstance(96, 20, Image.SCALE_REPLICATE);
-			triforce = ImageIO.read(new File("assets/items/triforce_orange.png")).getScaledInstance(20, 20, Image.SCALE_REPLICATE);
-		} catch (IOException e) {
+			heart = ImageIO.read(HUD.class.getResource("/assets/items/heart.png")).getScaledInstance(16, 16, Image.SCALE_REPLICATE);
+			half_heart = ImageIO.read(HUD.class.getResource("/assets/items/half_heart.png")).getScaledInstance(16, 16, Image.SCALE_REPLICATE);
+			empty_heart = ImageIO.read(HUD.class.getResource("/assets/items/empty_heart.png")).getScaledInstance(16, 16, Image.SCALE_REPLICATE);
+			life_text = ImageIO.read(HUD.class.getResource("/assets/text/HUD_text.png")).getScaledInstance(96, 20, Image.SCALE_REPLICATE);
+			triforce = ImageIO.read(HUD.class.getResource("/assets/items/triforce_orange.png")).getScaledInstance(20, 20, Image.SCALE_REPLICATE);
+		} catch (Exception e) {
+			e.printStackTrace();
 			System.err.print("Error loading files for HUD");
 			System.exit(1);
 		}

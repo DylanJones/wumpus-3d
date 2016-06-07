@@ -38,18 +38,21 @@ public class ClassCastException extends Entity {
 
 	static {
 		try {
-			boss1 = ImageIO.read(
-					new File("assets/classcastexception/boss1.png"))
+			boss1 = ImageIO
+					.read(ClassCastException.class
+							.getResource("/assets/classcastexception/boss1.png"))
 					.getScaledInstance(48, 76, Image.SCALE_REPLICATE);
-			boss2 = ImageIO.read(
-					new File("assets/classcastexception/boss2.png"))
+			boss2 = ImageIO
+					.read(ClassCastException.class
+							.getResource("/assets/classcastexception/boss2.png"))
 					.getScaledInstance(48, 72, Image.SCALE_REPLICATE);
-			boss3 = ImageIO.read(
-					new File("assets/classcastexception/boss3.png"))
+			boss3 = ImageIO
+					.read(ClassCastException.class
+							.getResource("/assets/classcastexception/boss3.png"))
 					.getScaledInstance(48, 76, Image.SCALE_REPLICATE);
-			projectileImage = ImageIO.read(new File(
-					"assets/classcastexception/projectile.png"));
-		} catch (IOException e) {
+			projectileImage = ImageIO.read(ClassCastException.class
+					.getResource("/assets/classcastexception/projectile.png"));
+		} catch (Exception e) {
 			System.err.println("Error reading ClassCastException image files!");
 			System.exit(1);
 		}
@@ -57,7 +60,7 @@ public class ClassCastException extends Entity {
 
 	public ClassCastException() {
 		super();
-		MusicPlayer.changePlayingMusic("assets/music/DeathMountain.wav");
+		MusicPlayer.changePlayingMusic("/assets/music/DeathMountain.wav");
 		this.x = 7.5;
 		this.y = 4.0;
 		this.health = 20;
@@ -124,11 +127,11 @@ public class ClassCastException extends Entity {
 			lastDamageTime = System.currentTimeMillis();
 			this.health -= amount;
 			System.out.println(health);
-			MusicPlayer.playSoundEffect("assets/music/Boss_Scream1.wav");
+			MusicPlayer.playSoundEffect("/assets/music/Boss_Scream1.wav");
 			if (this.health <= 0) { // Dying
 				World.deregisterEntity(this);
-				MusicPlayer.playSoundEffect("assets/music/Boss_Scream2.wav");
-				MusicPlayer.changePlayingMusic("assets/music/Overworld.wav");
+				MusicPlayer.playSoundEffect("/assets/music/Boss_Scream2.wav");
+				MusicPlayer.changePlayingMusic("/assets/music/Overworld.wav");
 				World.setTile(7, 9, WorldTile.stairs2);
 				new TriforcePiece(World.WORLD_WIDTH / 2, World.WORLD_HEIGHT / 2);
 			}

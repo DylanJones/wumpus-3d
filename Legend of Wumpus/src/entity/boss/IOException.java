@@ -28,11 +28,11 @@ public class IOException extends Entity {
 
 	static {
 		try {
-			boss1 = ImageIO.read(new File("assets/ioexception/boss1.png"))
+			boss1 = ImageIO.read(IOException.class.getResource("/assets/ioexception/boss1.png"))
 					.getScaledInstance(32, 32, Image.SCALE_REPLICATE);
-			boss2 = ImageIO.read(new File("assets/ioexception/boss2.png"))
+			boss2 = ImageIO.read(IOException.class.getResource("/assets/ioexception/boss2.png"))
 					.getScaledInstance(32, 32, Image.SCALE_REPLICATE);
-		} catch (java.io.IOException e) {
+		} catch (Exception e) {
 			System.err.println("Error reading IOException image files!");
 			System.exit(1);
 		}
@@ -40,7 +40,7 @@ public class IOException extends Entity {
 
 	public IOException() {
 		super();
-		MusicPlayer.changePlayingMusic("assets/music/Dungeon.wav");
+		MusicPlayer.changePlayingMusic("/assets/music/Dungeon.wav");
 		this.x = 7.5;
 		this.y = 4.0;
 		this.health = 20;
@@ -73,11 +73,11 @@ public class IOException extends Entity {
 			lastDamageTime = System.currentTimeMillis();
 			this.health -= amount;
 			System.out.println(health);
-			MusicPlayer.playSoundEffect("assets/music/Boss_Scream1.wav");
+			MusicPlayer.playSoundEffect("/assets/music/Boss_Scream1.wav");
 			if (this.health <= 0) { // Dying
 				World.deregisterEntity(this);
-				MusicPlayer.playSoundEffect("assets/music/Boss_Scream2.wav");
-				MusicPlayer.changePlayingMusic("assets/music/Overworld.wav");
+				MusicPlayer.playSoundEffect("/assets/music/Boss_Scream2.wav");
+				MusicPlayer.changePlayingMusic("/assets/music/Overworld.wav");
 				new TriforcePiece(World.WORLD_WIDTH / 2, World.WORLD_HEIGHT / 2);
 			}
 		}

@@ -20,7 +20,7 @@ public class TriforcePiece extends EntityItem {
 	static {
 		try {
 			myImage = ImageIO
-					.read(new File("assets/items/triforce_orange.png"));
+					.read(TriforcePiece.class.getResource("/assets/items/triforce_orange.png"));
 		} catch (IOException e) {
 			System.err.println("Error reading Triforce image files! ");
 			System.exit(1);

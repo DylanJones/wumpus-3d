@@ -5,9 +5,12 @@ import javax.swing.Timer;
 import javax.swing.JPanel;
 
 import java.awt.Graphics;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.URISyntaxException;
 import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -170,8 +173,8 @@ public final class World {
 	 */
 	public static void setGameState(int gameState) {
 		if (gameState == 2) { // Death
-			MusicPlayer.changePlayingMusic("assets/music/TitleScreen.wav");
-			MusicPlayer.playSoundEffect("assets/music/Die.wav");
+			MusicPlayer.changePlayingMusic("/assets/music/TitleScreen.wav");
+			MusicPlayer.playSoundEffect("/assets/music/Die.wav");
 			World.stopTicker();
 			JOptionPane.showMessageDialog(null, "You Lose!", "Wumpus",
 					JOptionPane.INFORMATION_MESSAGE);
@@ -181,7 +184,7 @@ public final class World {
 			World.startTicker(panel, panel.kb);
 			panel.hideStartButton();
 		} else if (gameState == 0) {
-			MusicPlayer.changePlayingMusic("assets/music/TitleScreen.wav");
+			MusicPlayer.changePlayingMusic("/assets/music/TitleScreen.wav");
 			panel.showStartButton();
 		} else if (gameState == 3) {
 			JOptionPane.showMessageDialog(null, "You WIN!!!", "Wumpus",
@@ -249,7 +252,9 @@ public final class World {
 		worldName = filename;
 		Scanner theScanner = null;
 		try {
-			theScanner = new Scanner(new File("assets/worlds/" + filename));
+			theScanner = new Scanner(new BufferedReader(new InputStreamReader(
+					World.class.getResource("/assets/worlds/" + filename)
+							.openStream())));
 		} catch (IOException e) {
 			System.err.println("Error reading file assets/worlds/" + filename);
 			System.exit(1);
@@ -257,7 +262,7 @@ public final class World {
 		String tileFileName = theScanner.nextLine().replace("tiles ", "");
 		loadTiles(tileFileName);
 		String musicName = theScanner.nextLine().replace("music ", "");
-		MusicPlayer.changePlayingMusic("assets/music/" + musicName);
+		MusicPlayer.changePlayingMusic("/assets/music/" + musicName);
 		northWorld = theScanner.nextLine().replace("north ", "");
 		southWorld = theScanner.nextLine().replace("south ", "");
 		eastWorld = theScanner.nextLine().replace("east ", "");
@@ -321,8 +326,10 @@ public final class World {
 	private static void loadTiles(String filename) {
 		Scanner s = null;
 		try {
-			s = new Scanner(new File("assets/worlds/tiles/" + filename));
-		} catch (FileNotFoundException e) {
+			s = new Scanner(new BufferedReader(new InputStreamReader(
+					World.class.getResource("/assets/worlds/tiles/" + filename)
+							.openStream())));
+		} catch (IOException e) {
 		}
 		for (int y = 0; y < WORLD_HEIGHT; y++) {
 			String[] nums = s.nextLine().split("\\s+");

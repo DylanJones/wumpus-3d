@@ -41,35 +41,42 @@ public class NullPointerException extends Entity {
 
 	static {
 		try {
-			boss1 = ImageIO.read(new File(
-					"assets/nullpointerexception/boss1.png")).getScaledInstance(48, 64, Image.SCALE_REPLICATE);
-			boss2 = ImageIO.read(new File(
-					"assets/nullpointerexception/boss2.png")).getScaledInstance(48, 64, Image.SCALE_REPLICATE);
-			boss3 = ImageIO.read(new File(
-					"assets/nullpointerexception/boss3.png")).getScaledInstance(48, 64, Image.SCALE_REPLICATE);
-			boss4 = ImageIO.read(new File(
-					"assets/nullpointerexception/boss4.png")).getScaledInstance(48, 64, Image.SCALE_REPLICATE);
-			pointerImage = ImageIO.read(
-					new File("assets/nullpointerexception/pointer.png"))
+			boss1 = ImageIO
+					.read(NullPointerException.class
+							.getResource("/assets/nullpointerexception/boss1.png"))
+					.getScaledInstance(48, 64, Image.SCALE_REPLICATE);
+			boss2 = ImageIO
+					.read(NullPointerException.class
+							.getResource("/assets/nullpointerexception/boss2.png"))
+					.getScaledInstance(48, 64, Image.SCALE_REPLICATE);
+			boss3 = ImageIO
+					.read(NullPointerException.class
+							.getResource("/assets/nullpointerexception/boss3.png"))
+					.getScaledInstance(48, 64, Image.SCALE_REPLICATE);
+			boss4 = ImageIO
+					.read(NullPointerException.class
+							.getResource("/assets/nullpointerexception/boss4.png"))
+					.getScaledInstance(48, 64, Image.SCALE_REPLICATE);
+			pointerImage = ImageIO
+					.read(NullPointerException.class
+							.getResource("/assets/nullpointerexception/pointer.png"))
 					.getScaledInstance(18, 6, Image.SCALE_REPLICATE);
-			pointerImage45 = ImageIO.read(
-					new File("assets/nullpointerexception/pointer45.png"))
+			pointerImage45 = ImageIO
+					.read(NullPointerException.class
+							.getResource("/assets/nullpointerexception/pointer45.png"))
 					.getScaledInstance(14, 14, Image.SCALE_REPLICATE);
-			pointerImageNegative45 = ImageIO.read(
-					new File("assets/nullpointerexception/pointer-45.png"))
+			pointerImageNegative45 = ImageIO
+					.read(NullPointerException.class
+							.getResource("/assets/nullpointerexception/pointer-45.png"))
 					.getScaledInstance(14, 14, Image.SCALE_REPLICATE);
-		} catch (IOException e) {
+		} catch (Exception e) {
 			System.err.println("Error reading NullPointerException files");
 		}
 	}
 
 	public NullPointerException() {
 		super();
-		try {
-			MusicPlayer.changePlayingMusic("assets/music/Dungeon.wav");
-		} catch(Exception r) {
-			System.out.println("Music files missing");
-		}
+		MusicPlayer.changePlayingMusic("/assets/music/Dungeon.wav");
 		this.x = 4.0;
 		this.y = 5.0;
 		this.health = 10;
@@ -109,23 +116,11 @@ public class NullPointerException extends Entity {
 			lastDamageTime = System.currentTimeMillis();
 			this.health -= amount;
 			System.out.println(health);
-			try {
-				MusicPlayer.playSoundEffect("assets/music/Boss_Scream1.wav");
-			} catch(Exception r) {
-				System.out.println("Music files missing");
-			}
-			if (this.health <= 0) { //Dying
+			MusicPlayer.playSoundEffect("/assets/music/Boss_Scream1.wav");
+			if (this.health <= 0) { // Dying
 				World.deregisterEntity(this);
-				try {
-					MusicPlayer.playSoundEffect("assets/music/Boss_Scream2.wav");
-				} catch(Exception r) {
-					System.out.println("Music files missing");
-				}
-				try {
-					MusicPlayer.changePlayingMusic("assets/music/Overworld.wav");
-				} catch(Exception r) {
-					System.out.println("Music files missing");
-				}
+				MusicPlayer.playSoundEffect("/assets/music/Boss_Scream2.wav");
+				MusicPlayer.changePlayingMusic("/assets/music/Overworld.wav");
 				World.setTile(14, 5, WorldTile.ground);
 				new TriforcePiece(World.WORLD_WIDTH / 2, World.WORLD_HEIGHT / 2);
 			}

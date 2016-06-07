@@ -18,11 +18,15 @@ public class EntityHeart extends EntityItem {
 	private static final long serialVersionUID = -808919570444662375L;
 	private static Image heartImage;
 	private int healAmount;
-	
+
 	static {
 		try {
-			heartImage = ImageIO.read(new File("assets/items/heart_canister.png")).getScaledInstance(16, 16, Image.SCALE_REPLICATE);;
-		} catch (IOException e) {
+			heartImage = ImageIO.read(
+					EntityHeart.class
+							.getResource("/assets/items/heart_canister.png"))
+					.getScaledInstance(16, 16, Image.SCALE_REPLICATE);
+			;
+		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("Error reading Heart images!");
 			System.exit(1);
@@ -32,7 +36,7 @@ public class EntityHeart extends EntityItem {
 	public EntityHeart(double x, double y) {
 		this(x, y, 1);
 	}
-	
+
 	public EntityHeart(double x, double y, int healAmount) {
 		super();
 		this.setHitbox(heartImage);
@@ -51,11 +55,7 @@ public class EntityHeart extends EntityItem {
 		if (e instanceof Player) {
 			((Player) e).heal(healAmount);
 			World.deregisterEntity(this);
-			try {
-				MusicPlayer.playSoundEffect("assets/music/Get_Heart.wav");
-			} catch(Exception r) {
-				System.out.println("Music files missing");
-			}
+			MusicPlayer.playSoundEffect("/assets/music/Get_Heart.wav");
 		}
 	}
 

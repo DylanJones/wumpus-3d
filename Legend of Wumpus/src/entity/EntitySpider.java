@@ -28,11 +28,12 @@ public class EntitySpider extends EntityMinion {
 	static {
 		try {
 			standingImage = ImageIO
-					.read(new File("assets/spider/standing.png"))
+					.read(EntitySpider.class.getResource("/assets/spider/standing.png"))
 					.getScaledInstance(32, 30, Image.SCALE_REPLICATE);
-			jumpingImage = ImageIO.read(new File("assets/spider/jumping.png"))
+			jumpingImage = ImageIO.read(EntitySpider.class.getResource("/assets/spider/jumping.png"))
 					.getScaledInstance(32, 24, Image.SCALE_REPLICATE);
-		} catch (IOException e) {
+		} catch (Exception e) {
+			e.printStackTrace();
 			System.err.println("Error reading Spider images!");
 			System.exit(1);
 		}
@@ -78,7 +79,7 @@ public class EntitySpider extends EntityMinion {
 	@Override
 	public void damage(int amount, Entity damageSource) {
 		try {
-			MusicPlayer.playSoundEffect("assets/music/Kill.wav");
+			MusicPlayer.playSoundEffect("/assets/music/Kill.wav");
 		} catch(Exception e) {
 			System.out.println("Music files missing");
 		}

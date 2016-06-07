@@ -16,7 +16,7 @@ import display.Direction;
 import display.World;
 import display.MusicPlayer;
 
-/** Another enemy that lives in the world.  It has 3 health and shoots arrows. */
+/** Another enemy that lives in the world. It has 3 health and shoots arrows. */
 public class EntityMolblin extends EntityMinion {
 	/**
 	 * Serial ID for Serialization to disk
@@ -38,32 +38,41 @@ public class EntityMolblin extends EntityMinion {
 		// Initialize images
 		try {
 			northImage1 = ImageIO.read(
-					new File("assets/molblin/molblin_north1.png"))
+					EntityMolblin.class
+							.getResource("/assets/molblin/molblin_north1.png"))
 					.getScaledInstance(28, 32, Image.SCALE_REPLICATE);
 			northImage2 = ImageIO.read(
-					new File("assets/molblin/molblin_north2.png"))
+					EntityMolblin.class
+							.getResource("/assets/molblin/molblin_north2.png"))
 					.getScaledInstance(28, 32, Image.SCALE_REPLICATE);
 			southImage1 = ImageIO.read(
-					new File("assets/molblin/molblin_south1.png"))
+					EntityMolblin.class
+							.getResource("/assets/molblin/molblin_south1.png"))
 					.getScaledInstance(32, 32, Image.SCALE_REPLICATE);
 			southImage2 = ImageIO.read(
-					new File("assets/molblin/molblin_south2.png"))
+					EntityMolblin.class
+							.getResource("/assets/molblin/molblin_south2.png"))
 					.getScaledInstance(32, 32, Image.SCALE_REPLICATE);
 			eastImage1 = ImageIO.read(
-					new File("assets/molblin/molblin_east1.png"))
+					EntityMolblin.class
+							.getResource("/assets/molblin/molblin_east1.png"))
 					.getScaledInstance(32, 32, Image.SCALE_REPLICATE);
 			eastImage2 = ImageIO.read(
-					new File("assets/molblin/molblin_east2.png"))
+					EntityMolblin.class
+							.getResource("/assets/molblin/molblin_east2.png"))
 					.getScaledInstance(32, 30, Image.SCALE_REPLICATE);
 			westImage1 = ImageIO.read(
-					new File("assets/molblin/molblin_west1.png"))
+					EntityMolblin.class
+							.getResource("/assets/molblin/molblin_west1.png"))
 					.getScaledInstance(32, 30, Image.SCALE_REPLICATE);
 			westImage2 = ImageIO.read(
-					new File("assets/molblin/molblin_west2.png"))
+					EntityMolblin.class
+							.getResource("/assets/molblin/molblin_west2.png"))
 					.getScaledInstance(32, 32, Image.SCALE_REPLICATE);
 			Image arrowImageTemp = ImageIO.read(
-					new File("assets/molblin/arrow.png")).getScaledInstance(10,
-					32, Image.SCALE_REPLICATE);
+					EntityMolblin.class
+							.getResource("/assets/molblin/arrow.png"))
+					.getScaledInstance(10, 32, Image.SCALE_REPLICATE);
 			// Convert to BufferedImage
 			// Create a buffered image with transparency
 			arrowImage = new BufferedImage(arrowImageTemp.getWidth(null),
@@ -73,8 +82,10 @@ public class EntityMolblin extends EntityMinion {
 			Graphics2D bGr = arrowImage.createGraphics();
 			bGr.drawImage(arrowImageTemp, 0, 0, null);
 			bGr.dispose();
-		} catch (IOException e) {
+		} catch (Exception e) {
+			e.printStackTrace();
 			System.err.println("Error reading Molblin image files");
+			System.exit(1);
 		}
 	}
 
@@ -111,11 +122,7 @@ public class EntityMolblin extends EntityMinion {
 			break;
 		}
 		new EntityProjectile(x, y, 1, facing, rotated);
-		try {
-			MusicPlayer.playSoundEffect("assets/music/Arrow.wav");
-		} catch(Exception e) {
-			System.out.println("Music files missing");
-		}
+		MusicPlayer.playSoundEffect("/assets/music/Arrow.wav");
 	}
 
 	/**
@@ -191,22 +198,14 @@ public class EntityMolblin extends EntityMinion {
 	@Override
 	public void damage(int amount, Entity damageSource) {
 		health -= amount;
-		if (health <= 0) { 
+		if (health <= 0) {
 			World.deregisterEntity(this);
-			try {
-				MusicPlayer.playSoundEffect("assets/music/Kill.wav");
-			} catch(Exception e) {
-				System.out.println("Music files missing");
-			}
+			MusicPlayer.playSoundEffect("/assets/music/Kill.wav");
 			if (Math.random() < 0.9) {
 				new EntityHeart(x, y, 2);
 			}
 		} else {
-			try {
-				MusicPlayer.playSoundEffect("assets/music/Hit.wav");
-			} catch(Exception e) {
-				System.out.println("Music files missing");
-			}
+			MusicPlayer.playSoundEffect("/assets/music/Hit.wav");
 		}
 	}
 

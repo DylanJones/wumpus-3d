@@ -6,6 +6,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.net.MalformedURLException;
+import java.net.URL;
+
 import javax.swing.*;
 
 /**
@@ -17,7 +20,7 @@ public class WumpusPanel extends JPanel {
 	KeyboardHandler kb;
 	private JButton startButton;
 
-	/** Default constructor for WumpusPanel.  Starts the title screen animation.*/
+	/** Default constructor for WumpusPanel. Starts the title screen animation. */
 	public WumpusPanel() {
 		super();
 		startButton = new JButton(new ImageIcon(

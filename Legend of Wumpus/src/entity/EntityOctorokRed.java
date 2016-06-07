@@ -17,30 +17,34 @@ public class EntityOctorokRed extends EntityMinion {
 	 * Serial ID for Serialization to disk
 	 */
 	private static final long serialVersionUID = -5085421657242795653L;
-	private static Image gremlinNorth;
-	private static Image gremlinSouth;
-	private static Image gremlinEast;
-	private static Image gremlinWest;
+	private static Image octorokNorth;
+	private static Image octorokSouth;
+	private static Image octorokEast;
+	private static Image octorokWest;
 	private static Image projectileImage;
 	private static final double SPEED = 0.1;
 
 	static {
 		try {
-			gremlinNorth = ImageIO.read(
-					new File("assets/gremlin/gremlin-north.png"))
+			octorokNorth = ImageIO.read(
+					EntityOctorokRed.class
+							.getResource("/assets/gremlin/gremlin-north.png"))
 					.getScaledInstance(32, 32, Image.SCALE_FAST);
-			gremlinSouth = ImageIO.read(
-					new File("assets/gremlin/gremlin-south.png"))
+			octorokSouth = ImageIO.read(
+					EntityOctorokRed.class
+							.getResource("/assets/gremlin/gremlin-south.png"))
 					.getScaledInstance(32, 32, Image.SCALE_FAST);
-			gremlinEast = ImageIO.read(
-					new File("assets/gremlin/gremlin-east.png"))
+			octorokEast = ImageIO.read(
+					EntityOctorokRed.class
+							.getResource("/assets/gremlin/gremlin-east.png"))
 					.getScaledInstance(32, 32, Image.SCALE_FAST);
-			gremlinWest = ImageIO.read(
-					new File("assets/gremlin/gremlin-west.png"))
+			octorokWest = ImageIO.read(
+					EntityOctorokRed.class
+							.getResource("/assets/gremlin/gremlin-west.png"))
 					.getScaledInstance(32, 32, Image.SCALE_FAST);
-			projectileImage = ImageIO.read(new File(
-					"assets/gremlin/projectile.png"));
-		} catch (IOException e) {
+			projectileImage = ImageIO.read(EntityOctorokRed.class
+					.getResource("/assets/gremlin/projectile.png"));
+		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.println("Error reading Gremlin images");
 			System.exit(1);
@@ -51,11 +55,11 @@ public class EntityOctorokRed extends EntityMinion {
 		super();
 		this.x = x;
 		this.y = y;
-		this.spriteHeight = gremlinNorth.getHeight(null);
-		this.spriteWidth = gremlinNorth.getWidth(null);
+		this.spriteHeight = octorokNorth.getHeight(null);
+		this.spriteWidth = octorokNorth.getWidth(null);
 		this.health = 1;
 		this.facing = Direction.NORTH;
-		setHitbox(gremlinNorth);
+		setHitbox(octorokNorth);
 	}
 
 	@Override
@@ -67,21 +71,13 @@ public class EntityOctorokRed extends EntityMinion {
 	public void damage(int amount, Entity damageSource) {
 		health -= amount;
 		if (health <= 0) {
-			try {
-				MusicPlayer.playSoundEffect("assets/music/Kill.wav");
-			} catch(Exception e) {
-				System.out.println("Music files missing");
-			}
+			MusicPlayer.playSoundEffect("/assets/music/Kill.wav");
 			World.deregisterEntity(this);
 			if (Math.random() < 0.5) {
 				new EntityHeart(x, y, 2);
 			}
 		} else {
-			try {
-				MusicPlayer.playSoundEffect("assets/music/Hit.wav");
-			} catch(Exception e) {
-				System.out.println("Music files missing");
-			}
+			MusicPlayer.playSoundEffect("/assets/music/Hit.wav");
 		}
 	}
 
@@ -126,20 +122,20 @@ public class EntityOctorokRed extends EntityMinion {
 		sCoords[1] = sCoords[1] - this.spriteHeight / 2;
 		switch (facing) {
 		case NORTH:
-			g.drawImage(gremlinNorth, sCoords[0], sCoords[1], null);
-			setHitbox(gremlinNorth);
+			g.drawImage(octorokNorth, sCoords[0], sCoords[1], null);
+			setHitbox(octorokNorth);
 			break;
 		case SOUTH:
-			g.drawImage(gremlinSouth, sCoords[0], sCoords[1], null);
-			setHitbox(gremlinSouth);
+			g.drawImage(octorokSouth, sCoords[0], sCoords[1], null);
+			setHitbox(octorokSouth);
 			break;
 		case EAST:
-			g.drawImage(gremlinEast, sCoords[0], sCoords[1], null);
-			setHitbox(gremlinEast);
+			g.drawImage(octorokEast, sCoords[0], sCoords[1], null);
+			setHitbox(octorokEast);
 			break;
 		case WEST:
-			g.drawImage(gremlinWest, sCoords[0], sCoords[1], null);
-			setHitbox(gremlinWest);
+			g.drawImage(octorokWest, sCoords[0], sCoords[1], null);
+			setHitbox(octorokWest);
 			break;
 		}
 	}
