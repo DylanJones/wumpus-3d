@@ -23,7 +23,7 @@ public class EntityProjectile extends EntityItem implements Serializable {
 	// This is here so it can be Serialized to disk
 	private final ImageIcon projectileImageIcon;
 	private Image projectileImage;
-	private int damageAmount;
+	protected int damageAmount;
 	private Direction facing;
 
 	public EntityProjectile(double x, double y, int damageAmount, Direction facing2, Image image) {

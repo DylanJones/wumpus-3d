@@ -26,6 +26,7 @@ public class ClassCastException extends EntityBoss {
 	private static Image boss1;
 	private static Image boss2;
 	private static Image boss3;
+	private static Image projectileImage;
 
 	private boolean scared = true;
 	private long lastScaredSwitchTime;
@@ -45,6 +46,8 @@ public class ClassCastException extends EntityBoss {
 			boss3 = ImageIO.read(
 					new File("assets/classcastexception/boss3.png"))
 					.getScaledInstance(48, 76, Image.SCALE_REPLICATE);
+			projectileImage = ImageIO.read(new File(
+					"assets/classcastexception/projectile.png"));
 		} catch (IOException e) {
 			System.err.println("Error reading ClassCastException image files!");
 			System.exit(1);
@@ -64,6 +67,7 @@ public class ClassCastException extends EntityBoss {
 		if (hasFightStarted) {
 			Player p = World.getThePlayer(); // For convince
 			if (scared) {
+				shootAllDirections();
 				if (p.getX() > this.x
 						&& !World.getTileAt(x - SPEED, y).isSolid())
 					this.x -= SPEED;
@@ -77,26 +81,34 @@ public class ClassCastException extends EntityBoss {
 						&& !World.getTileAt(x, y + SPEED).isSolid())
 					this.y += SPEED;
 			} else {
-				if (p.getX() > this.x
-						&& !World.getTileAt(x - SPEED, y).isSolid())
+				if (p.getX() > this.x)
 					this.x += SPEED;
-				else if (p.getX() < this.x
-						&& !World.getTileAt(x + SPEED, y).isSolid())
+				else if (p.getX() < this.x)
 					this.x -= SPEED;
-				if (p.getY() > this.x
-						&& !World.getTileAt(x, y - SPEED).isSolid())
+				if (p.getY() > this.x)
 					this.y += SPEED;
-				else if (p.getY() < this.y
-						&& !World.getTileAt(x, y + SPEED).isSolid())
+				else if (p.getY() < this.y)
 					this.y -= SPEED;
 			}
-			if (System.currentTimeMillis() - this.lastScaredSwitchTime > 2000 + Math.random() * 6000) {
+			if (System.currentTimeMillis() - this.lastScaredSwitchTime > 2000 + Math
+					.random() * 6000) {
 				lastScaredSwitchTime = System.currentTimeMillis();
 				scared = !scared;
 			}
 		} else {
 			animationTick();
 		}
+	}
+
+	private void shootAllDirections() {
+		new ClassCastProjectile(x, y, 1, Direction.NORTH, projectileImage);
+		new ClassCastProjectile(x, y, 1, Direction.SOUTH, projectileImage);
+		new ClassCastProjectile(x, y, 1, Direction.EAST, projectileImage);
+		new ClassCastProjectile(x, y, 1, Direction.WEST, projectileImage);
+		new ClassCastProjectile(x, y, 1, Direction.NORTHEAST, projectileImage);
+		new ClassCastProjectile(x, y, 1, Direction.NORTHWEST, projectileImage);
+		new ClassCastProjectile(x, y, 1, Direction.SOUTHEAST, projectileImage);
+		new ClassCastProjectile(x, y, 1, Direction.SOUTHWEST, projectileImage);
 	}
 
 	@Override

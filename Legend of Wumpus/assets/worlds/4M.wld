@@ -4,3 +4,5 @@ north 5M.wld
 south 3M.wld
 east 4N.wld
 west 4L.wld
+entities:
+classcastexception
