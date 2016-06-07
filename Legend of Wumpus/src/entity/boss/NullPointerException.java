@@ -15,6 +15,7 @@ import display.MusicPlayer;
 import entity.Entity;
 import entity.EntityProjectile;
 import entity.Player;
+import entity.TriforcePiece;
 
 /** The "Null Pointer Exception" boss, the easiest one. */
 public class NullPointerException extends Entity {
@@ -95,10 +96,6 @@ public class NullPointerException extends Entity {
 			animationTick();
 		}
 	}
-	
-	private void shootAllDirections() {
-		
-	}
 
 	@Override
 	public void collide(Entity e) {
@@ -130,6 +127,7 @@ public class NullPointerException extends Entity {
 					System.out.println("Music files missing");
 				}
 				World.setTile(14, 5, WorldTile.ground);
+				new TriforcePiece(World.WORLD_WIDTH / 2, World.WORLD_HEIGHT / 2);
 			}
 		}
 	}

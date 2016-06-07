@@ -1,5 +1,6 @@
 package display;
 
+import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.JPanel;
 
@@ -168,17 +169,20 @@ public final class World {
 	 *            the new GameState
 	 */
 	public static void setGameState(int gameState) {
-		if (gameState == 2) { //Death
+		if (gameState == 2) { // Death
 			MusicPlayer.changePlayingMusic("assets/music/TitleScreen.wav");
 			MusicPlayer.playSoundEffect("assets/music/Die.wav");
 			World.stopTicker();
 		} else if (gameState == 1) {
-			World.loadWorld("8E.wld");
+			World.loadWorld("8H.wld");
 			World.startTicker(panel, panel.kb);
 			panel.hideStartButton();
 		} else if (gameState == 0) {
 			MusicPlayer.changePlayingMusic("assets/music/TitleScreen.wav");
 			panel.showStartButton();
+		} else if (gameState == 3) {
+			JOptionPane.showMessageDialog(null, "You WIN!!!", "Wumpus",
+					JOptionPane.INFORMATION_MESSAGE);
 		}
 		World.gameState = gameState;
 	}
@@ -290,6 +294,9 @@ public final class World {
 			break;
 		case "classcastexception":
 			new entity.boss.ClassCastException();
+			break;
+		case "ioexception":
+			new entity.boss.IOException();
 			break;
 		default:
 			System.err.println("WARNING: Unknown entity type \"" + elements[0]

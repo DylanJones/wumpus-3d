@@ -250,5 +250,8 @@ public final class Player extends Entity {
 	//Gives the player another Triforce Piece
 	public void addTriforce(){
 		triforcePieces+=1;
+		if (triforcePieces >= 3) {
+			World.setGameState(3);
+		}
 	}
 }

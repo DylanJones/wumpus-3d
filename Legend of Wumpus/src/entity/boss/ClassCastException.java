@@ -13,8 +13,8 @@ import display.Tick;
 import display.World;
 import display.WorldTile;
 import entity.Entity;
-import entity.EntityProjectile;
 import entity.Player;
+import entity.TriforcePiece;
 
 /** The ClassCastException boss, the hardest one */
 public class ClassCastException extends Entity {
@@ -23,7 +23,7 @@ public class ClassCastException extends Entity {
 	 * For serialization to disk
 	 */
 	private static final long serialVersionUID = 748984645444456661L;
-	private static final double SPEED = 0.05;
+	private static final double SPEED = 0.02;
 	private static Image boss1;
 	private static Image boss2;
 	private static Image boss3;
@@ -130,6 +130,7 @@ public class ClassCastException extends Entity {
 				MusicPlayer.playSoundEffect("assets/music/Boss_Scream2.wav");
 				MusicPlayer.changePlayingMusic("assets/music/Overworld.wav");
 				World.setTile(7, 9, WorldTile.stairs2);
+				new TriforcePiece(World.WORLD_WIDTH / 2, World.WORLD_HEIGHT / 2);
 			}
 		}
 	}
