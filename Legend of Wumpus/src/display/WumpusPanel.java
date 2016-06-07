@@ -3,8 +3,10 @@ package display;
 import entity.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.*;
 
 import javax.swing.*;
+import javax.imageio.ImageIO;
 
 @SuppressWarnings("serial")
 /**
@@ -13,9 +15,11 @@ import javax.swing.*;
  */
 public class WumpusPanel extends JPanel {
 	private KeyboardHandler kb;
+	private boolean start;
 
 	public WumpusPanel() {
 		super();
+		start = true;
 		kb = new KeyboardHandler();
 		addKeyListener(kb);
 		setFocusable(true);

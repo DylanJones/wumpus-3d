@@ -64,6 +64,11 @@ public class NullPointerException extends EntityBoss {
 
 	public NullPointerException() {
 		super();
+		try {
+			MusicPlayer.changePlayingMusic("assets/music/Dungeon.wav");
+		} catch(Exception r) {
+			System.out.println("Music files missing");
+		}
 		this.x = 4.0;
 		this.y = 5.0;
 		this.health = 6;
@@ -112,6 +117,11 @@ public class NullPointerException extends EntityBoss {
 				World.deregisterEntity(this);
 				try {
 					MusicPlayer.playSoundEffect("assets/music/Boss_Scream2.wav");
+				} catch(Exception r) {
+					System.out.println("Music files missing");
+				}
+				try {
+					MusicPlayer.changePlayingMusic("assets/music/Overworld.wav");
 				} catch(Exception r) {
 					System.out.println("Music files missing");
 				}
