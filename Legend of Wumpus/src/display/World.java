@@ -175,7 +175,7 @@ public final class World {
 			World.stopTicker();
 			
 		} else if (gameState == 1) {
-			World.loadWorld("4I.wld");
+			World.loadWorld("5M.wld");
 			World.startTicker(panel, panel.kb);
 			panel.hideStartButton();
 		} else if (gameState == 0) {
@@ -289,6 +289,9 @@ public final class World {
 			break;
 		case "nullpointerexception":
 			new entity.boss.NullPointerException();
+			break;
+		case "classcastexception":
+			new entity.boss.ClassCastException();
 			break;
 		default:
 			System.err.println("WARNING: Unknown entity type \"" + elements[0]

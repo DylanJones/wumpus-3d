@@ -71,7 +71,7 @@ public class NullPointerException extends EntityBoss {
 		}
 		this.x = 4.0;
 		this.y = 5.0;
-		this.health = 6;
+		this.health = 10;
 	}
 
 	@Override
@@ -94,6 +94,10 @@ public class NullPointerException extends EntityBoss {
 		} else {
 			animationTick();
 		}
+	}
+	
+	private void shootAllDirections() {
+		
 	}
 
 	@Override
