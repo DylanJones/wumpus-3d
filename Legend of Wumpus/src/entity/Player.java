@@ -22,7 +22,8 @@ public final class Player extends Entity {
 	private static final long serialVersionUID = -7931553165420215402L;
 	private static final int ATTACK_TIME = 500; // attack duration in millis
 	private static final int ATTACK_COOLDOWN = 200; // attack cooldown in millis
-	private static int maxHealth = 16;
+	private static int maxHealth = 16; //Maximum health the player can have
+	//Player's Images
 	private static Image northImage1;
 	private static Image northImage2;
 	private static Image southImage1;
@@ -36,11 +37,12 @@ public final class Player extends Entity {
 	private static Image eastAttackImage;
 	private static Image westAttackImage;
 
-	private long lastDamageTime = 0;
-	private long attackStartTime = 0;
-	private int triforcePieces = 0;
+	private long lastDamageTime = 0; //Last time something attacked it
+	private long attackStartTime = 0; //Last time it attacked
+	private int triforcePieces = 0; //Number of triforce pieces the player has
 
 	static {
+		//Load images into the variables they belong to
 		try {
 			// Walking images
 			northImage1 = ImageIO.read(new File("assets/wumpus/north1.png"))
@@ -73,15 +75,17 @@ public final class Player extends Entity {
 					new File("assets/wumpus/attack_west.png"))
 					.getScaledInstance(54, 30, Image.SCALE_REPLICATE);
 		} catch (IOException e) {
+			//Error Handling
 			System.err.print("Error reading Player image files");
 			System.exit(1);
 		}
 	}
 
 	public Player() {
-		this.health = maxHealth;
-		this.spriteHeight = northImage1.getHeight(null);
-		this.spriteWidth = northImage1.getWidth(null);
+		this.health = maxHealth; //Player starts with full health
+		this.spriteHeight = northImage1.getHeight(null); //Player's height is assigned
+		this.spriteWidth = northImage1.getWidth(null); //Player's width is assigned
+		//Starting coordinates and direction
 		this.x = 5;
 		this.y = 5;
 		this.facing = Direction.NORTH;
@@ -91,6 +95,7 @@ public final class Player extends Entity {
 	 * @param g
 	 *            the graphics object to draw on
 	 */
+	//Draws Player sprite on screen
 	@Override
 	public void draw(Graphics2D g) {
 		int[] sCoords = World.getScreenCoordinates(x, y);
@@ -140,20 +145,21 @@ public final class Player extends Entity {
 		g.drawImage(imageToDraw, sCoords[0], sCoords[1], null);
 	}
 
+	//Entity collision system, called when an entity collides with a Player
 	@Override
 	public void collide(Entity e) {
 		if (System.currentTimeMillis() - this.attackStartTime < ATTACK_TIME)
 			e.damage(2, this);
 	}
 
+	//Called when something collides with Player
 	@Override
 	public void damage(int amount, Entity damageSource) {
 		if (System.currentTimeMillis() - lastDamageTime > 1000) {
 			lastDamageTime = System.currentTimeMillis();
 			// We're invulrnaberale while attacking
 			if (System.currentTimeMillis() - this.attackStartTime > ATTACK_TIME) {
-				if (health > 0 /* && !godmode */) {// Stops player from having
-													// negative health
+				if (health > 0 /* && !godmode */) {// Stops Player from having negative health
 					health -= amount;
 					if (health <= 0){ // did it go below 0?
 						World.setGameState(2);
@@ -169,13 +175,15 @@ public final class Player extends Entity {
 		}
 	}
 
+	//Function for player to turnLeft on the screen; similar function to karel
 	public void turnLeft() {
 		facing = facing.getLeft();
 	}
 
-	public void tick() {
-	}
+	//Required by superclass
+	public void tick() {}
 
+	//Movment method for player
 	public void move(double amount) {
 		boolean canMove = !World.willCollideTile(this, amount);
 		// Can't move while attacking
@@ -194,17 +202,19 @@ public final class Player extends Entity {
 				World.loadWorld(Direction.EAST);
 			}
 			if (y < 0.01) {
-				y = 10.9;
+				y = 10.4;
 				World.loadWorld(Direction.SOUTH);
 			}
-			if (y > 10.9) {
+			if (y > 10.4) {
 				y = 0.1;
 				World.loadWorld(Direction.NORTH);
 			}
 		}
 	}
 
+	//Called when Player wants to attack; Hopefully when near an enemy
 	public void attack() {
+		//Added so that player can not always be attacking
 		if (System.currentTimeMillis() - this.attackStartTime - ATTACK_COOLDOWN > ATTACK_TIME){
 			attackStartTime = System.currentTimeMillis();
 			try {
@@ -215,24 +225,29 @@ public final class Player extends Entity {
 		}
 	}
 	
+	//Heal's the Player
 	public void heal(int amount) {
 		health += amount;
 		if (health > maxHealth)
 			health = maxHealth;
 	}
 
+	//Returns Player's maxHealth
 	public int getMaxHealth() {
 		return maxHealth;
 	}
 
+	//Allows for the ability to increase maximum health
 	public void setMaxHealth(int healthValue) {
 		maxHealth = healthValue;
 	}
 
+	//Returns the amount of triforces the player has gathered
 	public int getTriforces(){
 		return triforcePieces;
 	}
 
+	//Gives the player another Triforce Piece
 	public void addTriforce(){
 		triforcePieces+=1;
 	}
