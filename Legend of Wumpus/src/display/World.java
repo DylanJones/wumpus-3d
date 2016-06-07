@@ -183,6 +183,7 @@ public final class World {
 		} else if (gameState == 3) {
 			JOptionPane.showMessageDialog(null, "You WIN!!!", "Wumpus",
 					JOptionPane.INFORMATION_MESSAGE);
+			System.exit(0);
 		}
 		World.gameState = gameState;
 	}

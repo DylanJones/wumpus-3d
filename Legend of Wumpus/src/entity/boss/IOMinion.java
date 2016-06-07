@@ -22,7 +22,7 @@ public class IOMinion extends Entity {
 	static {
 		try {
 			projectileImage = ImageIO.read(new File(
-					"assets/ioexception/projectile.png"));
+					"assets/ioexception/minion.png"));
 		} catch (java.io.IOException e) {
 			System.err.println("Error reading IOMinion files!");
 			System.exit(1);
