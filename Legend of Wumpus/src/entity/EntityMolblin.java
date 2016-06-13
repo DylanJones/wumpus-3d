@@ -9,7 +9,7 @@ import java.awt.Transparency;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
-import display.Direction;
+import display.Angle;
 import display.World;
 import display.MusicPlayer;
 
@@ -90,7 +90,7 @@ public class EntityMolblin extends EntityMinion {
 		this.x = x;
 		this.y = y;
 		this.health = 3; // 3 hits w/ wooden sword
-		this.facing = Direction.NORTH;
+		this.facing = Angle.NORTH;
 		this.setHitbox(northImage1);
 	}
 

@@ -11,7 +11,7 @@ import java.io.Serializable;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
-import display.Direction;
+import display.Angle;
 import display.World;
 
 /** Class that can be used to create any projectile. */
@@ -25,9 +25,9 @@ public class EntityProjectile extends EntityItem implements Serializable {
 	private final ImageIcon projectileImageIcon;
 	private Image projectileImage;
 	protected int damageAmount;
-	private Direction facing;
+	private Angle facing;
 
-	public EntityProjectile(double x, double y, int damageAmount, Direction facing2, Image image) {
+	public EntityProjectile(double x, double y, int damageAmount, Angle facing2, Image image) {
 		super();
 		this.projectileImage = image;
 		this.x = x;

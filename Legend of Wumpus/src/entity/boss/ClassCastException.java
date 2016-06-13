@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import javax.imageio.ImageIO;
 
-import display.Direction;
+import display.Angle;
 import display.MusicPlayer;
 import display.Tick;
 import display.World;
@@ -102,14 +102,14 @@ public class ClassCastException extends Entity {
 	}
 
 	private void shootAllDirections() {
-		new ClassCastProjectile(x, y, 1, Direction.NORTH, projectileImage);
-		new ClassCastProjectile(x, y, 1, Direction.SOUTH, projectileImage);
-		new ClassCastProjectile(x, y, 1, Direction.EAST, projectileImage);
-		new ClassCastProjectile(x, y, 1, Direction.WEST, projectileImage);
-		new ClassCastProjectile(x, y, 1, Direction.NORTHEAST, projectileImage);
-		new ClassCastProjectile(x, y, 1, Direction.NORTHWEST, projectileImage);
-		new ClassCastProjectile(x, y, 1, Direction.SOUTHEAST, projectileImage);
-		new ClassCastProjectile(x, y, 1, Direction.SOUTHWEST, projectileImage);
+		new ClassCastProjectile(x, y, 1, Angle.NORTH, projectileImage);
+		new ClassCastProjectile(x, y, 1, Angle.SOUTH, projectileImage);
+		new ClassCastProjectile(x, y, 1, Angle.EAST, projectileImage);
+		new ClassCastProjectile(x, y, 1, Angle.WEST, projectileImage);
+		new ClassCastProjectile(x, y, 1, Angle.NORTHEAST, projectileImage);
+		new ClassCastProjectile(x, y, 1, Angle.NORTHWEST, projectileImage);
+		new ClassCastProjectile(x, y, 1, Angle.SOUTHEAST, projectileImage);
+		new ClassCastProjectile(x, y, 1, Angle.SOUTHWEST, projectileImage);
 	}
 
 	@Override

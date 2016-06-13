@@ -2,7 +2,7 @@ package entity;
 
 import javax.imageio.ImageIO;
 
-import display.Direction;
+import display.Angle;
 import display.World;
 import display.MusicPlayer;
 
@@ -99,7 +99,7 @@ public final class Player extends Entity {
 		// Starting coordinates and direction
 		this.x = 5;
 		this.y = 5;
-		this.facing = Direction.NORTH;
+		this.facing = Angle.NORTH;
 	}
 
 	/**
@@ -204,19 +204,19 @@ public final class Player extends Entity {
 			y = facing.moveInDirection(x, y, amount)[1];
 			if (x < 0) {
 				x = 15.9;
-				World.loadWorld(Direction.WEST);
+				World.loadWorld(Angle.WEST);
 			}
 			if (x > 15.9) {
 				x = 0.01;
-				World.loadWorld(Direction.EAST);
+				World.loadWorld(Angle.EAST);
 			}
 			if (y < 0.01) {
 				y = 10.4;
-				World.loadWorld(Direction.SOUTH);
+				World.loadWorld(Angle.SOUTH);
 			}
 			if (y > 10.4) {
 				y = 0.1;
-				World.loadWorld(Direction.NORTH);
+				World.loadWorld(Angle.NORTH);
 			}
 		}
 	}

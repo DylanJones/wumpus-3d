@@ -213,11 +213,11 @@ public final class World {
 	 * Called when the player walks off the screen, loads the new section of
 	 * world in the specified direction
 	 * 
-	 * @param direction
+	 * @param a
 	 *            the direction in which to load the world
 	 */
-	public static void loadWorld(Direction direction) {
-		switch (direction) {
+	public static void loadWorld(Angle a) {
+		switch (a) {
 		case NORTH:
 			loadWorld(northWorld);
 			break;
@@ -231,7 +231,7 @@ public final class World {
 			loadWorld(westWorld);
 			break;
 		default:
-			System.err.println("Invalid world direction " + direction);
+			System.err.println("Invalid world direction " + a);
 			System.exit(1);
 		}
 	}

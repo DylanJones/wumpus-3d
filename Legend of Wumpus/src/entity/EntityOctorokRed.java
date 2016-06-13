@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import javax.imageio.ImageIO;
 
-import display.Direction;
+import display.Angle;
 import display.World;
 import display.MusicPlayer;
 
@@ -55,7 +55,7 @@ public class EntityOctorokRed extends EntityMinion {
 		this.spriteHeight = octorokNorth.getHeight(null);
 		this.spriteWidth = octorokNorth.getWidth(null);
 		this.health = 1;
-		this.facing = Direction.NORTH;
+		this.facing = Angle.NORTH;
 		setHitbox(octorokNorth);
 	}
 

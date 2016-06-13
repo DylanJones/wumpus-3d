@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.io.Serializable;
 
-import display.Direction;
+import display.Angle;
 import display.World;
 
 /**
@@ -21,7 +21,7 @@ public abstract class Entity implements Serializable {
 	/** Sprite size in PIXELS */
 	protected int spriteWidth, spriteHeight;
 	protected int health;
-	protected Direction facing;
+	protected Angle facing;
 
 	// Make sure that ALL entities are registered.
 	public Entity() {
@@ -98,7 +98,7 @@ public abstract class Entity implements Serializable {
 
 	/** Get the direction in which the Entity is facing
 	 * @return the facing of said entity */
-	public Direction getFacing() {
+	public Angle getFacing() {
 		return facing;
 	}
 }

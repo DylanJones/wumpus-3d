@@ -5,7 +5,7 @@ import java.awt.Image;
 import javax.imageio.ImageIO;
 
 import display.World;
-import display.Direction;
+import display.Angle;
 import display.MusicPlayer;
 
 /** Enemy that jumps around the screen diagonally. */
@@ -106,16 +106,16 @@ public class EntitySpider extends EntityMinion {
 		}
 	}
 
-	private Direction whichWayToJump() {
+	private Angle whichWayToJump() {
 		if (Math.random() < 0.5)
 			if (Math.random() < 0.5)
-				return Direction.SOUTHEAST;
+				return Angle.SOUTHEAST;
 			else
-				return Direction.NORTHEAST;
+				return Angle.NORTHEAST;
 		else
 			if (Math.random() < 0.5)
-				return Direction.SOUTHWEST;
+				return Angle.SOUTHWEST;
 			else
-				return Direction.NORTHWEST;
+				return Angle.NORTHWEST;
 	}
 }

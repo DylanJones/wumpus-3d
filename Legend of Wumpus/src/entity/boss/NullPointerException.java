@@ -4,7 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import javax.imageio.ImageIO;
 
-import display.Direction;
+import display.Angle;
 import display.Tick;
 import display.World;
 import display.WorldTile;
@@ -84,10 +84,10 @@ public class NullPointerException extends Entity {
 		if (hasFightStarted) {
 			if (System.currentTimeMillis() - lastProjectileTime > 1000 + Math
 					.random() * 2000) {
-				new EntityProjectile(x, y, 1, Direction.EAST, pointerImage);
-				new EntityProjectile(x, y, 1, Direction.SOUTHEAST,
+				new EntityProjectile(x, y, 1, Angle.EAST, pointerImage);
+				new EntityProjectile(x, y, 1, Angle.SOUTHEAST,
 						pointerImage45);
-				new EntityProjectile(x, y, 1, Direction.NORTHEAST,
+				new EntityProjectile(x, y, 1, Angle.NORTHEAST,
 						pointerImageNegative45);
 				lastProjectileTime = System.currentTimeMillis();
 			}
