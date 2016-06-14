@@ -55,7 +55,7 @@ public class EntityOctorokRed extends EntityMinion {
 		this.spriteHeight = octorokNorth.getHeight(null);
 		this.spriteWidth = octorokNorth.getWidth(null);
 		this.health = 1;
-		this.facing = Angle.NORTH;
+		this.facing = new Angle(0);
 		setHitbox(octorokNorth);
 	}
 
@@ -105,9 +105,9 @@ public class EntityOctorokRed extends EntityMinion {
 
 	private void randomTurn() {
 		if (Math.random() < 0.5) {
-			facing = facing.getLeft();
+			facing.add(90);
 		} else {
-			facing = facing.getRight();
+			facing.add(-90);
 		}
 	}
 
@@ -117,7 +117,7 @@ public class EntityOctorokRed extends EntityMinion {
 		int[] sCoords = World.getScreenCoordinates(x, y);
 		sCoords[0] = sCoords[0] - this.spriteWidth / 2;
 		sCoords[1] = sCoords[1] - this.spriteHeight / 2;
-		switch (facing) {
+		switch (facing.toCardinalDirection()) {
 		case NORTH:
 			g.drawImage(octorokNorth, sCoords[0], sCoords[1], null);
 			setHitbox(octorokNorth);

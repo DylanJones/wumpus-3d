@@ -102,14 +102,14 @@ public class ClassCastException extends Entity {
 	}
 
 	private void shootAllDirections() {
-		new ClassCastProjectile(x, y, 1, Angle.NORTH, projectileImage);
-		new ClassCastProjectile(x, y, 1, Angle.SOUTH, projectileImage);
-		new ClassCastProjectile(x, y, 1, Angle.EAST, projectileImage);
-		new ClassCastProjectile(x, y, 1, Angle.WEST, projectileImage);
-		new ClassCastProjectile(x, y, 1, Angle.NORTHEAST, projectileImage);
-		new ClassCastProjectile(x, y, 1, Angle.NORTHWEST, projectileImage);
-		new ClassCastProjectile(x, y, 1, Angle.SOUTHEAST, projectileImage);
-		new ClassCastProjectile(x, y, 1, Angle.SOUTHWEST, projectileImage);
+		new ClassCastProjectile(x, y, 1, new Angle(0), projectileImage);
+		new ClassCastProjectile(x, y, 1, new Angle(45), projectileImage);
+		new ClassCastProjectile(x, y, 1, new Angle(90), projectileImage);
+		new ClassCastProjectile(x, y, 1, new Angle(135), projectileImage);
+		new ClassCastProjectile(x, y, 1, new Angle(180), projectileImage);
+		new ClassCastProjectile(x, y, 1, new Angle(225), projectileImage);
+		new ClassCastProjectile(x, y, 1, new Angle(270), projectileImage);
+		new ClassCastProjectile(x, y, 1, new Angle(315), projectileImage);
 	}
 
 	@Override

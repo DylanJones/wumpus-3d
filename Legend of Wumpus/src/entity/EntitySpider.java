@@ -98,24 +98,23 @@ public class EntitySpider extends EntityMinion {
 	}
 
 	private void startJump() {
-		facing = whichWayToJump();
+		if (Math.random() > 0.5) {
+			if (Math.random() > 0.5) {
+				facing = new Angle(45);
+			} else {
+				facing = new Angle(135);
+			}
+		} else {
+			if (Math.random() > 0.5 ) {
+				facing = new Angle(225);
+			} else {
+				facing = new Angle(315);
+			}
+		}
 		if (!World.willCollideTile(this, JUMP_DISTANCE)) {
 			jumping = true;
 			double[] coords = facing.moveInDirection(x, y, JUMP_DISTANCE);
 			jumpXDest = coords[0];
 		}
-	}
-
-	private Angle whichWayToJump() {
-		if (Math.random() < 0.5)
-			if (Math.random() < 0.5)
-				return Angle.SOUTHEAST;
-			else
-				return Angle.NORTHEAST;
-		else
-			if (Math.random() < 0.5)
-				return Angle.SOUTHWEST;
-			else
-				return Angle.NORTHWEST;
 	}
 }

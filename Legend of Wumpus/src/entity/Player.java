@@ -3,6 +3,7 @@ package entity;
 import javax.imageio.ImageIO;
 
 import display.Angle;
+import display.Angle.CardinalDirection;
 import display.World;
 import display.MusicPlayer;
 
@@ -99,7 +100,7 @@ public final class Player extends Entity {
 		// Starting coordinates and direction
 		this.x = 5;
 		this.y = 5;
-		this.facing = Angle.NORTH;
+		this.facing = new Angle(0);
 	}
 
 	/**
@@ -115,7 +116,7 @@ public final class Player extends Entity {
 		boolean whichImage = (((int) (x * 2) % 2) == 1)
 				^ (((int) (y * 2) % 2) == 1);
 		Image imageToDraw;
-		switch (facing) {
+		switch (facing.toCardinalDirection()) {
 		case NORTH:
 			if (System.currentTimeMillis() - this.attackStartTime < ATTACK_TIME)
 				imageToDraw = northAttackImage;
@@ -185,7 +186,7 @@ public final class Player extends Entity {
 
 	// Function for player to turnLeft on the screen; similar function to karel
 	public void turnLeft() {
-		facing = facing.getLeft();
+		facing.add(-90);;
 	}
 
 	// Required by superclass
@@ -204,19 +205,19 @@ public final class Player extends Entity {
 			y = facing.moveInDirection(x, y, amount)[1];
 			if (x < 0) {
 				x = 15.9;
-				World.loadWorld(Angle.WEST);
+				World.loadWorld(CardinalDirection.WEST);
 			}
 			if (x > 15.9) {
 				x = 0.01;
-				World.loadWorld(Angle.EAST);
+				World.loadWorld(CardinalDirection.EAST);
 			}
 			if (y < 0.01) {
 				y = 10.4;
-				World.loadWorld(Angle.SOUTH);
+				World.loadWorld(CardinalDirection.SOUTH);
 			}
 			if (y > 10.4) {
 				y = 0.1;
-				World.loadWorld(Angle.NORTH);
+				World.loadWorld(CardinalDirection.NORTH);
 			}
 		}
 	}

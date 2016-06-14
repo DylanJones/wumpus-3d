@@ -1,15 +1,13 @@
 package entity;
 
 import java.awt.Graphics2D;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 import java.awt.Image;
-import java.awt.Transparency;
 import java.awt.image.BufferedImage;
+
 import javax.imageio.ImageIO;
 
 import display.Angle;
+import display.ImageUtil;
 import display.World;
 import display.MusicPlayer;
 
@@ -90,7 +88,7 @@ public class EntityMolblin extends EntityMinion {
 		this.x = x;
 		this.y = y;
 		this.health = 3; // 3 hits w/ wooden sword
-		this.facing = Angle.NORTH;
+		this.facing = new Angle(0);
 		this.setHitbox(northImage1);
 	}
 
@@ -101,15 +99,15 @@ public class EntityMolblin extends EntityMinion {
 
 	private void shoot() {
 		BufferedImage rotated = arrowImage;
-		switch (facing) {
+		switch (facing.toCardinalDirection()) {
 		case WEST:
-			rotated = rotate(arrowImage, 270);
+			rotated = ImageUtil.rotate(arrowImage, 270);
 			break;
 		case SOUTH:
-			rotated = rotate(rotated, 180);
+			rotated = ImageUtil.rotate(rotated, 180);
 			break;
 		case EAST:
-			rotated = rotate(rotated, 90);
+			rotated = ImageUtil.rotate(rotated, 90);
 			break;
 		case NORTH:
 			rotated = arrowImage;
@@ -120,44 +118,6 @@ public class EntityMolblin extends EntityMinion {
 		}
 		new EntityProjectile(x, y, 1, facing, rotated);
 		MusicPlayer.playSoundEffect("/assets/music/Arrow.wav");
-	}
-
-	/**
-	 * Rotates img by angle degrees. Returns a copy of the rotated image.
-	 * 
-	 * @param image
-	 *            The image to be rotated
-	 * @param angleDegrees
-	 *            The angle in degrees
-	 * @return The rotated image
-	 */
-	public static BufferedImage rotate(BufferedImage image, double angleDegrees) {
-		double angleRadians = Math.toRadians(angleDegrees);
-		// Find new width and height
-		double sin = Math.abs(Math.sin(angleRadians)), cos = Math.abs(Math
-				.cos(angleRadians));
-		int w = image.getWidth(), h = image.getHeight();
-		int neww = (int) Math.floor(w * cos + h * sin), newh = (int) Math
-				.floor(h * cos + w * sin);
-		// Use GraphicsConfiguration to create a compatable BufferedImage
-		GraphicsConfiguration gc = getDefaultConfiguration();
-		BufferedImage result = gc.createCompatibleImage(neww, newh,
-				Transparency.TRANSLUCENT);
-		// Use Graphics2D to rotate "image" and draw it on the new one
-		Graphics2D g = result.createGraphics();
-		g.translate((neww - w) / 2, (newh - h) / 2);
-		g.rotate(angleRadians, w / 2, h / 2);
-		g.drawRenderedImage(image, null);
-		g.dispose();
-		// Return the new image
-		return result;
-	}
-
-	private static GraphicsConfiguration getDefaultConfiguration() {
-		GraphicsEnvironment ge = GraphicsEnvironment
-				.getLocalGraphicsEnvironment();
-		GraphicsDevice gd = ge.getDefaultScreenDevice();
-		return gd.getDefaultConfiguration();
 	}
 
 	@Override
@@ -181,9 +141,9 @@ public class EntityMolblin extends EntityMinion {
 
 	private void randomTurn() {
 		if (Math.random() < 0.5)
-			facing = facing.getLeft();
+			facing.add(90);
 		else
-			facing = facing.getRight();
+			facing.add(-90);
 	}
 
 	@Override
@@ -215,7 +175,7 @@ public class EntityMolblin extends EntityMinion {
 		boolean whichImage = (((int) (x * 2) % 2) == 1)
 				^ (((int) (y * 2) % 2) == 1);
 		Image imageToDraw = null;
-		switch (facing) {
+		switch (facing.toCardinalDirection()) {
 		case EAST:
 			if (whichImage)
 				imageToDraw = eastImage1;

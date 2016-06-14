@@ -13,13 +13,49 @@ public class Angle implements Serializable {
 	private static final long serialVersionUID = 33544444446765742L;
 	// The angle in degrees
 	private double degrees;
+	
+	public enum CardinalDirection {
+		 NORTH, SOUTH, EAST, WEST, NORTHEAST, SOUTHEAST, NORTHWEST, SOUTHWEST
+	}
 
 	public Angle(double angleDegrees) {
 		degrees = angleDegrees;
 	}
 
-	public Angle add(Angle a) {
-		return new Angle((degrees + a.degrees) % 360);
+	public CardinalDirection toCardinalDirection() {
+		double tmp = degrees / 45.0;
+		int dir = (int) Math.round(tmp) % 8;
+		switch(dir) {
+		case 0:
+			return CardinalDirection.NORTH;
+		case 1:
+			return CardinalDirection.NORTHEAST;
+		case 2:
+			return CardinalDirection.EAST;
+		case 3:
+			return CardinalDirection.SOUTHEAST;
+		case 4:
+			return CardinalDirection.SOUTH;
+		case 5:
+			return CardinalDirection.SOUTHWEST;
+		case 6:
+			return CardinalDirection.WEST;
+		case 7:
+			return CardinalDirection.NORTHWEST;
+		default:
+			System.err.println("Invalid angle " + degrees);
+			return CardinalDirection.NORTH;
+		}
+	}
+
+	/**
+	 * Add amount to the current degrees.
+	 * 
+	 * @param amount
+	 *            how many degrees to add
+	 */
+	public void add(double amount) {
+		this.degrees = (degrees + amount) % 360;
 	}
 
 	/**
@@ -38,5 +74,9 @@ public class Angle implements Serializable {
 		double verticalLength = movement * Math.sin(Math.toRadians(degrees));
 		double horizontalLength = movement * Math.cos(Math.toRadians(degrees));
 		return new double[] { x + horizontalLength, y + verticalLength };
+	}
+
+	public double getDegrees() {
+		return degrees;
 	}
 }

@@ -84,10 +84,10 @@ public class NullPointerException extends Entity {
 		if (hasFightStarted) {
 			if (System.currentTimeMillis() - lastProjectileTime > 1000 + Math
 					.random() * 2000) {
-				new EntityProjectile(x, y, 1, Angle.EAST, pointerImage);
-				new EntityProjectile(x, y, 1, Angle.SOUTHEAST,
+				new EntityProjectile(x, y, 1, new Angle(90), pointerImage);
+				new EntityProjectile(x, y, 1, new Angle(135),
 						pointerImage45);
-				new EntityProjectile(x, y, 1, Angle.NORTHEAST,
+				new EntityProjectile(x, y, 1, new Angle(45),
 						pointerImageNegative45);
 				lastProjectileTime = System.currentTimeMillis();
 			}

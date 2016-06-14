@@ -4,6 +4,8 @@ import javax.swing.JOptionPane;
 import javax.swing.Timer;
 import javax.swing.JPanel;
 
+import display.Angle.CardinalDirection;
+
 import java.awt.Graphics;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -216,7 +218,7 @@ public final class World {
 	 * @param a
 	 *            the direction in which to load the world
 	 */
-	public static void loadWorld(Angle a) {
+	public static void loadWorld(CardinalDirection a) {
 		switch (a) {
 		case NORTH:
 			loadWorld(northWorld);
@@ -372,7 +374,7 @@ public final class World {
 				movement);
 		double newX = newCoords[0];
 		double newY = newCoords[1];
-		switch (e.getFacing()) {
+		switch (e.getFacing().toCardinalDirection()) {
 		case SOUTH:
 			newY += e.getHeight() / 2;
 			break;
