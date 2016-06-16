@@ -339,14 +339,6 @@ public final class World {
 		}
 	}
 
-	public static void renderTiles(Graphics g) {
-		for (int x = 0; x < WORLD_WIDTH; x++) {
-			for (int y = 0; y < WORLD_HEIGHT; y++) {
-				World.getTileAt(x, y).draw(x, y, g);
-			}
-		}
-	}
-
 	private static void startTicker(JPanel parent, KeyboardHandler kb) {
 		ticker = new Timer(33, new Tick(parent, kb));
 		ticker.start();
@@ -368,7 +360,6 @@ public final class World {
 	 *            how far the Entity wants to move
 	 * @return Whether or not the Entity will collide
 	 * */
-	@SuppressWarnings("incomplete-switch")
 	public static boolean willCollideTile(Entity e, double movement) {
 		double[] newCoords = e.getFacing().moveInDirection(e.getX(), e.getY(),
 				movement);

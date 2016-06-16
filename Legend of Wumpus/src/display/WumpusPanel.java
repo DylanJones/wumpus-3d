@@ -42,7 +42,7 @@ public class WumpusPanel extends JPanel {
 		BufferedImage buffer = new BufferedImage(this.getWidth(),
 				this.getHeight(), BufferedImage.TYPE_INT_RGB);
 		Graphics2D bufferGraphics = buffer.createGraphics();
-		World.renderTiles(bufferGraphics);
+		TileRenderer.renderTiles(bufferGraphics);
 		HUD.drawHud(bufferGraphics);
 		for (Entity e : World.getAllEntities()) {
 			e.draw(bufferGraphics);
