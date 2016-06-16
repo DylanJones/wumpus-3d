@@ -22,6 +22,10 @@ public class Angle implements Serializable {
 		degrees = angleDegrees;
 	}
 
+	public Angle(Angle a) {
+		degrees = a.degrees;
+	}
+
 	public CardinalDirection toCardinalDirection() {
 		double tmp = degrees / 45.0;
 		int dir = (int) Math.round(tmp) % 8;
@@ -55,7 +59,10 @@ public class Angle implements Serializable {
 	 *            how many degrees to add
 	 */
 	public void add(double amount) {
-		this.degrees = (degrees + amount) % 360;
+		this.degrees += amount;
+		this.degrees %= 360;
+		if (this.degrees < 0)
+			this.degrees += 360;
 	}
 
 	/**
@@ -71,12 +78,17 @@ public class Angle implements Serializable {
 	 */
 	public double[] moveInDirection(double x, double y, double movement) {
 		// Use trigonometry to find the length moved in x and y
-		double verticalLength = movement * Math.sin(Math.toRadians(degrees));
-		double horizontalLength = movement * Math.cos(Math.toRadians(degrees));
-		return new double[] { x + horizontalLength, y + verticalLength };
+		double horizontalLength = movement * Math.sin(Math.toRadians(degrees));
+		double verticalLength = movement * Math.cos(Math.toRadians(degrees));
+		return new double[] { x + horizontalLength, y - verticalLength };
 	}
 
 	public double getDegrees() {
 		return degrees;
+	}
+	
+	@Override
+	public String toString() {
+		return degrees + " degrees, cardinal " + this.toCardinalDirection();
 	}
 }

@@ -4,11 +4,13 @@ import javax.imageio.ImageIO;
 
 import display.Angle;
 import display.Angle.CardinalDirection;
+import display.ImageUtil;
 import display.World;
 import display.MusicPlayer;
 
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 
 /**
  * This class should handle all of the things re lated to the Player. It should
@@ -23,15 +25,15 @@ public final class Player extends Entity {
 	private static final int ATTACK_COOLDOWN = 200; // attack cooldown in millis
 	private static int maxHealth = 16; // Maximum health the player can have
 	// Player's Images
-	private static Image northImage1;
-	private static Image northImage2;
+	private static BufferedImage northImage1;
+	private static BufferedImage northImage2;
 	private static Image southImage1;
 	private static Image southImage2;
 	private static Image eastImage1;
 	private static Image eastImage2;
 	private static Image westImage1;
 	private static Image westImage2;
-	private static Image northAttackImage;
+	private static BufferedImage northAttackImage;
 	private static Image southAttackImage;
 	private static Image eastAttackImage;
 	private static Image westAttackImage;
@@ -45,12 +47,12 @@ public final class Player extends Entity {
 		// Load images into the variables they belong to
 		try {
 			// Walking images
-			northImage1 = ImageIO.read(
+			northImage1 = ImageUtil.toBufferedImage(ImageIO.read(
 					Player.class.getResource("/assets/wumpus/north1.png"))
-					.getScaledInstance(32, 32, Image.SCALE_REPLICATE);
-			northImage2 = ImageIO.read(
+					.getScaledInstance(32, 32, Image.SCALE_REPLICATE));
+			northImage2 = ImageUtil.toBufferedImage(ImageIO.read(
 					Player.class.getResource("/assets/wumpus/north2.png"))
-					.getScaledInstance(32, 32, Image.SCALE_REPLICATE);
+					.getScaledInstance(32, 32, Image.SCALE_REPLICATE));
 			southImage1 = ImageIO.read(
 					Player.class.getResource("/assets/wumpus/south1.png"))
 					.getScaledInstance(32, 32, Image.SCALE_REPLICATE);
@@ -70,10 +72,10 @@ public final class Player extends Entity {
 					Player.class.getResource("/assets/wumpus/west2.png"))
 					.getScaledInstance(32, 32, Image.SCALE_REPLICATE);
 			// Attacking images
-			northAttackImage = ImageIO
+			northAttackImage = ImageUtil.toBufferedImage(ImageIO
 					.read(Player.class
 							.getResource("/assets/wumpus/attack_north.png"))
-					.getScaledInstance(32, 56, Image.SCALE_REPLICATE);
+					.getScaledInstance(32, 56, Image.SCALE_REPLICATE));
 			southAttackImage = ImageIO
 					.read(Player.class
 							.getResource("/assets/wumpus/attack_south.png"))
@@ -85,7 +87,7 @@ public final class Player extends Entity {
 					Player.class.getResource("/assets/wumpus/attack_west.png"))
 					.getScaledInstance(54, 30, Image.SCALE_REPLICATE);
 		} catch (Exception e) {
-			// Error Handling
+			e.printStackTrace();
 			System.err.print("Error reading Player image files");
 			System.exit(1);
 		}
@@ -115,44 +117,17 @@ public final class Player extends Entity {
 		sCoords[1] = sCoords[1] - spriteHeight / 2;
 		boolean whichImage = (((int) (x * 2) % 2) == 1)
 				^ (((int) (y * 2) % 2) == 1);
-		Image imageToDraw;
-		switch (facing.toCardinalDirection()) {
-		case NORTH:
-			if (System.currentTimeMillis() - this.attackStartTime < ATTACK_TIME)
-				imageToDraw = northAttackImage;
-			else if (whichImage)
+		BufferedImage imageToDraw;
+		if (System.currentTimeMillis() - attackStartTime < ATTACK_TIME) {
+			imageToDraw = northAttackImage;
+		} else {
+			if (whichImage) {
 				imageToDraw = northImage1;
-			else
+			} else {
 				imageToDraw = northImage2;
-			break;
-		case SOUTH:
-			if (System.currentTimeMillis() - this.attackStartTime < ATTACK_TIME)
-				imageToDraw = southAttackImage;
-			else if (whichImage)
-				imageToDraw = southImage1;
-			else
-				imageToDraw = southImage2;
-			break;
-		case EAST:
-			if (System.currentTimeMillis() - this.attackStartTime < ATTACK_TIME)
-				imageToDraw = eastAttackImage;
-			else if (whichImage)
-				imageToDraw = eastImage1;
-			else
-				imageToDraw = eastImage2;
-			break;
-		case WEST:
-			if (System.currentTimeMillis() - this.attackStartTime < ATTACK_TIME)
-				imageToDraw = westAttackImage;
-			else if (whichImage)
-				imageToDraw = westImage1;
-			else
-				imageToDraw = westImage2;
-			break;
-		default:
-			System.err.println("Invalid player facing");
-			imageToDraw = null;
+			}
 		}
+		imageToDraw = ImageUtil.rotate(imageToDraw, facing);
 		setHitbox(imageToDraw);
 		g.drawImage(imageToDraw, sCoords[0], sCoords[1], null);
 	}
@@ -171,7 +146,7 @@ public final class Player extends Entity {
 			lastDamageTime = System.currentTimeMillis();
 			// We're invulrnaberale while attacking
 			if (System.currentTimeMillis() - this.attackStartTime > ATTACK_TIME) {
-				if (health > 0 /* && !godmode */) {// Stops Player from having
+				if (health > 0 && canTakeDamage) {// Stops Player from having
 													// negative health
 					health -= amount;
 					if (health <= 0) { // did it go below 0?
@@ -186,7 +161,13 @@ public final class Player extends Entity {
 
 	// Function for player to turnLeft on the screen; similar function to karel
 	public void turnLeft() {
-		facing.add(-90);;
+		facing.add(-5);
+		System.out.println(facing);
+	}
+	
+	public void turnRight() {
+		facing.add(5);
+		System.out.println(facing);
 	}
 
 	// Required by superclass

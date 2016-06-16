@@ -374,17 +374,9 @@ public final class World {
 				movement);
 		double newX = newCoords[0];
 		double newY = newCoords[1];
-		switch (e.getFacing().toCardinalDirection()) {
-		case SOUTH:
-			newY += e.getHeight() / 2;
-			break;
-		case EAST:
-			newX += e.getWidth() / 2;
-			break;
-		case WEST:
-			newX -= e.getWidth() / 2;
-			break;
-		}
+		newCoords = e.getFacing().moveInDirection(newX, newY, e.getHeight() / 2);
+		newX = newCoords[0];
+		newY = newCoords[1];
 		if (!(e instanceof Player))
 			if (newX < 0 || newX >= WORLD_WIDTH || newY < 0
 					|| newY >= WORLD_HEIGHT)

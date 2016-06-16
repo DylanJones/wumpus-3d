@@ -33,7 +33,7 @@ public class EntityProjectile extends EntityItem implements Serializable {
 		this.x = x;
 		this.y = y;
 		this.damageAmount = damageAmount;
-		this.facing = facing2;
+		this.facing = new Angle(facing2);
 		this.spriteHeight = projectileImage.getHeight(null);
 		this.spriteWidth = projectileImage.getWidth(null);
 		this.projectileImageIcon = new ImageIcon(projectileImage);
