@@ -13,12 +13,10 @@ public class TileRenderer {
 		// 45 degrees to either side of player
 		double playerDegrees = World.getThePlayer().getFacing().getDegrees();
 		Angle angle = new Angle(playerDegrees - 45);
-		while (angle.getDegrees() < 45 + playerDegrees) {
+		// One column for each horizontal pixel
+		for (int i = 0; i < 512; i++) {
 			drawColumn(angle, g);
-			angle.add(0.5);
-			// System.out.println("player: "
-			// + World.getThePlayer().getFacing().getDegrees());
-			// System.out.println(angle.getDegrees());
+			angle.add(90 / 512.0);
 		}
 	}
 

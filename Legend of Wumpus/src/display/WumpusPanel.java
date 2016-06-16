@@ -42,7 +42,10 @@ public class WumpusPanel extends JPanel {
 		BufferedImage buffer = new BufferedImage(this.getWidth(),
 				this.getHeight(), BufferedImage.TYPE_INT_RGB);
 		Graphics2D bufferGraphics = buffer.createGraphics();
+		long start = System.nanoTime();
 		TileRenderer.renderTiles(bufferGraphics);
+		long stop = System.nanoTime();
+		System.out.println("Raycasting took " + (stop - start) / 1000000.0 + " milliseconds");
 		HUD.drawHud(bufferGraphics);
 		for (Entity e : World.getAllEntities()) {
 			e.draw(bufferGraphics);

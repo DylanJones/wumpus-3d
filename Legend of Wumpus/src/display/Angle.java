@@ -19,11 +19,11 @@ public class Angle implements Serializable {
 	}
 
 	public Angle(double angleDegrees) {
-		degrees = angleDegrees;
+		this.add(angleDegrees);
 	}
 
 	public Angle(Angle a) {
-		degrees = a.degrees;
+		this.add(a.degrees);;
 	}
 
 	public CardinalDirection toCardinalDirection() {
