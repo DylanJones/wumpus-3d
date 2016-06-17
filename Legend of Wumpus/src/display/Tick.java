@@ -38,6 +38,8 @@ public class Tick implements ActionListener {
 			World.getThePlayer().turnRight();
 		if (kb.isKeyPressed('q'))
 			World.getThePlayer().attack();
+		if (kb.isKeyPressed('s'))
+			World.getThePlayer().move(-0.15);
 		if (kb.isKeyPressed('i')
 				&& System.currentTimeMillis() - lastITime > 1000) {
 			lastITime = System.currentTimeMillis();
