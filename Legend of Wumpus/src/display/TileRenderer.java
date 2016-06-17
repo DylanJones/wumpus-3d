@@ -15,25 +15,32 @@ public class TileRenderer {
 		double playerDegrees = World.getThePlayer().getFacing().getDegrees();
 		Angle angle = new Angle(playerDegrees - 45);
 		// One column for each horizontal pixel
-		for (int i = 0; i < 512; i++) {
+		for (int i = 0; i < World.WORLD_WIDTH * 32; i++) {
 			drawColumn(angle, g, i);
-			angle.add(90 / 512.0);
+			angle.add(90 / (double)(World.WORLD_WIDTH * 32));
 		}
 	}
 
-	private static void drawColumn(Angle a, Graphics2D g, int column) {
+	private static void drawColumn(Angle a, Graphics2D g, int col) {
 		Tracer t = new Tracer(a);
 		double distance = t.trace();
+		if (distance < 1)
+			distance = 1;
 		int height = (int) (1.0 / distance * World.WORLD_HEIGHT * 32);
-		int y1 = (World.WORLD_HEIGHT * 32 - height) / 2;
+		int y1 = (World.WORLD_HEIGHT * 32 - height) / 2 + 112;
 		int y2 = y1 + height;
 		if (t.getX() >= World.WORLD_WIDTH || t.getX() <= 0
 				|| t.getY() >= World.WORLD_HEIGHT || t.getY() <= 0) {
-			g.setColor(Color.BLUE);
+			g.setColor(Color.CYAN);
+			g.drawLine(col, y1, col, y2);
 		} else {
 			g.setColor(Color.red);
+			WorldTile tile = World.getTileAt(t.getX(), t.getY());
+			for (int row = y1; row < y2; row++) {
+				g.setColor(tile.getPixel((int)(Math.random() * 16), (int)((row - y1) / (double)height)));
+				g.fillRect(col, row, 1, 1);
+			}
 		}
-		g.drawLine(column, y1, column, y2);
 		// Draw a line
 		// double[] nCoords = a.moveInDirection(World.getThePlayer().getX(),
 		// World
@@ -80,7 +87,7 @@ public class TileRenderer {
 				y = nCoords[1];
 				distanceTraveled += PRECISION;
 			} // Move one more time so that we are inside the block
-			double[] nCoords = facing.moveInDirection(x, y, PRECISION);
+			double[] nCoords = facing.moveInDirection(x, y, PRECISION * 2);
 			x = nCoords[0];
 			y = nCoords[1];
 			return distanceTraveled;

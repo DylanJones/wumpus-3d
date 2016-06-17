@@ -1,7 +1,9 @@
 package display;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -228,7 +230,7 @@ public enum WorldTile {
 	}
 
 	// Enum polymorphism things
-	private Image myImage;
+	private BufferedImage myImage;
 	private int myCode;
 	private boolean isSolid;
 
@@ -250,8 +252,11 @@ public enum WorldTile {
 																				// 16x16
 	}
 
-	/** Find out whether or not the tile is solid.
-	 * @return whether or not the tile is solid*/
+	/**
+	 * Find out whether or not the tile is solid.
+	 * 
+	 * @return whether or not the tile is solid
+	 */
 	public boolean isSolid() {
 		return isSolid;
 	}
@@ -264,11 +269,18 @@ public enum WorldTile {
 	public int getCode() {
 		return myCode;
 	}
+	
+	public Color getPixel(int row, int col) {
+		int[] thing = new int[4]; 
+		myImage.getRaster().getPixel(row, col, thing);
+		return new Color(thing[0], thing[1], thing[2]);
+	}
 
 	private WorldTile(String imageName, boolean solid, int byteCode) {
 		try {
-			myImage = ImageIO.read(WorldTile.class.getResource("/assets/tiles/" + imageName))
-					.getScaledInstance(32, 32, Image.SCALE_REPLICATE);
+			myImage = ImageUtil.toBufferedImage(ImageIO.read(
+					WorldTile.class.getResource("/assets/tiles/" + imageName))
+					.getScaledInstance(32, 32, Image.SCALE_REPLICATE));
 		} catch (IOException e) {
 			System.err.println("Error reading image file: /assets/tiles/"
 					+ imageName);
@@ -277,7 +289,7 @@ public enum WorldTile {
 		isSolid = solid;
 		myCode = byteCode;
 	}
-	
+
 	public Image getImage() {
 		return myImage;
 	}
