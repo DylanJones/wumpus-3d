@@ -3,7 +3,6 @@ package display;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Image;
 
 import entity.Entity;
 
@@ -15,9 +14,13 @@ public class TileRenderer {
 		double playerDegrees = World.getThePlayer().getFacing().getDegrees();
 		Angle angle = new Angle(playerDegrees - 45);
 		// One column for each horizontal pixel
+		g.setColor(Color.BLUE);
+		g.fillRect(0, 112, World.WORLD_WIDTH * 32, 112 + (World.WORLD_HEIGHT * 32) / 8);
+		g.setColor(WorldTile.ground.getPixel(0, 0));
+		g.fillRect(0, 112 + (World.WORLD_HEIGHT * 32) / 2, World.WORLD_WIDTH * 32, World.WORLD_HEIGHT * 32 + 112);
 		for (int i = 0; i < World.WORLD_WIDTH * 32; i++) {
 			drawColumn(angle, g, i);
-			angle.add(90 / (double)(World.WORLD_WIDTH * 32));
+			angle.add(90 / (double) (World.WORLD_WIDTH * 32));
 		}
 	}
 
@@ -27,6 +30,7 @@ public class TileRenderer {
 		if (distance < 1)
 			distance = 1;
 		int height = (int) (1.0 / distance * World.WORLD_HEIGHT * 32);
+		// int height = (int) Math.sqrt(distance * World.WORLD_HEIGHT * 32);
 		int y1 = (World.WORLD_HEIGHT * 32 - height) / 2 + 112;
 		int y2 = y1 + height;
 		if (t.getX() >= World.WORLD_WIDTH || t.getX() <= 0
@@ -37,8 +41,11 @@ public class TileRenderer {
 			g.setColor(Color.red);
 			WorldTile tile = World.getTileAt(t.getX(), t.getY());
 			for (int row = y1; row < y2; row++) {
-				g.setColor(tile.getPixel((int)(Math.random() * 16), (int)((row - y1) / (double)height)));
+				g.setColor(tile.getPixel((int) ((t.getX() - (int) t.getX()) * 16),
+						(int) (((row - y1) / (double) height) * 16)));
 				g.fillRect(col, row, 1, 1);
+				// System.out.println((int) (((row - y1) / (double) height) *
+				// 16));
 			}
 		}
 		// Draw a line
