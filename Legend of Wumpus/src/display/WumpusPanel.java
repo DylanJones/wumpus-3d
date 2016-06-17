@@ -47,9 +47,10 @@ public class WumpusPanel extends JPanel {
 //		long stop = System.nanoTime();
 //		System.out.println("Raycasting took " + (stop - start) / 1000000.0 + " milliseconds");
 		HUD.drawHud(bufferGraphics);
-		for (Entity e : World.getAllEntities()) {
-			e.draw(bufferGraphics);
-		}
+//		for (Entity e : World.getAllEntities()) {
+//			e.draw(bufferGraphics);
+//		}
+		World.getThePlayer().setCanTakeDamage(false); //because we're not rendering entites
 		g.drawImage(buffer, 0, 0, null);
 	}
 
