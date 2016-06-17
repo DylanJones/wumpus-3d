@@ -3,32 +3,49 @@ package display;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 
 import entity.Entity;
 
 public class TileRenderer {
 	public static void renderTiles(Graphics2D g) {
-		renderTiles2D(g);
+		// renderTiles2D(g);
 		g.setColor(Color.RED);
 		// 45 degrees to either side of player
 		double playerDegrees = World.getThePlayer().getFacing().getDegrees();
 		Angle angle = new Angle(playerDegrees - 45);
 		// One column for each horizontal pixel
 		for (int i = 0; i < 512; i++) {
-			drawColumn(angle, g);
+			drawColumn(angle, g, i);
 			angle.add(90 / 512.0);
 		}
 	}
 
-	private static void drawColumn(Angle a, Graphics2D g) {
+	private static void drawColumn(Angle a, Graphics2D g, int column) {
 		Tracer t = new Tracer(a);
 		double distance = t.trace();
-		double[] nCoords = a.moveInDirection(World.getThePlayer().getX(), World
-				.getThePlayer().getY(), distance);
-		int[] pCoords = World.getScreenCoordinates(World.getThePlayer().getX(),
-				World.getThePlayer().getY());
-		int[] lCoords = World.getScreenCoordinates(nCoords[0], nCoords[1]);
-		g.drawLine(pCoords[0], pCoords[1], lCoords[0], lCoords[1]);
+		int height = (int) (1.0 / distance * World.WORLD_HEIGHT * 32);
+		int y1 = (World.WORLD_HEIGHT * 32 - height) / 2;
+		int y2 = y1 + height;
+		if (t.getX() >= World.WORLD_WIDTH || t.getX() <= 0
+				|| t.getY() >= World.WORLD_HEIGHT || t.getY() <= 0) {
+			g.setColor(Color.BLUE);
+		} else {
+			g.setColor(Color.red);
+		}
+		g.drawLine(column, y1, column, y2);
+		// Draw a line
+		// double[] nCoords = a.moveInDirection(World.getThePlayer().getX(),
+		// World
+		// .getThePlayer().getY(), distance);
+		// int[] pCoords =
+		// World.getScreenCoordinates(World.getThePlayer().getX(),
+		// World.getThePlayer().getY());
+		// int[] lCoords = World.getScreenCoordinates(nCoords[0], nCoords[1]);
+		// Image theImage = World.getTileAt(t.getX(), t.getY()).getImage();
+		// // theImage.getGraphics();
+		// g.setColor(Color.DARK_GRAY);
+		// g.drawLine(pCoords[0], pCoords[1], lCoords[0], lCoords[1]);
 	}
 
 	public static void renderTiles2D(Graphics g) {
@@ -62,7 +79,10 @@ public class TileRenderer {
 				x = nCoords[0];
 				y = nCoords[1];
 				distanceTraveled += PRECISION;
-			}
+			} // Move one more time so that we are inside the block
+			double[] nCoords = facing.moveInDirection(x, y, PRECISION);
+			x = nCoords[0];
+			y = nCoords[1];
 			return distanceTraveled;
 		}
 

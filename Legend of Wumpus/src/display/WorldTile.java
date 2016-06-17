@@ -275,6 +275,10 @@ public enum WorldTile {
 			System.exit(1);
 		}
 		isSolid = solid;
-		this.myCode = byteCode;
+		myCode = byteCode;
+	}
+	
+	public Image getImage() {
+		return myImage;
 	}
 }

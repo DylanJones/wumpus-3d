@@ -6,7 +6,6 @@ import javax.swing.JPanel;
 
 import display.Angle.CardinalDirection;
 
-import java.awt.Graphics;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;

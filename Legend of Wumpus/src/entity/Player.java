@@ -27,16 +27,7 @@ public final class Player extends Entity {
 	// Player's Images
 	private static BufferedImage northImage1;
 	private static BufferedImage northImage2;
-	private static Image southImage1;
-	private static Image southImage2;
-	private static Image eastImage1;
-	private static Image eastImage2;
-	private static Image westImage1;
-	private static Image westImage2;
 	private static BufferedImage northAttackImage;
-	private static Image southAttackImage;
-	private static Image eastAttackImage;
-	private static Image westAttackImage;
 
 	private boolean canTakeDamage = true;
 	private long lastDamageTime = 0; // Last time something attacked it
@@ -53,39 +44,11 @@ public final class Player extends Entity {
 			northImage2 = ImageUtil.toBufferedImage(ImageIO.read(
 					Player.class.getResource("/assets/wumpus/north2.png"))
 					.getScaledInstance(32, 32, Image.SCALE_REPLICATE));
-			southImage1 = ImageIO.read(
-					Player.class.getResource("/assets/wumpus/south1.png"))
-					.getScaledInstance(32, 32, Image.SCALE_REPLICATE);
-			southImage2 = ImageIO.read(
-					Player.class.getResource("/assets/wumpus/south2.png"))
-					.getScaledInstance(32, 32, Image.SCALE_REPLICATE);
-			eastImage1 = ImageIO.read(
-					Player.class.getResource("/assets/wumpus/east1.png"))
-					.getScaledInstance(32, 32, Image.SCALE_REPLICATE);
-			eastImage2 = ImageIO.read(
-					Player.class.getResource("/assets/wumpus/east2.png"))
-					.getScaledInstance(32, 32, Image.SCALE_REPLICATE);
-			westImage1 = ImageIO.read(
-					Player.class.getResource("/assets/wumpus/west1.png"))
-					.getScaledInstance(32, 32, Image.SCALE_REPLICATE);
-			westImage2 = ImageIO.read(
-					Player.class.getResource("/assets/wumpus/west2.png"))
-					.getScaledInstance(32, 32, Image.SCALE_REPLICATE);
 			// Attacking images
 			northAttackImage = ImageUtil.toBufferedImage(ImageIO
 					.read(Player.class
 							.getResource("/assets/wumpus/attack_north.png"))
 					.getScaledInstance(32, 56, Image.SCALE_REPLICATE));
-			southAttackImage = ImageIO
-					.read(Player.class
-							.getResource("/assets/wumpus/attack_south.png"))
-					.getScaledInstance(32, 54, Image.SCALE_REPLICATE);
-			eastAttackImage = ImageIO.read(
-					Player.class.getResource("/assets/wumpus/attack_east.png"))
-					.getScaledInstance(54, 30, Image.SCALE_REPLICATE);
-			westAttackImage = ImageIO.read(
-					Player.class.getResource("/assets/wumpus/attack_west.png"))
-					.getScaledInstance(54, 30, Image.SCALE_REPLICATE);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.err.print("Error reading Player image files");
@@ -162,12 +125,10 @@ public final class Player extends Entity {
 	// Function for player to turnLeft on the screen; similar function to karel
 	public void turnLeft() {
 		facing.add(-5);
-		System.out.println(facing);
 	}
-	
+
 	public void turnRight() {
 		facing.add(5);
-		System.out.println(facing);
 	}
 
 	// Required by superclass
