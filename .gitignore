@@ -1,6 +1,6 @@
 .DS_Store
 *.class
-Legend of Wumpus/bin
+Legend of Wumpus/bin/*
 Legend of Wumpus/.classpath
 Legend of Wumpus/.gitignore
 Legend of Wumpus/.project
