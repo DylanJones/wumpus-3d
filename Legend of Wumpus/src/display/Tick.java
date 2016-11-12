@@ -27,6 +27,8 @@ public class Tick implements ActionListener {
 		entityTick();
 		collideEntities();
 		container.update(container.getGraphics());
+		((WumpusPanel) container).getPanel().update(
+				((WumpusPanel) container).getPanel().getGraphics());
 	}
 
 	private void movePlayer() {

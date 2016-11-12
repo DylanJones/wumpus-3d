@@ -231,6 +231,7 @@ public enum WorldTile {
 
 	// Enum polymorphism things
 	private BufferedImage myImage;
+	private int[][][] myPixels;
 	private int myCode;
 	private boolean isSolid;
 
@@ -269,11 +270,12 @@ public enum WorldTile {
 	public int getCode() {
 		return myCode;
 	}
-	
+
 	public Color getPixel(int row, int col) {
-		int[] thing = new int[4]; 
-		myImage.getRaster().getPixel(row, col, thing);
-		return new Color(thing[0], thing[1], thing[2]);
+//		int[] thing = new int[4];
+//		myImage.getRaster().getPixel(row, col, thing);
+		return new Color(myPixels[row][col][0], myPixels[row][col][1],
+				myPixels[row][col][2]);
 	}
 
 	private WorldTile(String imageName, boolean solid, int byteCode) {
@@ -288,6 +290,13 @@ public enum WorldTile {
 		}
 		isSolid = solid;
 		myCode = byteCode;
+		myPixels = new int[myImage.getWidth()][myImage.getHeight()][4];
+		for (int x = 0; x < myImage.getWidth(); x++) {
+			for (int y = 0; y < myImage.getHeight(); y++) {
+				myImage.getRaster().getPixel(x, y, myPixels[x][y]);
+				System.out.println(myPixels[x][y][0]);
+			}
+		}
 	}
 
 	public Image getImage() {

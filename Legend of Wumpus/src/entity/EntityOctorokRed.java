@@ -117,7 +117,7 @@ public class EntityOctorokRed extends EntityMinion {
 		int[] sCoords = World.getScreenCoordinates(x, y);
 		sCoords[0] = sCoords[0] - this.spriteWidth / 2;
 		sCoords[1] = sCoords[1] - this.spriteHeight / 2;
-		switch (facing.toCardinalDirection()) {
+		switch (facing.toOldDirection()) {
 		case NORTH:
 			g.drawImage(octorokNorth, sCoords[0], sCoords[1], null);
 			setHitbox(octorokNorth);

@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+
 import javax.swing.*;
 
 /**
@@ -14,10 +15,13 @@ public class WumpusPanel extends JPanel {
 	private static final long serialVersionUID = 4170582039177761054L;
 	KeyboardHandler kb;
 	private JButton startButton;
+	private JFrame frame;
+	private MapPanel panel;
 
 	/** Default constructor for WumpusPanel. Starts the title screen animation. */
 	public WumpusPanel() {
 		super();
+		initMap();
 		startButton = new JButton(new ImageIcon(
 				WumpusPanel.class.getResource("/assets/title.gif")));
 		startButton.addActionListener(new ActionListener() {
@@ -40,15 +44,17 @@ public class WumpusPanel extends JPanel {
 		BufferedImage buffer = new BufferedImage(this.getWidth(),
 				this.getHeight(), BufferedImage.TYPE_INT_RGB);
 		Graphics2D bufferGraphics = buffer.createGraphics();
-//		long start = System.nanoTime();
+		// long start = System.nanoTime();
 		TileRenderer.renderTiles(bufferGraphics);
-//		long stop = System.nanoTime();
-//		System.out.println("Raycasting took " + (stop - start) / 1000000.0 + " milliseconds");
+		// long stop = System.nanoTime();
+		// System.out.println("Raycasting took " + (stop - start) / 1000000.0 +
+		// " milliseconds");
 		HUD.drawHud(bufferGraphics);
-//		for (Entity e : World.getAllEntities()) {
-//			e.draw(bufferGraphics);
-//		}
-		World.getThePlayer().setCanTakeDamage(false); //because we're not rendering entites
+		// for (Entity e : World.getAllEntities()) {
+		// e.draw(bufferGraphics);
+		// }
+		World.getThePlayer().setCanTakeDamage(false); // because we're not
+														// rendering entites
 		g.drawImage(buffer, 0, 0, null);
 	}
 
@@ -62,4 +68,18 @@ public class WumpusPanel extends JPanel {
 		this.add(startButton);
 	}
 
+	private void initMap() {
+		frame = new JFrame();
+		panel = new MapPanel();
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.add(panel);
+		frame.setSize(512, 448);
+		frame.setVisible(true);
+		frame.setResizable(false);
+		frame.setTitle("The Legend of Wumpus 2D");
+	}
+
+	MapPanel getPanel() {
+		return panel;
+	}
 }

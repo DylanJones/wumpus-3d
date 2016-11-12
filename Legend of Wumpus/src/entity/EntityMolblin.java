@@ -99,7 +99,7 @@ public class EntityMolblin extends EntityMinion {
 
 	private void shoot() {
 		BufferedImage rotated = arrowImage;
-		switch (facing.toCardinalDirection()) {
+		switch (facing.toOldDirection()) {
 		case WEST:
 			rotated = ImageUtil.rotate(arrowImage, 270);
 			break;
@@ -175,7 +175,7 @@ public class EntityMolblin extends EntityMinion {
 		boolean whichImage = (((int) (x * 2) % 2) == 1)
 				^ (((int) (y * 2) % 2) == 1);
 		Image imageToDraw = null;
-		switch (facing.toCardinalDirection()) {
+		switch (facing.toOldDirection()) {
 		case EAST:
 			if (whichImage)
 				imageToDraw = eastImage1;

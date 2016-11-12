@@ -13,9 +13,15 @@ public class Angle implements Serializable {
 	private static final long serialVersionUID = 33544444446765742L;
 	// The angle in degrees
 	private double degrees;
-	
+
 	public enum CardinalDirection {
-		 NORTH, SOUTH, EAST, WEST, NORTHEAST, SOUTHEAST, NORTHWEST, SOUTHWEST
+		NORTH(0), SOUTH(180), EAST(90), WEST(270), NORTHEAST(45), SOUTHEAST(135), NORTHWEST(
+				315), SOUTHWEST(225);
+		public final int degrees;
+
+		private CardinalDirection(int degrees) {
+			this.degrees = degrees;
+		}
 	}
 
 	public Angle(double angleDegrees) {
@@ -23,13 +29,32 @@ public class Angle implements Serializable {
 	}
 
 	public Angle(Angle a) {
-		this.add(a.degrees);;
+		this.add(a.degrees);
+		;
 	}
 
 	public CardinalDirection toCardinalDirection() {
+		double tmp = degrees / 90.0;
+		int dir = (int) Math.round(tmp) % 4;
+		switch (dir) {
+		case 0:
+			return CardinalDirection.NORTH;
+		case 1:
+			return CardinalDirection.EAST;
+		case 2:
+			return CardinalDirection.SOUTH;
+		case 3:
+			return CardinalDirection.WEST;
+		default:
+			System.err.println("Angle error method Angle.toCardinalDirection");
+			return CardinalDirection.NORTH;
+		}
+	}
+
+	public CardinalDirection toOldDirection() {
 		double tmp = degrees / 45.0;
 		int dir = (int) Math.round(tmp) % 8;
-		switch(dir) {
+		switch (dir) {
 		case 0:
 			return CardinalDirection.NORTH;
 		case 1:
@@ -86,9 +111,13 @@ public class Angle implements Serializable {
 	public double getDegrees() {
 		return degrees;
 	}
-	
+
 	@Override
 	public String toString() {
-		return degrees + " degrees, cardinal " + this.toCardinalDirection();
+		return degrees + " degrees, cardinal " + this.toOldDirection();
+	}
+
+	public double getRadians() {
+		return Math.toRadians(degrees);
 	}
 }
